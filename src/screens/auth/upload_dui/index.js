@@ -1,0 +1,132 @@
+
+import React, { Component } from 'react';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { connect } from 'react-redux';
+import { Container, Content } from 'native-base';
+
+//customs
+import styles from './styles';
+import locale from '../../../locale';
+
+//component
+import MainButton from '../../../components/button';
+import CustomHeader from '../../../components/header';
+import HeaderTitle from '../../../components/header_title';
+import BackButton from '../../../components/back_button';
+
+//icons
+import duiIcons from '../../../assets/icons/dui.png';
+import cameraIcons from '../../../assets/icons/camera.png';
+
+class UploadDUI extends Component {
+
+  state = {
+    lng: {},
+  }
+
+  async componentDidMount() {
+    const lng = await locale()
+
+    this.setState({
+      lng
+    })
+  }
+
+  navigateTo = (screen) => {
+    const { navigation } = this.props
+
+    navigation.navigate(screen)
+  }
+
+  goBack = () => {
+    const { navigation } = this.props
+
+    navigation.goBack()
+  }
+
+  render() {
+
+    const {
+      lng,
+    } = this.state
+
+    return (
+      <Container
+        style={styles.container}
+      >
+        <CustomHeader
+          center={
+            <HeaderTitle
+              text={lng.id_oficial}
+            />
+          }
+          left={
+            <BackButton
+              onPress={() => this.goBack()}
+            />
+          }
+        />
+        <Content
+          contentContainerStyle={styles.content}
+        >
+          <View
+            style={styles.cameraContainer}
+          >
+            <TouchableOpacity>
+              <Text
+                style={styles.cameraText}
+              >
+                {lng.galery}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Image
+                source={cameraIcons}
+              />
+            </TouchableOpacity>
+          </View>
+          <Image
+            style={styles.icon}
+            source={duiIcons}
+          />
+          <Text
+            style={styles.title}
+          >
+            {lng.id_oficial}
+          </Text>
+          <Text
+            style={styles.label}
+          >
+            {lng.id_oficial_label1}
+          </Text>
+          <Text
+            style={
+              [
+                styles.label,
+                styles.label2
+              ]
+            }
+          >
+            {lng.id_oficial_label2}
+          </Text>
+          <View
+            style={styles.btnContainer}
+          >
+            <MainButton
+              raised_green
+              text={lng.skip}
+              sm
+            />
+            <MainButton
+              white
+              text={lng.next}
+              sm
+            />
+          </View>
+        </Content>
+      </Container>
+    );
+  }
+}
+
+export default connect()(UploadDUI);
