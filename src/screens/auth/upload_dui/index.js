@@ -17,11 +17,16 @@ import BackButton from '../../../components/back_button';
 //icons
 import duiIcons from '../../../assets/icons/dui.png';
 import cameraIcons from '../../../assets/icons/camera.png';
+import id_empty from '../../../assets/icons/id_empty.png'
+
+//camera
+import Camera from '../../../utils/image_picker';
 
 class UploadDUI extends Component {
 
   state = {
     lng: {},
+    img: null
   }
 
   async componentDidMount() {
@@ -44,10 +49,33 @@ class UploadDUI extends Component {
     navigation.goBack()
   }
 
+  onPressTakePhoto = async () => {
+    try {
+      const res = await Camera.ImageCamera()
+      this.setState({
+        img: res.uri
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  onPressLibrary = async () => {
+    try {
+      const res = await Camera.ImageLibrary()
+      this.setState({
+        img: res.uri
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   render() {
 
     const {
       lng,
+      img
     } = this.state
 
     return (
@@ -68,18 +96,23 @@ class UploadDUI extends Component {
         />
         <Content
           contentContainerStyle={styles.content}
+          bounces={false}
         >
           <View
             style={styles.cameraContainer}
           >
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.onPressLibrary()}
+            >
               <Text
                 style={styles.cameraText}
               >
                 {lng.galery}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.onPressTakePhoto()}
+            >
               <Image
                 source={cameraIcons}
               />
@@ -99,6 +132,11 @@ class UploadDUI extends Component {
           >
             {lng.id_oficial_label1}
           </Text>
+          <Image
+            style={img ? styles.img : styles.empty_img}
+            source={img ? { uri: img } : id_empty}
+            resizeMode={'contain'}
+          />
           <Text
             style={
               [

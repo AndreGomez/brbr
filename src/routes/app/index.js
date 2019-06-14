@@ -2,10 +2,12 @@ import { createAppContainer, createStackNavigator } from 'react-navigation';
 
 // screens
 import Home from '../../screens/app/home';
+import FirstTime from '../../screens/app/fist_time';
 
 const appStackNavigator = createStackNavigator(
   {
-    Home
+    Home,
+    FirstTime
   },
   {
     initialRouteName: 'Home',

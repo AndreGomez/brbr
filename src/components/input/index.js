@@ -35,15 +35,16 @@ export default class MainInput extends Component {
       icon,
       rounded,
       label,
-      customContainer
+      customContainer,
+      secureTextEntry,
+      keyboardType
     } = this.props;
 
     const {
       underlineStyle,
       txtStyle,
-      keyboardType,
       roundedFocus,
-      roundedText
+      roundedText,
     } = this.state
 
     return (
@@ -90,6 +91,7 @@ export default class MainInput extends Component {
 
           <Input
             keyboardType={keyboardType}
+            secureTextEntry={secureTextEntry}
             value={value}
             placeholder={rounded && placeholder}
             onChangeText={onChangeText}

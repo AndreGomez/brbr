@@ -18,12 +18,20 @@ export default StyleSheet.create({
     height: resize(54, 'height'),
     width: resize(300),
   },
+  xs: {
+    width: resize(115),
+    height: resize(32, 'h'),
+  },
   icon: {
     position: 'absolute',
     left: resize(22)
   },
   iconRight: {
     right: resize(40),
+    left: null
+  },
+  iconRightXs: {
+    right: resize(10),
     left: null
   },
   blackText: {
@@ -35,6 +43,9 @@ export default StyleSheet.create({
     fontSize: resize(20),
     fontWeight: '500',
     letterSpacing: resize(0.5),
+  },
+  xsText: {
+    fontSize: resize(14),
   },
   blue: {
     backgroundColor: '#1877f2',
@@ -50,6 +61,15 @@ export default StyleSheet.create({
   },
   black: {
     backgroundColor: 'black'
+  },
+  greenText: {
+    color: '#94ffb4',
+    fontFamily: AIRBNB_MEDIUM,
+    fontWeight: '700',
+    letterSpacing: resize(0.35),
+    height: '100%',
+    paddingTop: 0,
+    marginLeft: resize(-10)
   },
   bottom: {
     borderRadius: 0,

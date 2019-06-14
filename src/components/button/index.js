@@ -22,7 +22,8 @@ export default function MainButton(props) {
     white,
     primary_red,
     black,
-    bottom
+    bottom,
+    xsRaisedGreen
   } = props
 
   return (
@@ -33,7 +34,8 @@ export default function MainButton(props) {
           style={
             [
               styles.icon,
-              iconRight && styles.iconRight
+              iconRight && styles.iconRight,
+              xsRaisedGreen && styles.iconRightXs
             ]
           }
           source={icon}
@@ -49,6 +51,8 @@ export default function MainButton(props) {
           red && styles.blueText,
           primary_red && styles.blackText,
           black && styles.blueText,
+          xsRaisedGreen && styles.xsText,
+          xsRaisedGreen && styles.greenText
         ]
       }
       loading={loading}
@@ -63,6 +67,8 @@ export default function MainButton(props) {
           raised_green && styles.raisedGreen,
           sm && styles.sm,
           md && styles.md,
+          xsRaisedGreen && styles.xs,
+          xsRaisedGreen && styles.raisedGreen,
           white && styles.white,
           primary_red && styles.primaryRed,
           black && styles.black,

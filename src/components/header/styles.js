@@ -23,6 +23,5 @@ export default StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'flex-end',
-    paddingRight: resize(21)
   }
 });

@@ -117,6 +117,7 @@ class LoginForm extends Component {
             onChangeText={(value) => this.onChange('password', value)}
             value={password.value}
             rounded
+            secureTextEntry
             label={lng.password}
             customContainer={styles.inputBottom}
           />
@@ -130,7 +131,7 @@ class LoginForm extends Component {
             />
           </View>
           <MainButton
-            onPress={() => this.navigateTo('UploadDUI')}
+            onPress={() => this.onPressLogin()}
             text={lng.login_button_text}
             containerStyle={styles.btn}
           />

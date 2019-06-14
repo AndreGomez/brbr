@@ -16,7 +16,8 @@ export default StyleSheet.create({
     flexDirection: 'row',
     marginHorizontal: resize(20),
     justifyContent: 'space-between',
-    width: '100%'
+    width: '100%',
+    marginTop: resize(60, 'h')
   },
   cameraText: {
     color: '#95989a',
@@ -30,6 +31,11 @@ export default StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'flex-end'
+  },
+  img: {
+    height: resize(120, 'h'),
+    width: '100%',
+    marginTop: resize(15, 'h')
   },
   icon: {
     marginTop: resize(85, 'h'),
@@ -51,10 +57,13 @@ export default StyleSheet.create({
     fontWeight: '500',
     letterSpacing: resize(0.45),
     textAlign: 'center',
-    marginTop: resize(26, 'h'),
+    marginTop: resize(20, 'h'),
     paddingHorizontal: resize(80)
   },
   label2: {
     paddingHorizontal: resize(50)
+  },
+  empty_img: {
+    marginVertical: resize(50, 'h')
   }
 });

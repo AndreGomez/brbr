@@ -10,6 +10,6 @@ export default StyleSheet.create({
     zIndex: 999
   },
   spinner: {
-    color: '#000'
+    color: '#FFFF'
   }
 });

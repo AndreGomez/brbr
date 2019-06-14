@@ -4,15 +4,14 @@ import en from './en';
 import es from './es';
 
 export default locale = async () => {
-  try {
+  return new Promise(async (resolve, reject) => {
+
     const lng = await AsyncStorage.getItem('lng')
 
     if (lng === 'es') {
-      return es
+      resolve(es)
     } else {
-      return en
+      resolve(en)
     }
-  } catch (error) {
-
-  }
+  })
 }

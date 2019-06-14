@@ -44,6 +44,17 @@ const es = {
   //generic
   all_fields_are_required: 'Todos los campos son requeridos',
 
+
+  //first_time
+  calified_brbr: 'Barberos Calificados',
+  calified_brbr_message: 'Lorem dolor sit amet consectetur adipisicing elit, sed do eiusmod tempor incididunt.',
+  calified_brbr_2: 'Header Title 2',
+  calified_brbr_message_2: 'Lorem dolor sit amet consectetur adipisicing elit, sed do eiusmod tempor incididunt.',
+  calified_brbr_3: 'Header Title 3',
+  calified_brbr_message_3: 'Lorem dolor sit amet consectetur adipisicing elit, sed do eiusmod tempor incididunt.',
+  calified_brbr_4: 'Reserva tu primera experiencia ',
+  calified_brbr_message_4: 'Lorem dolor sit amet consectetur adipisicing elit, sed do eiusmod tempor incididunt.',
+
   //login
   login_email: 'Tu correo o nombre de usuario',
   forgot_password: '¿Olvidaste la contraseña?',
@@ -54,6 +65,10 @@ const es = {
   id_oficial: 'Identificación oficial',
   id_oficial_label1: 'Por tu seguridad sube una foto de tu galería o tómate una',
   id_oficial_label2: 'Si utilizas tu cámara recuerda sacar el rostro completo',
+
+  //HOME
+  vip_experience: 'brbr VIP Experience',
+  arround_of_you: 'Barberos cerca de tí',
 
   //single
   next: 'Siguiente',
@@ -70,7 +85,12 @@ const es = {
   accept: 'Aceptar',
   email_placeholder: 'nombre@correo.com',
   password: 'Contraseña',
-  galery: 'Galería'
+  galery: 'Galería',
+  reserve: 'Reservar',
+  RESERVE: 'RESERVAR',
+  CASH: 'EFECTIVO',
+  add: 'Agregar',
+  select: 'Seleccionar'
 }
 
 export default es;

@@ -167,6 +167,7 @@ class PaymentMethodAuth extends Component {
               sm
             />
             <MainButton
+              onPress={() => this.navigateTo('UploadDUI')}
               white
               text={lng.next}
               sm
