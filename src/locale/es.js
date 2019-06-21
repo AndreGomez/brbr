@@ -95,7 +95,15 @@ const es = {
   rese: 'Reseñas',
   calify: 'Calificacion',
   cuts: 'Cortes',
-  galery: 'Galeria'
+  galery: 'Galeria',
+  day: 'Día',
+  hour: 'Hora',
+  lunes: 'Lunes',
+  martes: 'Martes',
+  miercoles: 'Miercoles',
+  jueves: 'Jueves',
+  viernes: 'Viernes',
+  reserve_now: 'Reservar Barbero ahora',
 }
 
 export default es;

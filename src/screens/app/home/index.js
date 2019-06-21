@@ -109,6 +109,7 @@ class Home extends Component {
       price={brbr.item.price}
       cash={this.state.lng.CASH}
       reserve={this.state.lng.RESERVE}
+      onPress={() => this.navigateTo('BrbrReserve', brbr)}
     />
   )
 

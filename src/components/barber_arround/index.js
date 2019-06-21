@@ -26,7 +26,8 @@ export default function BarberArround(props) {
     price,
     cash,
     reserve,
-    onPressBarberArround
+    onPressBarberArround,
+    onPress
   } = props
 
   return (
@@ -86,6 +87,7 @@ export default function BarberArround(props) {
           text={reserve}
           iconRight
           icon={arrow_green}
+          onPress={onPress}
         />
       </View>
     </TouchableOpacity>

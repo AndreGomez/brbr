@@ -4,12 +4,14 @@ import { createAppContainer, createStackNavigator } from 'react-navigation';
 import Home from '../../screens/app/home';
 import FirstTime from '../../screens/app/fist_time';
 import BrbrProfile from '../../screens/app/brbr_profile';
+import BrbrReserve from '../../screens/app/brbr_reserve';
 
 const appStackNavigator = createStackNavigator(
   {
     Home,
     FirstTime,
-    BrbrProfile
+    BrbrProfile,
+    BrbrReserve
   },
   {
     initialRouteName: 'Home',
