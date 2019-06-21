@@ -23,5 +23,8 @@ export default StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'flex-end',
+  },
+  portraitBack: {
+    position: 'absolute'
   }
 });

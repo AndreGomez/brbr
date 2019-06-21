@@ -90,7 +90,12 @@ const es = {
   RESERVE: 'RESERVAR',
   CASH: 'EFECTIVO',
   add: 'Agregar',
-  select: 'Seleccionar'
+  select: 'Seleccionar',
+  brbr_profile_title: 'Barbero',
+  rese: 'Reseñas',
+  calify: 'Calificacion',
+  cuts: 'Cortes',
+  galery: 'Galeria'
 }
 
 export default es;

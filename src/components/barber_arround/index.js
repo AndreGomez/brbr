@@ -25,12 +25,14 @@ export default function BarberArround(props) {
     name,
     price,
     cash,
-    reserve
+    reserve,
+    onPressBarberArround
   } = props
 
   return (
     <TouchableOpacity
       style={styles.container}
+      onPress={onPressBarberArround}
     >
       <Image
         source={{ uri: img }}

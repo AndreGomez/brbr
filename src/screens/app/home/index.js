@@ -46,14 +46,15 @@ class Home extends Component {
       { img: 'https://content-static.upwork.com/uploads/2014/10/01073427/profilephoto1.jpg', stars: 4, addres: 'Santa Ana', name: 'Andre Gomez', price: 10.50, },
       { img: 'https://content-static.upwork.com/uploads/2014/10/01073427/profilephoto1.jpg', stars: 4, addres: 'Santa Ana', name: 'Andre Gomez', price: 10.50, }],
     totalBrbr: 20,
-    loading: false,
+    loading: true,
     location: 'Agricultura 104, int 304, Escandón Agricultura 104, int 304, Escandón'
   }
 
   async componentDidMount() {
     const lng = await locale()
     this.setState({
-      lng
+      lng,
+      loading: false
     })
   }
 
@@ -78,7 +79,7 @@ class Home extends Component {
 
   renderVips = (brbr) => (
     <BarberVip
-      onPressBarberVip={() => this.onPressBarberVip(brbr.item.id)}
+      onPressBarberVip={() => this.navigateTo('BrbrProfile', brbr)}
       img={brbr.item.img}
       addres={brbr.item.addres}
       stars={brbr.item.stars}
@@ -100,7 +101,7 @@ class Home extends Component {
 
   renderArround = (brbr) => (
     <BarberArround
-      onPressBarberArround={() => this.onPressBarberArround(brbr.item.id)}
+      onPressBarberArround={() => this.navigateTo('BrbrProfile', brbr)}
       img={brbr.item.img}
       addres={brbr.item.addres}
       stars={brbr.item.stars}
@@ -125,6 +126,12 @@ class Home extends Component {
 
   onPressServices = () => {
 
+  }
+
+  navigateTo = (screen, data = {}) => {
+    const { navigation } = this.props
+
+    navigation.navigate(screen, data)
   }
 
   render() {

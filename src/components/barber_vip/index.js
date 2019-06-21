@@ -19,12 +19,12 @@ export default function BarberVip(props) {
     addres,
     stars,
     name,
-    onPress
+    onPressBarberVip
   } = props
 
   return (
     <TouchableOpacity
-      onPress={onPress}
+      onPress={onPressBarberVip}
       style={styles.container}
     >
       <Image
