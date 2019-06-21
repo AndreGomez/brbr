@@ -14,6 +14,17 @@ export default StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
+  horizontal: {
+    width: resize(375),
+    height: resize(63, 'h'),
+    borderRadius: 12,
+    backgroundColor: '#2d2d2d',
+    paddingHorizontal: resize(15),
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: resize(10, 'h')
+  },
   img: {
     width: resize(65),
     height: resize(65),

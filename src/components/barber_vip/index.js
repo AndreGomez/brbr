@@ -19,33 +19,57 @@ export default function BarberVip(props) {
     addres,
     stars,
     name,
-    onPressBarberVip
+    onPressBarberVip,
+    horizontal
   } = props
 
   return (
     <TouchableOpacity
       onPress={onPressBarberVip}
-      style={styles.container}
+      style={horizontal ? styles.horizontal : styles.container}
     >
-      <Image
-        source={{ uri: img }}
-        style={styles.img}
-      />
       <View
-        style={styles.txtContainer}
+        style={{ flexDirection: 'row', alignItems: 'center' }}
       >
-        <Text
-          style={styles.name}
-          numberOfLines={1}
+        <Image
+          source={{ uri: img }}
+          style={styles.img}
+        />
+        <View
+          style={styles.txtContainer}
         >
-          {name}
-        </Text>
-        <Text
-          style={styles.addres}
-          numberOfLines={1}
-        >
-          {addres}
-        </Text>
+          <Text
+            style={styles.name}
+            numberOfLines={1}
+          >
+            {name}
+          </Text>
+          <Text
+            style={styles.addres}
+            numberOfLines={1}
+          >
+            {addres}
+          </Text>
+          {
+            !horizontal &&
+            <View
+              style={styles.starContainer}
+            >
+              <Text
+                style={styles.starText}
+              >
+                {stars}
+              </Text>
+              <Image
+                style={styles.starIcon}
+                source={starIcon}
+              />
+            </View>
+          }
+        </View>
+      </View>
+      {
+        horizontal &&
         <View
           style={styles.starContainer}
         >
@@ -59,7 +83,7 @@ export default function BarberVip(props) {
             source={starIcon}
           />
         </View>
-      </View>
+      }
     </TouchableOpacity>
   );
 }

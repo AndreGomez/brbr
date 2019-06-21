@@ -69,6 +69,7 @@ const es = {
   //HOME
   vip_experience: 'brbr VIP Experience',
   arround_of_you: 'Barberos cerca de tí',
+  start_search: 'Comienza a buscar barberos',
 
   //single
   next: 'Siguiente',
@@ -104,6 +105,7 @@ const es = {
   jueves: 'Jueves',
   viernes: 'Viernes',
   reserve_now: 'Reservar Barbero ahora',
+  reco: 'Sugerencias',
 }
 
 export default es;

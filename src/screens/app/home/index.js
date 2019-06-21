@@ -4,7 +4,8 @@ import {
   TouchableOpacity,
   Image,
   FlatList,
-  Text
+  Text,
+  TextInput
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Container, Content } from 'native-base';
@@ -33,8 +34,8 @@ import searchIcon from '../../../assets/icons/search.png';
 import vipIcon from '../../../assets/icons/vip.png';
 import locationIcon from '../../../assets/icons/marker.png';
 import calendarIcon from '../../../assets/icons/calendar.png';
-import brbr_machineIcon from '../../../assets/icons/brbr_machine.png'
-
+import brbr_machineIcon from '../../../assets/icons/brbr_machine.png';
+import search_grey from '../../../assets/icons/search_grey.png';
 
 class Home extends Component {
 
@@ -47,6 +48,7 @@ class Home extends Component {
       { img: 'https://content-static.upwork.com/uploads/2014/10/01073427/profilephoto1.jpg', stars: 4, addres: 'Santa Ana', name: 'Andre Gomez', price: 10.50, }],
     totalBrbr: 20,
     loading: true,
+    search: false,
     location: 'Agricultura 104, int 304, Escandón Agricultura 104, int 304, Escandón'
   }
 
@@ -69,7 +71,7 @@ class Home extends Component {
 
   renderVipsList = () => (
     <FlatList
-      horizontal
+      horizontal={!this.state.search}
       data={this.state.barberVips}
       renderItem={(barberVip) => this.renderVips(barberVip)}
       showsHorizontalScrollIndicator={false}
@@ -84,6 +86,7 @@ class Home extends Component {
       addres={brbr.item.addres}
       stars={brbr.item.stars}
       name={brbr.item.name}
+      horizontal={this.state.search}
     />
   )
 
@@ -141,7 +144,8 @@ class Home extends Component {
       lng,
       loading,
       totalBrbr,
-      location
+      location,
+      search
     } = this.state
 
     return (
@@ -167,10 +171,20 @@ class Home extends Component {
             right={
               <TouchableOpacity
                 style={styles.searchIcon}
+                onPress={() => this.setState({ search: !this.state.search })}
               >
-                <Image
-                  source={searchIcon}
-                />
+                {
+                  search ?
+                    <Text
+                      style={styles.cancel}
+                    >
+                      {lng.cancel}
+                    </Text>
+                    :
+                    <Image
+                      source={searchIcon}
+                    />
+                }
               </TouchableOpacity>
             }
           />
@@ -182,72 +196,97 @@ class Home extends Component {
             <Content
               contentContainerStyle={styles.content}
             >
-              <View
-                style={styles.searchContainer}
-              >
-                <TouchableOpacity
-                  onPress={() => this.onPressLocation()}
-                  style={styles.location}
-                  activeOpacity={0.8}
-                >
-                  <Image
-                    source={locationIcon}
-                  />
-                  <Text
-                    numberOfLines={1}
-                    style={styles.locationText}
-                  >
-                    {location}
-                  </Text>
-                </TouchableOpacity>
-                <View
-                  style={styles.calendarAndServices}
-                >
-                  <TouchableOpacity
-                    onPress={() => this.onPressCalendar()}
-                    style={styles.calendar}
-                    activeOpacity={0.8}
+              {
+                search ?
+                  <View
+                    style={styles.search}
                   >
                     <Image
-                      source={calendarIcon}
+                      source={search_grey}
                     />
-                    <Text
-                      numberOfLines={1}
-                      style={styles.locationText}
-                    >
-                      {lng.add}
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => this.onPressServices()}
-                    style={styles.services}
-                    activeOpacity={0.8}
+                    <TextInput
+                      placeholder={lng.start_search}
+                      style={styles.input}
+                    />
+                  </View>
+                  :
+                  <View
+                    style={styles.searchContainer}
                   >
-                    <Image
-                      source={brbr_machineIcon}
-                    />
-                    <Text
-                      numberOfLines={1}
-                      style={styles.locationText}
+                    <TouchableOpacity
+                      onPress={() => this.onPressLocation()}
+                      style={styles.location}
+                      activeOpacity={0.8}
                     >
-                      {lng.select}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
+                      <Image
+                        source={locationIcon}
+                      />
+                      <Text
+                        numberOfLines={1}
+                        style={styles.locationText}
+                      >
+                        {location}
+                      </Text>
+                    </TouchableOpacity>
+                    <View
+                      style={styles.calendarAndServices}
+                    >
+                      <TouchableOpacity
+                        onPress={() => this.onPressCalendar()}
+                        style={styles.calendar}
+                        activeOpacity={0.8}
+                      >
+                        <Image
+                          source={calendarIcon}
+                        />
+                        <Text
+                          numberOfLines={1}
+                          style={styles.locationText}
+                        >
+                          {lng.add}
+                        </Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => this.onPressServices()}
+                        style={styles.services}
+                        activeOpacity={0.8}
+                      >
+                        <Image
+                          source={brbr_machineIcon}
+                        />
+                        <Text
+                          numberOfLines={1}
+                          style={styles.locationText}
+                        >
+                          {lng.select}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+              }
               <View>
-                <View
-                  style={styles.vipContainer}
-                >
-                  <Image
-                    source={vipIcon}
-                  />
-                  <Text
-                    style={styles.vipText}
-                  >
-                    {lng.vip_experience}
-                  </Text>
-                </View>
+                {
+                  search ?
+                    <Text
+                      style={styles.reco}
+                    >
+                      {lng.reco}
+                    </Text>
+                    :
+                    <View
+                      style={styles.vipContainer}
+                    >
+                      <Image
+                        source={vipIcon}
+                      />
+                      <Text
+                        style={styles.vipText}
+                      >
+                        {lng.vip_experience}
+                      </Text>
+                    </View>
+                }
+
                 {this.renderVipsList()}
               </View>
               <View

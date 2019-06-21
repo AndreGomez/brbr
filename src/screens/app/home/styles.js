@@ -14,6 +14,29 @@ export default StyleSheet.create({
   },
   content: {
   },
+  input: {
+    paddingLeft: resize(10),
+    color: '#cfcfcf',
+    fontFamily: 'Airbnb Cereal App',
+    fontSize: resize(16),
+    fontWeight: '500',
+  },
+  cancel: {
+    color: '#94ffb4',
+    fontFamily: AIRBNB_MEDIUM,
+    fontSize: resize(16),
+    fontWeight: '500',
+  },
+  search: {
+    width: resize(375),
+    height: resize(54, 'h'),
+    borderRadius: 6,
+    backgroundColor: '#ffffff',
+    alignSelf: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingHorizontal: resize(20)
+  },
   searchContainer: {
     paddingHorizontal: resize(20),
     marginTop: resize(31, 'h')
@@ -111,5 +134,13 @@ export default StyleSheet.create({
     fontSize: resize(18),
     fontWeight: '500',
     letterSpacing: resize(0.45),
+  },
+  reco: {
+    color: '#ffffff',
+    fontFamily: AIRBNB_MEDIUM,
+    paddingLeft: resize(20),
+    fontSize: resize(18),
+    fontWeight: '500',
+    paddingTop: resize(20, 'h')
   }
 });
