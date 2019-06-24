@@ -380,6 +380,7 @@
 		16A3A4A06558422C9B2D78B5 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		2AFD10DD08464A29B2203318 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/native-base/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		30BDCDAD22BDDF1300B17EB0 /* brbr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = brbr.entitlements; path = brbr/brbr.entitlements; sourceTree = "<group>"; };
 		425A3AC0009544FCACA780F4 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		43DF16E4E23878F094D286E1 /* libPods-brbr.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-brbr.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		482E03FDB0444496906803D3 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/native-base/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
@@ -545,6 +546,7 @@
 		13B07FAE1A68108700A75B9A /* brbr */ = {
 			isa = PBXGroup;
 			children = (
+				30BDCDAD22BDDF1300B17EB0 /* brbr.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -752,7 +754,15 @@
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = HC8QC4CP2B;
+						DevelopmentTeam = 7RQFGG78B4;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -1242,9 +1252,10 @@
 			baseConfigurationReference = D8A8700CB86DB65ACF703B05 /* Pods-brbr.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = brbr/brbr.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = HC8QC4CP2B;
+				DEVELOPMENT_TEAM = 7RQFGG78B4;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
@@ -1265,7 +1276,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.elaniin.brbr.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.elaniin.brbr.client.ios;
 				PRODUCT_NAME = brbr;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1276,8 +1287,9 @@
 			baseConfigurationReference = 0AB7F38CA765A410D11FAC8D /* Pods-brbr.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = brbr/brbr.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = HC8QC4CP2B;
+				DEVELOPMENT_TEAM = 7RQFGG78B4;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
@@ -1298,7 +1310,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.elaniin.brbr.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.elaniin.brbr.client.ios;
 				PRODUCT_NAME = brbr;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

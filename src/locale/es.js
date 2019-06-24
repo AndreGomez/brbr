@@ -71,6 +71,10 @@ const es = {
   arround_of_you: 'Barberos cerca de tí',
   start_search: 'Comienza a buscar barberos',
 
+  //DETAIL SERVICE
+  detail_service: 'Resumen del Servicio',
+  payment_method: 'Método de Pago',
+
   //single
   next: 'Siguiente',
   skip: 'Omitir',
@@ -106,6 +110,31 @@ const es = {
   viernes: 'Viernes',
   reserve_now: 'Reservar Barbero ahora',
   reco: 'Sugerencias',
+  change: 'Cambiar',
+  view_profile: 'Ver perfil',
+  method: 'Método de Pago',
+
+  preferencies: 'Preferencias',
+  edit_profile: 'Editar perfil',
+  lang: 'Idioma de la app',
+  notifications: 'Notificaciones',
+  about: 'Acerca de',
+  desactive: 'Desactivado',
+  active: 'Activas',
+  my_profile: 'Mi perfil',
+
+  close_session: 'Cerrar Sesión',
+
+  account: 'Cuenta',
+  upload_photo: 'Subir una foto',
+  save: 'Guardar',
+  version: 'Versión',
+  TOU: 'Ver Términos y Condiciones',
+  POP: 'Ver Política de Privacidad',
+  tou: 'Términos y Condiciones',
+  pop: 'Política de Privacidad',
+  notifications_modal: 'Recibe notificaciones de calificaciones o de tu Barbero',
+  activate: 'Activar',
 }
 
 export default es;

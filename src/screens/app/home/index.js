@@ -162,7 +162,9 @@ class Home extends Component {
               />
             }
             left={
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.toggleDrawer()}
+              >
                 <Image
                   source={prefIcon}
                 />

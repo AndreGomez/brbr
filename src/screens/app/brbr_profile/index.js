@@ -124,7 +124,7 @@ class BrbrProfile extends Component {
           }
           left={
             <BackButton
-              onPress={() => this.props.navigation.popToTop()}
+              onPress={() => this.props.navigation.goBack()}
             />
           }
           right={

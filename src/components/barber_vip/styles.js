@@ -29,7 +29,7 @@ export default StyleSheet.create({
     width: resize(65),
     height: resize(65),
     borderRadius: resize(32.5),
-    backgroundColor: 'red',
+    backgroundColor: '#2d2d2d',
   },
   txtContainer: {
     paddingLeft: resize(12),

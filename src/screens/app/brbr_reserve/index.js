@@ -282,6 +282,7 @@ class BrbrReserve extends Component {
             bottom
             icon={brbr_sithIcon}
             text={lng.reserve_now}
+            onPress={() => this.props.navigation.navigate('ServiceReview')}
           />
         }
       </Container>
