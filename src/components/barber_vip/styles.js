@@ -31,6 +31,12 @@ export default StyleSheet.create({
     borderRadius: resize(32.5),
     backgroundColor: '#2d2d2d',
   },
+  imgH: {
+    width: resize(50),
+    height: resize(50),
+    borderRadius: resize(25),
+    backgroundColor: '#2d2d2d',
+  },
   txtContainer: {
     paddingLeft: resize(12),
   },

@@ -154,11 +154,13 @@ class UploadDUI extends Component {
               raised_green
               text={lng.skip}
               sm
+              onPress={() => this.navigateTo('FirstTime')}
             />
             <MainButton
               white
               text={lng.next}
               sm
+              onPress={() => this.navigateTo('FirstTime')}
             />
           </View>
         </Content>

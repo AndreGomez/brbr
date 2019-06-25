@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, Platform } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
 //custom
@@ -28,7 +28,7 @@ export default function Select(props) {
           placeholder={{
             label: placeholder,
             value: null,
-            color: 'white',
+            color: Platform.OS === 'ios' ? 'white' : 'black',
           }}
           items={data}
           onValueChange={(val) => onValueChange(val)}

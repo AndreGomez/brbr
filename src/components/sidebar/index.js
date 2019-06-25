@@ -116,7 +116,7 @@ class Sidebar extends Component {
               >
                 <ItemList
                   text={lng.my_profile}
-                  onPress={() => { }}
+                  onPress={() => this.navigateTo('MyProfile')}
                 />
                 <ItemList
                   text={lng.lang}

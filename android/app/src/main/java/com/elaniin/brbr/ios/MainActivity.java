@@ -1,4 +1,4 @@
-package com.elaniin.brbr.ios;
+package com.elaniin.brbr.android;
 
 import android.os.Bundle;
 

@@ -14,6 +14,9 @@ export default StyleSheet.create({
     height: resize(54, 'height'),
     width: resize(175),
   },
+  smPad: {
+    paddingTop: resize(4, 'h')
+  },
   md: {
     height: resize(54, 'height'),
     width: resize(300),
@@ -29,6 +32,9 @@ export default StyleSheet.create({
   iconRight: {
     right: resize(40),
     left: null
+  },
+  smTitle: {
+    backgroundColor: 'red'
   },
   iconRightXs: {
     right: resize(10),

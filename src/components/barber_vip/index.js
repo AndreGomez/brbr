@@ -33,7 +33,7 @@ export default function BarberVip(props) {
       >
         <Image
           source={{ uri: img }}
-          style={styles.img}
+          style={horizontal ? styles.imgH : styles.img}
         />
         <View
           style={styles.txtContainer}

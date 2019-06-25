@@ -14,7 +14,6 @@ export default StyleSheet.create({
   },
   avatar: {
     borderColor: '#707070',
-    borderStyle: 'solid',
     borderWidth: 4,
     width: resize(100, 'h'),
     height: resize(100, 'h'),

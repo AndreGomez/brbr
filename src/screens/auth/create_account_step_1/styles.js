@@ -19,10 +19,11 @@ export default StyleSheet.create({
     color: '#ffffff',
     fontSize: resize(28),
     fontWeight: '500',
+    fontFamily: AIRBNB_MEDIUM,
     letterSpacing: resize(0.7),
-    width: resize(243),
+    width: resize(253),
     alignSelf: 'center',
-    marginTop: resize(66, 'height')
+    marginTop: resize(69, 'height')
   },
   btnContainer: {
     alignItems: 'center',

@@ -135,6 +135,8 @@ const es = {
   pop: 'Política de Privacidad',
   notifications_modal: 'Recibe notificaciones de calificaciones o de tu Barbero',
   activate: 'Activar',
+  prox: 'Próxima Cita',
+  history: 'Historial',
 }
 
 export default es;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StatusBar } from 'react-native';
+import { View, Text, Image, StatusBar, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { Container, Tab, Tabs } from 'native-base';
 
@@ -44,7 +44,7 @@ class FirstTime extends Component {
   onPressReserve = () => {
     const { navigation } = this.props
 
-    navigation.navigate('home')
+    navigation.navigate('Home')
   }
 
   render() {
@@ -58,6 +58,7 @@ class FirstTime extends Component {
       <Container>
         <StatusBar
           barStyle={'dark-content'}
+          backgroundColor={'#FFFF'}
         />
         <Tabs
           edgeHitWidth={100}

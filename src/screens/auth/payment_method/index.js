@@ -155,7 +155,7 @@ class PaymentMethodAuth extends Component {
             title={lng.payment_methods_pay_with}
             check={false}
             isCollapsed={collapsable === 1}
-            content={<MainButton />}
+            content={<View />}
             onPress={() => this.onPressCollaps(1)}
           />
           <View

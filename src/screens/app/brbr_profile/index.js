@@ -199,6 +199,16 @@ class BrbrProfile extends Component {
             </Text>
           </View>
         </View>
+        <View
+          style={styles.switch}
+        >
+          <Switch
+            st={lng.galery}
+            ft={lng.rese}
+            onPress={() => this.setState({ switchActive: !this.state.switchActive })}
+            active={switchActive}
+          />
+        </View>
         {
           loading ?
             <Loading />
@@ -206,12 +216,7 @@ class BrbrProfile extends Component {
             <Content
               contentContainerStyle={styles.content}
             >
-              <Switch
-                st={lng.galery}
-                ft={lng.rese}
-                onPress={() => this.setState({ switchActive: !this.state.switchActive })}
-                active={switchActive}
-              />
+
               {
                 switchActive ?
                   this.renderComments()

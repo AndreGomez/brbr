@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { StatusBar, AsyncStorage } from 'react-native';
+import { StatusBar, AsyncStorage, Platform } from 'react-native';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Root } from 'native-base';
@@ -23,7 +23,7 @@ export default class App extends Component {
           persistor={persistor}
         >
           <StatusBar
-            backgroundColor='#fff'
+            backgroundColor={Platform.OS === 'ios' ? '#fff' : 'black'}
             barStyle='light-content'
           />
           <Root>

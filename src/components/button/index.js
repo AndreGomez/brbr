@@ -72,7 +72,8 @@ export default function MainButton(props) {
           white && styles.white,
           primary_red && styles.primaryRed,
           black && styles.black,
-          bottom && styles.bottom
+          bottom && styles.bottom,
+          xsRaisedGreen && styles.smPad,
         ]
       }
       title={text}

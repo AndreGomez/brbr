@@ -5,7 +5,9 @@ import {
   Image,
   FlatList,
   Text,
-  TextInput
+  TextInput,
+  StatusBar,
+  Platform
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Container, Content } from 'native-base';
@@ -76,6 +78,7 @@ class Home extends Component {
       renderItem={(barberVip) => this.renderVips(barberVip)}
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.vipList}
+      keyExtractor={(a, i) => `${i}`}
     />
   )
 
@@ -99,6 +102,7 @@ class Home extends Component {
       data={this.state.arroundBarbers}
       renderItem={(barberArround) => this.renderArround(barberArround)}
       showsVerticalScrollIndicator={false}
+      keyExtractor={(a, i) => `${i}`}
     />
   )
 
@@ -152,6 +156,10 @@ class Home extends Component {
       <Container
         style={styles.container}
       >
+        <StatusBar
+          backgroundColor={Platform.OS === 'ios' ? '#fff' : 'black'}
+          barStyle='light-content'
+        />
         <View
           style={styles.header}
         >

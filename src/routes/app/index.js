@@ -9,6 +9,8 @@ import ServiceReview from '../../screens/app/services_review';
 import EditProfile from '../../screens/app/edit_profile';
 import ExtraInfo from '../../screens/app/extra_info';
 import About from '../../screens/app/about';
+import MyProfile from '../../screens/app/my_profile';
+import UploadDUI from '../../screens/auth/upload_dui';
 
 //components 
 import Sidebar from '../../components/sidebar';
@@ -34,10 +36,11 @@ const appStackNavigator = createStackNavigator(
     ServiceReview,
     EditProfile,
     ExtraInfo,
-    About
+    About,
+    MyProfile,
   },
   {
-    initialRouteName: 'drawer',
+    initialRouteName: 'FirstTime',
     defaultNavigationOptions: {
       header: null
     }

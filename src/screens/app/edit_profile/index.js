@@ -11,10 +11,8 @@ import { Container, Content } from 'native-base';
 //component
 import CustomHeader from '../../../components/header';
 import HeaderTitle from '../../../components/header_title';
-import ModalAlert from '../../../components/modal_alerts';
 import Loading from '../../../components/loading';
 import BackButton from '../../../components/back_button';
-import MainButton from '../../../components/button';
 
 //customs
 import styles from './styles';
@@ -25,6 +23,9 @@ import MainInput from '../../../components/input';
 
 //icons
 import pencil from '../../../assets/icons/pencil.png';
+
+//utils
+import ImageSelect from '../../../utils/image_picker';
 
 class EditProfile extends Component {
 
@@ -57,6 +58,17 @@ class EditProfile extends Component {
       lng,
       loading: false
     })
+  }
+
+  selectImage = async () => {
+    try {
+      const res = await ImageSelect.ImageSelect()
+      this.setState({
+        avatar: res.uri
+      })
+    } catch (error) {
+
+    }
   }
 
   onChange = (key, value) => {
@@ -112,7 +124,9 @@ class EditProfile extends Component {
               bounces={false}
               contentContainerStyle={styles.content}
             >
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.selectImage()}
+              >
                 <Image
                   style={styles.avatar}
                   source={{ uri: avatar }}

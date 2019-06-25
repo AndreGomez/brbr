@@ -10,7 +10,6 @@ export default StyleSheet.create({
     height: resize(64, 'h'),
     borderRadius: resize(32, 'h'),
     borderColor: '#707070',
-    borderStyle: 'solid',
     borderWidth: 4,
   },
   row: {

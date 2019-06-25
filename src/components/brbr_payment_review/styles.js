@@ -88,6 +88,7 @@ export default StyleSheet.create({
     paddingHorizontal: resize(15),
     paddingVertical: resize(14, 'h'),
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    alignItems: 'center'
   }
 });

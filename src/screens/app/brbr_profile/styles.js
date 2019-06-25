@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 //utils
 import {
@@ -73,12 +73,15 @@ export default StyleSheet.create({
     height: resize(117, 'h'),
     alignItems: 'center',
     flexDirection: 'row',
-    marginTop: resize(100, 'h')
+    marginTop: Platform.OS === 'ios' ? resize(100, 'h') : resize(135, 'h'),
   },
   section: {
     width: '33.33333%',
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  switch: {
+    paddingHorizontal: resize(20)
   }
 });
