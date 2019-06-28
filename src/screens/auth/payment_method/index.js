@@ -24,7 +24,7 @@ class PaymentMethodAuth extends Component {
   state = {
     lng: {},
     collapsable: 3,
-    cards: [{ name: '', active: true }]
+    cards: [{ holder_name: '', active: true }]
   }
 
   async componentDidMount() {
@@ -35,10 +35,10 @@ class PaymentMethodAuth extends Component {
     })
   }
 
-  navigateTo = (screen) => {
+  navigateTo = (screen, data = {}) => {
     const { navigation } = this.props
 
-    navigation.navigate(screen)
+    navigation.navigate(screen, data)
   }
 
   goBack = () => {
@@ -69,7 +69,7 @@ class PaymentMethodAuth extends Component {
       <CardSelection
         key={i}
         lng={lng}
-        name={res.name}
+        name={res.holder_name}
         active={res.active}
         onPress={() => this.onPressCard(i)}
       />
@@ -77,16 +77,35 @@ class PaymentMethodAuth extends Component {
   }
 
   onPressCard = (i) => {
-    this.navigateTo('AddCardForm')
+    this.navigateTo('AddCardForm', { addCard: (card) => this.addCard(card) })
+  }
+
+  addCard = (card) => {
+    const { state } = this
+    const cards = state.cards
+    cardsIndex = state.cards.length - 1
+    cards[cardsIndex] = card
+    this.setState({
+      cards
+    })
   }
 
   onPressAddCard = () => {
     this.setState({
       cards: [
         ...this.state.cards,
-        { name: '', active: null }
+        { holder_name: '', active: null }
       ]
     })
+  }
+
+  onPressNext = () => {
+
+    //this.navigateTo('UploadDUI')
+  }
+
+  onPressSkip = () => {
+    this.navigateTo('UploadDUI')
   }
 
   render() {
@@ -107,11 +126,11 @@ class PaymentMethodAuth extends Component {
               text={lng.payment_methods}
             />
           }
-          left={
-            <BackButton
-              onPress={() => this.goBack()}
-            />
-          }
+        // left={
+        //   <BackButton
+        //     onPress={() => this.goBack()}
+        //   />
+        // }
         />
         <Content>
           <Text
@@ -122,7 +141,7 @@ class PaymentMethodAuth extends Component {
           <CardCollapsable
             title={lng.payment_methods_pay_with_card}
             card
-            check={cards[0].name != ''}
+            check={cards[0].holder_name != ''}
             isCollapsed={collapsable === 0}
             content={
               <View
@@ -130,8 +149,8 @@ class PaymentMethodAuth extends Component {
               >
                 {this.renderCards()}
                 {
-                  cards[0].name != '' &&
-                  cards[cards.length - 1].name != '' &&
+                  cards[0].holder_name != '' &&
+                  cards[cards.length - 1].holder_name != '' &&
                   <TouchableOpacity
                     style={styles.addCardBtnContainer}
                     onPress={() => this.onPressAddCard()}
@@ -165,9 +184,10 @@ class PaymentMethodAuth extends Component {
               raised_green
               text={lng.skip}
               sm
+              onPress={() => this.onPressSkip()}
             />
             <MainButton
-              onPress={() => this.navigateTo('UploadDUI')}
+              onPress={() => this.onPressNext()}
               white
               text={lng.next}
               sm

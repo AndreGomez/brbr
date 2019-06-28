@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Image, Text, TouchableOpacity } from 'react-native';
-import { Content, Container } from 'native-base'
+import { Content, Container, Input } from 'native-base'
 
 //custom
 import styles from './styles';
@@ -21,7 +21,11 @@ export default function ModalAlert(props) {
     onPress,
     close,
     onPressClose,
-    bottom
+    bottom,
+    phoneNumber,
+    subtitle,
+    onChangeText,
+    placeholder,
   } = props
 
   return (
@@ -34,7 +38,7 @@ export default function ModalAlert(props) {
         style={
           [
             styles.container,
-            bottom && styles.bottomContainer
+            bottom && styles.bottomContainer,
           ]
         }
       >
@@ -42,7 +46,8 @@ export default function ModalAlert(props) {
           contentContainerStyle={
             [
               styles.content,
-              bottom && styles.bottom
+              bottom && styles.bottom,
+              phoneNumber && styles.phoneNumber
             ]
           }
           bounces={false}
@@ -64,13 +69,44 @@ export default function ModalAlert(props) {
           >
             {message}
           </Text>
-          <MainButton
-            md
-            black
-            text={btnTitle}
-            containerStyle={styles.btn}
-            onPress={() => onPress()}
-          />
+          {
+            phoneNumber &&
+            <Text
+              style={styles.subtitle}
+            >
+              {subtitle}
+            </Text>
+          }
+          {
+            phoneNumber &&
+            <Input
+              placeholder={placeholder}
+              style={styles.input}
+              onChangeText={onChangeText}
+            />
+          }
+          {
+            phoneNumber &&
+            <TouchableOpacity
+              onPress={() => onPress()}
+            >
+              <Text
+                style={styles.btnPhone}
+              >
+                {btnTitle}
+              </Text>
+            </TouchableOpacity>
+          }
+          {
+            !phoneNumber &&
+            <MainButton
+              md
+              black
+              text={btnTitle}
+              containerStyle={styles.btn}
+              onPress={() => onPress()}
+            />
+          }
         </Content>
       </Container>
     </Modal>

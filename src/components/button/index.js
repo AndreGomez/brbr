@@ -56,6 +56,7 @@ export default function MainButton(props) {
         ]
       }
       loading={loading}
+      loadingProps={{ color: 'black' }}
       containerStyle={props.containerStyle}
       buttonStyle={
         [

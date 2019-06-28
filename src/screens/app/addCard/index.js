@@ -19,7 +19,6 @@ import Select from '../../../components/select';
 
 //assets
 import upsIcon from '../../../assets/icons/ups.png';
-import checkIcon from '../../../assets/icons/check.png';
 import cardsIcon from '../../../assets/icons/cards.png';
 import cuestionIcon from '../../../assets/icons/cuestion.png';
 import dateIcon from '../../../assets/icons/date_exp.png';
@@ -28,6 +27,17 @@ import cvvIcon from '../../../assets/icons/cvv.png';
 //utils
 import countrys from '../../../utils/country_list';
 import { validateFields } from '../../../utils/validators';
+
+import { store } from '../../../../store';
+
+//actions
+import { SET_USER } from '../../../actions/user';
+
+//api
+import {
+  addPaymentMethodToken,
+  generateToken
+} from '../../../api/payment';
 
 class AddCardForm extends Component {
 
@@ -74,7 +84,8 @@ class AddCardForm extends Component {
         type: '',
         required: true
       }
-    }
+    },
+    loadingButton: false
   }
 
   async componentDidMount() {
@@ -110,12 +121,45 @@ class AddCardForm extends Component {
   }
 
   onPressAccept = async () => {
+    const {
+      dispatch,
+      navigation
+    } = this.props
+
     try {
+      this.setState({ loadingButton: true })
       const { cardInfo, lng } = this.state
 
       await validateFields(cardInfo)
+      const date = cardInfo.date.value.split('/')
+      const data = {
+        card_number: cardInfo.cardNumber.value,
+        holder_name: `${cardInfo.name.value} ${cardInfo.lastName.value}`,
+        expiration_year: date[0],
+        expiration_month: date[1],
+        cvv2: cardInfo.cvv.value
+      }
 
+      const res = await generateToken(data)
+      const card = await res.json()
+      if (card.card) {
+        const resToken = await addPaymentMethodToken({ token: card.id })
+
+        dispatch({
+          type: SET_USER,
+          payload: {
+            ...resToken.data
+          }
+        });
+        navigation.state.params.addCard(card.card)
+        navigation.goBack()
+        this.setState({ loadingButton: false })
+      } else {
+        this.toggleModal('modalErrorData', lng.card_verify)
+        this.setState({ loadingButton: false })
+      }
     } catch (error) {
+      this.setState({ loadingButton: false })
       this.toggleModal('modalErrorData', this.state.lng.all_fields_are_required)
     }
   }
@@ -134,7 +178,8 @@ class AddCardForm extends Component {
       },
       modalDateData,
       modalCVVData,
-      modalErrorData
+      modalErrorData,
+      loadingButton
     } = this.state
 
     return (
@@ -245,6 +290,7 @@ class AddCardForm extends Component {
               white
               text={lng.accept}
               sm
+              loading={loadingButton}
             />
           </View>
         </Content>

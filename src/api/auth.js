@@ -1,13 +1,41 @@
 //custom
 import { dispatchRequest } from '../api';
 
-//all request
+export const authenticateUser = async (data = {}) => {
+  return await dispatchRequest({
+    method: 'post',
+    url: 'login',
+    data
+  });
+}
 
-//example
-// export const authenticateUser = async (data = {}) => {
-//   return await dispatchRequest({
-//     method: 'post',
-//     url: 'login',
-//     data
-//   });
-// }
+export const createAccount = async (data = {}) => {
+  return await dispatchRequest({
+    method: 'post',
+    url: 'users/signup',
+    data: {
+      ...data
+    }
+  })
+}
+
+export const validateEmail = async (data = {}) => {
+  return await dispatchRequest({
+    method: 'post',
+    url: `users/email`,
+    data: {
+      ...data
+    }
+  })
+}
+
+export const loginUser = async (data = {}) => {
+  return await dispatchRequest({
+    method: 'post',
+    url: `users/auth`,
+    data: {
+      ...data
+    }
+  })
+}
+

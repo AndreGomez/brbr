@@ -113,6 +113,7 @@ const es = {
   change: 'Cambiar',
   view_profile: 'Ver perfil',
   method: 'Método de Pago',
+  card_verify: 'Verifique que todos los datos de su tarjeta sean correctos',
 
   preferencies: 'Preferencias',
   edit_profile: 'Editar perfil',
@@ -137,6 +138,13 @@ const es = {
   activate: 'Activar',
   prox: 'Próxima Cita',
   history: 'Historial',
+  confirm: 'Confirmar',
+
+  confirm_your_code: 'Código de confirmación enviado revisa tu teléfono.',
+  set_code: 'Ingresa el código',
+  code: 'Código',
+
+  active_card: 'Activa'
 }
 
 export default es;

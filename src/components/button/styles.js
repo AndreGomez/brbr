@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 //custom
 import { resize, PRIMARY_GREEN, PRIMARY_GREY, RED, width, AIRBNB_MEDIUM } from '../../utils/styles';
@@ -15,7 +15,7 @@ export default StyleSheet.create({
     width: resize(175),
   },
   smPad: {
-    paddingTop: resize(4, 'h')
+    paddingTop: Platform.OS === 'android' ? resize(4, 'h') : null
   },
   md: {
     height: resize(54, 'height'),

@@ -120,7 +120,7 @@ export default StyleSheet.create({
   separator: {
     height: 1,
     backgroundColor: 'rgba(255,255,255,0.3)',
-    width: resize(width - 40),
+    width: width - resize(40),
     alignSelf: 'center',
     marginTop: resize(25, 'h')
   },

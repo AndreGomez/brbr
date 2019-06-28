@@ -63,7 +63,7 @@ export default function CardSelection(props) {
               <Text
                 style={styles.activeTxt}
               >
-                {lng.active}
+                {lng.active_card}
               </Text>
               <Image
                 style={styles.activeIcon}

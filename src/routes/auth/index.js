@@ -22,7 +22,7 @@ const authStackNavigator = createStackNavigator(
     UploadDUI
   },
   {
-    initialRouteName: 'Login',
+    initialRouteName: 'PaymentMethodAuth',
     defaultNavigationOptions: {
       header: null
     }
