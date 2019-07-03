@@ -114,6 +114,7 @@ class MyAddress extends Component {
 
   onPressSaveLocation = async () => {
     const { coords, descriptionAddress } = this.state
+    const { dispatch } = this.props
     this.setState({
       loadingButton: true
     })
@@ -125,11 +126,21 @@ class MyAddress extends Component {
         },
         description: descriptionAddress
       })
+      console.log(res)
+      dispatch({
+        type: SET_USER,
+        payload: {
+          ...res.data
+        }
+      });
+
+      successMessage('Direccion guardada exitosamente')
       this.setState({
         loadingButton: false,
         editable: false
       })
     } catch (error) {
+      console.log('error', error)
       this.setState({
         loadingButton: false,
         editable: false

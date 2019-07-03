@@ -99,7 +99,7 @@ class UploadDUI extends Component {
     dispatch({
       type: INIT_SESSION,
       payload: {
-        authorize: true,
+        firstTime: true
       }
     });
   }
@@ -134,11 +134,10 @@ class UploadDUI extends Component {
             ...userData.data
           }
         });
-
         dispatch({
           type: INIT_SESSION,
           payload: {
-            authorize: true,
+            firstTime: true
           }
         });
       } catch (error) {

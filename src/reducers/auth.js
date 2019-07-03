@@ -3,6 +3,7 @@ import { INIT_SESSION, DESTROY_SESSION } from '../actions/auth';
 const INITIAL_STATE = {
   authorize: false,
   token: null,
+  firstTime: false
 };
 
 function auth(state = INITIAL_STATE, action) {

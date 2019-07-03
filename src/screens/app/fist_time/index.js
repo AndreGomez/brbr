@@ -17,6 +17,7 @@ import navaja from '../../../assets/icons/navaja.png';
 import silla from '../../../assets/icons/brbr_silla.png';
 import cuts from '../../../assets/icons/cuts.png';
 import barber from '../../../assets/icons/barber.png';
+import { INIT_SESSION } from '../../../actions/auth';
 
 class FirstTime extends Component {
 
@@ -42,9 +43,15 @@ class FirstTime extends Component {
   }
 
   onPressReserve = () => {
-    const { navigation } = this.props
+    const { dispatch } = this.props
 
-    navigation.navigate('Home')
+    dispatch({
+      type: INIT_SESSION,
+      payload: {
+        authorize: true,
+        firstTime: false
+      }
+    });
   }
 
   render() {

@@ -6,6 +6,7 @@ import { View, Text, AsyncStorage } from 'react-native';
 //routes
 import AuthNavigation from '../../routes/auth';
 import AppNavigation from '../../routes/app';
+import FirstTimeNavigation from '../../routes/first_time';
 
 //component
 import Logo from '../../components/logo';
@@ -42,7 +43,10 @@ class Splash extends Component {
   redirect = () => {
     const {
       authorize,
+      firstTime
     } = this.props;
+
+    if (firstTime) return <FirstTimeNavigation />;
 
     if (!authorize) return <AuthNavigation />;
 
@@ -78,6 +82,7 @@ class Splash extends Component {
 
 const mapStateToProps = (state) => ({
   authorize: state.auth.authorize,
+  firstTime: state.auth.firstTime
 });
 
 export default connect(mapStateToProps)(Splash);

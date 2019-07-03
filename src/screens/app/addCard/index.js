@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Image, View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { Content, Container } from 'native-base';
+import { createDeviceSessionId } from 'openpay-react-native';
 
 //customs
 import styles from './styles';
@@ -131,6 +132,7 @@ class AddCardForm extends Component {
       const { cardInfo, lng } = this.state
 
       await validateFields(cardInfo)
+
       const date = cardInfo.date.value.split('/')
       const data = {
         card_number: cardInfo.cardNumber.value,
@@ -142,8 +144,12 @@ class AddCardForm extends Component {
 
       const res = await generateToken(data)
       const card = await res.json()
+      const device_session_id = await createDeviceSessionId()
       if (card.card) {
-        const resToken = await addPaymentMethodToken({ token: card.id })
+        const resToken = await addPaymentMethodToken({
+          device_session_id,
+          token: card.id
+        })
 
         dispatch({
           type: SET_USER,
