@@ -33,6 +33,7 @@
 		1E662EF23FB84EC9BF0D9D40 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BCF7821DF5BC46DC91595A86 /* FontAwesome5_Brands.ttf */; };
 		301ABFF322C3159E00AD4D22 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 301ABFC822C3159D00AD4D22 /* GoogleService-Info.plist */; };
 		301AC0AF22C3CF8400AD4D22 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 301AC0AC22C3CF7500AD4D22 /* libRNDeviceInfo.a */; };
+		3070FE8B22CC48DA00976FA4 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30A6EF3922CB15BB00D9FB82 /* libAirMaps.a */; };
 		334C3919007540D7AC348CD8 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 425A3AC0009544FCACA780F4 /* FontAwesome5_Solid.ttf */; };
 		3D2240B3D9A448CCA8904DD6 /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6661EF4F8EA04D7CB50FE540 /* Roboto.ttf */; };
 		3E2D20245F7C4DF1B97B8B71 /* AirbnbCereal-Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FC3B1272EF3B46FFB0470D7D /* AirbnbCereal-Book.ttf */; };
@@ -246,6 +247,13 @@
 			remoteGlobalIDString = E72EC1401F7ABB5A0001BC90;
 			remoteInfo = "RNDeviceInfo-tvOS";
 		};
+		30A6EF3822CB15BB00D9FB82 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 30A6EF3422CB15BB00D9FB82 /* AirMaps.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 11FA5C511C4A1296003AC2EE;
+			remoteInfo = AirMaps;
+		};
 		3DAD3E831DF850E9000B6D8A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */;
@@ -398,6 +406,7 @@
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		301ABFC822C3159D00AD4D22 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		301AC0A622C3CF7300AD4D22 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/ios/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
+		30A6EF3422CB15BB00D9FB82 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 		30BDCDAD22BDDF1300B17EB0 /* brbr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = brbr.entitlements; path = brbr/brbr.entitlements; sourceTree = "<group>"; };
 		425A3AC0009544FCACA780F4 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		43DF16E4E23878F094D286E1 /* libPods-brbr.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-brbr.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -433,6 +442,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3070FE8B22CC48DA00976FA4 /* libAirMaps.a in Frameworks */,
 				301AC0AF22C3CF8400AD4D22 /* libRNDeviceInfo.a in Frameworks */,
 				AD08D85D22B0931900FA902A /* libRNImagePicker.a in Frameworks */,
 				029FD0262298B378004B9715 /* libRNGestureHandler.a in Frameworks */,
@@ -621,6 +631,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		30A6EF3522CB15BB00D9FB82 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				30A6EF3922CB15BB00D9FB82 /* libAirMaps.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		48E378ED7394E68870FF8B1A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -651,6 +669,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				30A6EF3422CB15BB00D9FB82 /* AirMaps.xcodeproj */,
 				301AC0A622C3CF7300AD4D22 /* RNDeviceInfo.xcodeproj */,
 				AD08D82E22B0930F00FA902A /* RNImagePicker.xcodeproj */,
 				029FD01D2298B366004B9715 /* RNGestureHandler.xcodeproj */,
@@ -764,6 +783,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				125528991873D3954F338867 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -809,6 +829,10 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = 30A6EF3522CB15BB00D9FB82 /* Products */;
+					ProjectRef = 30A6EF3422CB15BB00D9FB82 /* AirMaps.xcodeproj */;
+				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
@@ -1075,6 +1099,13 @@
 			remoteRef = 301AC0AD22C3CF7500AD4D22 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		30A6EF3922CB15BB00D9FB82 /* libAirMaps.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAirMaps.a;
+			remoteRef = 30A6EF3822CB15BB00D9FB82 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		3DAD3E841DF850E9000B6D8A /* libRCTImage-tvOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1247,6 +1278,24 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
+		125528991873D3954F338867 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-brbr/Pods-brbr-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-brbr/Pods-brbr-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		2D28CE811A39377DEA29CFD0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1305,6 +1354,14 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 7RQFGG78B4;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"$(inherited)",
+					"PB_FIELD_32BIT=1",
+					"PB_NO_PACKED_STRUCTS=1",
+					"PB_ENABLE_MALLOC=1",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
@@ -1315,14 +1372,14 @@
 					"\"${PODS_ROOT}/Headers/Public/nanopb\"",
 					"$(inherited)",
 					"${PODS_ROOT}/Firebase/CoreOnly/Sources",
-					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios\n",
+					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
+					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios",
 				);
 				INFOPLIST_FILE = brbr/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					"-ObjC",
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.elaniin.brbr.client.ios;
@@ -1339,6 +1396,14 @@
 				CODE_SIGN_ENTITLEMENTS = brbr/brbr.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7RQFGG78B4;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"$(inherited)",
+					"PB_FIELD_32BIT=1",
+					"PB_NO_PACKED_STRUCTS=1",
+					"PB_ENABLE_MALLOC=1",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
@@ -1349,14 +1414,14 @@
 					"\"${PODS_ROOT}/Headers/Public/nanopb\"",
 					"$(inherited)",
 					"${PODS_ROOT}/Firebase/CoreOnly/Sources",
-					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios\n",
+					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
+					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios",
 				);
 				INFOPLIST_FILE = brbr/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					"-ObjC",
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.elaniin.brbr.client.ios;

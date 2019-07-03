@@ -10,6 +10,7 @@ import locale from '../../../locale';
 
 //actions
 import { INIT_SESSION } from '../../../actions/auth';
+import { SET_USER } from '../../../actions/user';
 
 //component
 import MainButton from '../../../components/button';
@@ -19,14 +20,26 @@ import CustomHeader from '../../../components/header';
 import HeaderTitle from '../../../components/header_title';
 import MainInput from '../../../components/input';
 import BackButton from '../../../components/back_button';
+import { validateFields } from '../../../utils/validators';
+import { loginUser } from '../../../api/auth';
+import successMessage from '../../../utils/success_message';
 
 class LoginForm extends Component {
 
   state = {
     lng: {},
+    loading: false,
     form: {
-      email: '',
-      password: ''
+      email: {
+        value: '',
+        type: '',
+        require: true
+      },
+      password: {
+        value: '',
+        type: '',
+        require: true
+      }
     }
   }
 
@@ -38,15 +51,39 @@ class LoginForm extends Component {
     })
   }
 
-  onPressLogin = () => {
+  onPressLogin = async () => {
     const { dispatch } = this.props;
 
-    dispatch({
-      type: INIT_SESSION,
-      payload: {
-        authorize: true
-      }
-    });
+    const { form } = this.state
+
+    try {
+      await validateFields(form)
+
+      const res = await loginUser({
+        email: form.email.value,
+        password: form.password.value,
+      })
+
+      dispatch({
+        type: SET_USER,
+        payload: {
+          ...res.data.user
+        }
+      });
+
+      dispatch({
+        type: INIT_SESSION,
+        payload: {
+          authorize: true,
+          token: `Bearer ${res.data.token}`,
+        }
+      });
+
+      this.setState({ loading: false })
+    } catch (error) {
+      this.setState({ loading: false })
+      return successMessage('Verifique sus datos', 'danger')
+    }
   }
 
   createAccount = () => {
@@ -81,7 +118,8 @@ class LoginForm extends Component {
       form: {
         email,
         password
-      }
+      },
+      loading
     } = this.state
 
     return (
@@ -134,6 +172,7 @@ class LoginForm extends Component {
             onPress={() => this.onPressLogin()}
             text={lng.login_button_text}
             containerStyle={styles.btn}
+            loading={loading}
           />
         </Content>
       </Container>

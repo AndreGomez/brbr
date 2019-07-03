@@ -2,15 +2,17 @@ import React from 'react';
 import {
   View,
   Text,
-  Image,
   TouchableOpacity
 } from 'react-native';
+import { Image } from 'react-native-elements';
 
 //customs
 import styles from './styles';
 
 //icons
 import right_arrow from '../../assets/icons/right_arrow.png';
+import img_empty from '../../assets/images/img_empty.png';
+import Loading from '../loading';
 
 export default function ItemList(props) {
 
@@ -31,7 +33,7 @@ export default function ItemList(props) {
       style={styles.container}
     >
       {
-        avatar ?
+        name ?
           <View
             style={styles.row}
           >
@@ -39,8 +41,9 @@ export default function ItemList(props) {
               style={styles.row}
             >
               <Image
+                PlaceholderContent={<Loading />}
                 style={styles.avatar}
-                source={{ uri: avatar }}
+                source={avatar ? { uri: avatar } : img_empty}
               />
               <View
                 style={styles.txtContainer}

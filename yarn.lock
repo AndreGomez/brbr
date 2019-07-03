@@ -5201,6 +5201,11 @@ react-native-keyboard-aware-scroll-view@0.8.0:
     prop-types "^15.6.2"
     react-native-iphone-x-helper "^1.0.3"
 
+react-native-maps@^0.24.2:
+  version "0.24.2"
+  resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.24.2.tgz#19974f967cb0c2e24dab74ca879118e0932571b2"
+  integrity sha512-1iNIDikp2dkCG+8DguaEviYZiMSYyvwqYT7pO2YTZvuFRDSc/P9jXMhTUnSh4wNDlEeQ47OJ09l0pwWVBZ7wxg==
+
 react-native-picker-select@^6.1.1:
   version "6.1.1"
   resolved "https://registry.yarnpkg.com/react-native-picker-select/-/react-native-picker-select-6.1.1.tgz#5c43ac3f2135e41d9b41bf2a0589c6ebad695cf1"

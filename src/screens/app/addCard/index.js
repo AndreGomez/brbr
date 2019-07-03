@@ -284,6 +284,7 @@ class AddCardForm extends Component {
               raised_green
               text={lng.cancel}
               sm
+              onPress={() => this.goBack()}
             />
             <MainButton
               onPress={() => this.onPressAccept()}

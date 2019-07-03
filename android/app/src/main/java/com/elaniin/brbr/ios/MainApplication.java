@@ -24,6 +24,9 @@ import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 //image picker
 import com.imagepicker.ImagePickerPackage;
 
+//map
+import com.airbnb.android.react.maps.MapsPackage;
+
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
@@ -34,9 +37,15 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(new MainReactPackage(), new RNFirebasePackage(),
-          new RNFirebaseStoragePackage(), new SplashScreenReactPackage(), new RNGestureHandlerPackage(),
-          new ImagePickerPackage());
+      return Arrays.<ReactPackage>asList(
+        new MainReactPackage(), 
+        new RNFirebasePackage(),
+        new RNFirebaseStoragePackage(), 
+        new SplashScreenReactPackage(), 
+        new RNGestureHandlerPackage(),
+        new ImagePickerPackage(),
+        new MapsPackage()
+        );
     }
 
     @Override

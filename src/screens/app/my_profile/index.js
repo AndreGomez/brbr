@@ -64,6 +64,10 @@ class MyProfile extends Component {
       paymentMethod
     } = this.state
 
+    const {
+      currentUser
+    } = this.props
+
     return (
       <Container
         style={styles.container}
@@ -101,12 +105,17 @@ class MyProfile extends Component {
                   <Text
                     style={styles.name}
                   >
-                    {name}
+                    {currentUser.name}
                   </Text>
                   <Text
                     style={styles.city}
                   >
-                    {city}
+                    {
+                      currentUser.address.length != 0 ?
+                        currentUser.address[0].description
+                        :
+                        ''
+                    }
                   </Text>
                   <View
                     style={styles.row}
@@ -152,4 +161,10 @@ class MyProfile extends Component {
   }
 }
 
-export default connect()(MyProfile);
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.user
+  }
+};
+
+export default connect(mapStateToProps)(MyProfile);

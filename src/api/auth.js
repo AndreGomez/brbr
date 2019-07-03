@@ -39,3 +39,14 @@ export const loginUser = async (data = {}) => {
   })
 }
 
+export const authIdentityConfirm = async (id, data = {}) => {
+  return await dispatchRequest({
+    method: 'put',
+    url: `users/${id}`,
+    data: {
+      ...data
+    }
+  })
+}
+
+

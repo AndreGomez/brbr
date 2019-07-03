@@ -16,7 +16,7 @@ export default StyleSheet.create({
   },
   containerItems: {
     marginTop: resize(60, 'h'),
-    height: resize(140, 'h'),
+    height: resize(170, 'h'),
     justifyContent: 'space-between',
     width: '100%',
     marginBottom: resize(140, 'h')

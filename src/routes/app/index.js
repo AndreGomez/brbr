@@ -11,6 +11,7 @@ import ExtraInfo from '../../screens/app/extra_info';
 import About from '../../screens/app/about';
 import MyProfile from '../../screens/app/my_profile';
 import UploadDUI from '../../screens/auth/upload_dui';
+import MyAddress from '../../screens/app/my_address';
 
 //components 
 import Sidebar from '../../components/sidebar';
@@ -38,9 +39,10 @@ const appStackNavigator = createStackNavigator(
     ExtraInfo,
     About,
     MyProfile,
+    MyAddress
   },
   {
-    initialRouteName: 'FirstTime',
+    initialRouteName: 'drawer',
     defaultNavigationOptions: {
       header: null
     }

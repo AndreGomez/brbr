@@ -22,14 +22,32 @@ import id_empty from '../../../assets/icons/id_empty.png'
 //camera
 import Camera from '../../../utils/image_picker';
 
+//store
+import { store } from '../../../../store';
+
+//utils
+import uploadAsset from '../../../utils/upload_asset';
+import successMessage from '../../../utils/success_message';
+
+//actions
+import { INIT_SESSION } from '../../../actions/auth';
+import { SET_USER } from '../../../actions/user';
+
+//api
+import {
+  authIdentityConfirm
+} from '../../../api/auth';
+
 class UploadDUI extends Component {
 
   state = {
     lng: {},
-    img: null
+    img: null,
+    loadingButton: false
   }
 
   async componentDidMount() {
+    console.log(await store.getState())
     const lng = await locale()
 
     this.setState({
@@ -63,11 +81,71 @@ class UploadDUI extends Component {
   onPressLibrary = async () => {
     try {
       const res = await Camera.ImageLibrary()
+
       this.setState({
-        img: res.uri
+        img: res.uri,
+        imgInfo: res
       })
     } catch (error) {
       console.log(error)
+    }
+  }
+
+  onPressSkip = () => {
+    const {
+      dispatch
+    } = this.props;
+
+    dispatch({
+      type: INIT_SESSION,
+      payload: {
+        authorize: true,
+      }
+    });
+  }
+
+  onPressNext = async () => {
+    const {
+      img,
+      lng,
+      imgInfo
+    } = this.state
+
+    const {
+      dispatch
+    } = this.props;
+
+    if (img) {
+      try {
+        this.setState({ loadingButton: true })
+
+        const res = await uploadAsset('authIdentiry', imgInfo.uri, imgInfo.fileName, { contentType: imgInfo.type })
+
+        const storeState = await store.getState()
+
+        const userData = await authIdentityConfirm(storeState.user._id, {
+          auth_identity: res
+        })
+
+        this.setState({ loadingButton: false })
+        dispatch({
+          type: SET_USER,
+          payload: {
+            ...userData.data
+          }
+        });
+
+        dispatch({
+          type: INIT_SESSION,
+          payload: {
+            authorize: true,
+          }
+        });
+      } catch (error) {
+        this.setState({ loadingButton: false })
+      }
+    } else {
+      return successMessage(lng.photo_identify, 'danger')
     }
   }
 
@@ -75,7 +153,8 @@ class UploadDUI extends Component {
 
     const {
       lng,
-      img
+      img,
+      loadingButton
     } = this.state
 
     return (
@@ -154,13 +233,14 @@ class UploadDUI extends Component {
               raised_green
               text={lng.skip}
               sm
-              onPress={() => this.navigateTo('FirstTime')}
+              onPress={() => this.onPressSkip()}
             />
             <MainButton
               white
               text={lng.next}
               sm
-              onPress={() => this.navigateTo('FirstTime')}
+              onPress={() => this.onPressNext()}
+              loading={loadingButton}
             />
           </View>
         </Content>

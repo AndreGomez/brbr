@@ -33,17 +33,18 @@ class Sidebar extends Component {
   state = {
     lng: {},
     loading: true,
-    name: 'Andre Gomez',
-    avatar: 'https://content-static.upwork.com/uploads/2014/10/01073427/profilephoto1.jpg',
     modalVisible: false
   }
 
   async componentDidMount() {
+
     const lng = await locale()
+
     this.setState({
       lng,
-      loading: false
+      loading: false,
     })
+
   }
 
   onDestroySession = () => {
@@ -72,10 +73,14 @@ class Sidebar extends Component {
     const {
       lng,
       loading,
-      avatar,
-      name,
-      modalVisible
+      modalVisible,
     } = this.state
+
+    const {
+      currentUser
+    } = this.props;
+
+    console.log(currentUser)
 
     return (
       <Container
@@ -108,8 +113,8 @@ class Sidebar extends Component {
               <ItemList
                 text={lng.edit_profile}
                 onPress={() => this.navigateTo('EditProfile')}
-                avatar={avatar}
-                name={name}
+                avatar={currentUser.photo}
+                name={currentUser.name}
               />
               <View
                 style={styles.containerItems}
@@ -117,6 +122,10 @@ class Sidebar extends Component {
                 <ItemList
                   text={lng.my_profile}
                   onPress={() => this.navigateTo('MyProfile')}
+                />
+                <ItemList
+                  text={lng.my_address}
+                  onPress={() => this.navigateTo('MyAddress')}
                 />
                 <ItemList
                   text={lng.lang}
@@ -160,5 +169,10 @@ class Sidebar extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.user
+  }
+};
 
-export default connect()(Sidebar);
+export default connect(mapStateToProps)(Sidebar);

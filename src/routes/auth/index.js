@@ -9,6 +9,7 @@ import AddCardForm from '../../screens/app/addCard';
 import LoginForm from '../../screens/auth/login_form';
 import forgotPassword from '../../screens/auth/forgot_password';
 import UploadDUI from '../../screens/auth/upload_dui';
+import FirstTime from '../../screens/app/fist_time';
 
 const authStackNavigator = createStackNavigator(
   {
@@ -19,10 +20,10 @@ const authStackNavigator = createStackNavigator(
     AddCardForm,
     LoginForm,
     forgotPassword,
-    UploadDUI
+    UploadDUI,
   },
   {
-    initialRouteName: 'PaymentMethodAuth',
+    initialRouteName: 'Login',
     defaultNavigationOptions: {
       header: null
     }

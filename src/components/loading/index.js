@@ -6,6 +6,7 @@ import { Spinner } from 'native-base';
 import styles from './styles';
 
 export default function Loading(props) {
+
   return (
     <View style={styles.container}>
       <Spinner

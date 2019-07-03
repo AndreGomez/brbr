@@ -19,6 +19,9 @@ import CardSelection from '../../../components/card_selection';
 //icons
 import plusCardIcon from '../../../assets/icons/plus_card.png';
 
+//utils
+import successMessage from '../../../utils/success_message';
+
 class PaymentMethodAuth extends Component {
 
   state = {
@@ -101,7 +104,15 @@ class PaymentMethodAuth extends Component {
 
   onPressNext = () => {
 
-    //this.navigateTo('UploadDUI')
+    const {
+      cards,
+      lng
+    } = this.state
+    if (cards.length >= 2) {
+      this.navigateTo('UploadDUI')
+    } else {
+      return successMessage(lng.more_one_payment_method, 'danger')
+    }
   }
 
   onPressSkip = () => {

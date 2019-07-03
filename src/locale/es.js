@@ -123,6 +123,7 @@ const es = {
   desactive: 'Desactivado',
   active: 'Activas',
   my_profile: 'Mi perfil',
+  edit: 'Editar',
 
   close_session: 'Cerrar Sesión',
 
@@ -144,7 +145,13 @@ const es = {
   set_code: 'Ingresa el código',
   code: 'Código',
 
-  active_card: 'Activa'
+  active_card: 'Activa',
+
+  more_one_payment_method: 'Debe agregar al menos un metodo de pago o omitir este paso',
+  photo_identify: 'Debe subir una foto u omitir este paso',
+
+  my_address: 'Mi direccion',
+  accept_location: 'Aceptar ubicacion',
 }
 
 export default es;
