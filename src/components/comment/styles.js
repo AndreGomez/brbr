@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import { resize, AIRBNB_MEDIUM } from '../../utils/styles';
 
 export default StyleSheet.create({
@@ -14,7 +14,7 @@ export default StyleSheet.create({
     color: '#000000',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(14),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
   },
   header: {
     flexDirection: 'row',
@@ -31,13 +31,13 @@ export default StyleSheet.create({
     color: '#5c5c5c',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(14),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
   },
   title: {
     color: '#000000',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(17),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
   },
   body: {
     color: '#000000',
@@ -49,7 +49,7 @@ export default StyleSheet.create({
     color: '#95989a',
     fontFamily: 'Airbnb Cereal App',
     fontSize: resize(14),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
   },
   avatar: {
     width: resize(40, 'h'),

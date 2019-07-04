@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 //utils
 import {
@@ -21,7 +21,7 @@ export default StyleSheet.create({
     color: '#ffffff',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(24),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
     width: '100%',
     textAlign: 'center',
     marginTop: resize(38, 'h'),
@@ -47,7 +47,7 @@ export default StyleSheet.create({
     color: '#000000',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(18),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
   },
   calendarIcon: {
     width: resize(20),
@@ -58,13 +58,13 @@ export default StyleSheet.create({
     color: '#95989a',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(18),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
   },
   location: {
     color: '#000000',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(16),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
     paddingLeft: resize(16)
   },
   headerHeaderText: {

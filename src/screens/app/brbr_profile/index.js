@@ -15,6 +15,7 @@ import HeaderTitle from '../../../components/header_title';
 import BackButton from '../../../components/back_button';
 import Switch from '../../../components/switch';
 import Comment from '../../../components/comment';
+import MainButton from '../../../components/button';
 
 //customs
 import styles from './styles';
@@ -41,7 +42,7 @@ class BrbrProfile extends Component {
     comments: [
       {
         avatar: 'https://content-static.upwork.com/uploads/2014/10/01073427/profilephoto1.jpg',
-        title: 'MUY BUEN TRABAJO AMIGO',
+        title: 'MUY BUEN TRABAJO',
         city: 'Ecuador',
         name: 'Fidel Castro',
         date: '12/02/1902',
@@ -49,7 +50,7 @@ class BrbrProfile extends Component {
       },
       {
         avatar: 'https://content-static.upwork.com/uploads/2014/10/01073427/profilephoto1.jpg',
-        title: 'MUY BUEN TRABAJO AMIGO',
+        title: 'MUY BUEN TRABAJO',
         city: 'Ecuador',
         name: 'Fidel Castro',
         date: '12/02/1902',
@@ -57,7 +58,7 @@ class BrbrProfile extends Component {
       },
       {
         avatar: 'https://content-static.upwork.com/uploads/2014/10/01073427/profilephoto1.jpg',
-        title: 'MUY BUEN TRABAJO AMIGO',
+        title: 'MUY BUEN TRABAJO',
         city: 'Ecuador',
         name: 'Fidel Castro',
         date: '12/02/1902',
@@ -65,7 +66,7 @@ class BrbrProfile extends Component {
       },
       {
         avatar: 'https://content-static.upwork.com/uploads/2014/10/01073427/profilephoto1.jpg',
-        title: 'MUY BUEN TRABAJO AMIGO',
+        title: 'MUY BUEN TRABAJO',
         city: 'Ecuador',
         name: 'Fidel Castro',
         date: '12/02/1902',
@@ -151,6 +152,14 @@ class BrbrProfile extends Component {
           >
             {city}
           </Text>
+          <View
+            style={{ position: 'absolute', bottom: 10, right: 10 }}
+          >
+            <MainButton
+              xsRaisedGreen
+              text={lng.RESERVE}
+            />
+          </View>
         </View>
         <View
           style={styles.interSection}

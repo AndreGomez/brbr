@@ -126,7 +126,6 @@ class MyAddress extends Component {
         },
         description: descriptionAddress
       })
-      console.log(res)
       dispatch({
         type: SET_USER,
         payload: {
@@ -205,7 +204,6 @@ class MyAddress extends Component {
       currentUser
     } = this.props
 
-    console.log(currentUser.address.length)
 
     return (
       <Container

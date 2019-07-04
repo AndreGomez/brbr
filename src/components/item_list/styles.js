@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import { resize, AIRBNB_MEDIUM } from '../../utils/styles';
 
 export default StyleSheet.create({
@@ -21,13 +21,13 @@ export default StyleSheet.create({
     color: '#ffffff',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(24),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
   },
   textLbl: {
     color: '#cfcfcf',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(20),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
   },
   txtContainer: {
     marginLeft: resize(15)
@@ -36,24 +36,24 @@ export default StyleSheet.create({
     color: '#ffffff',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(18),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
   },
   version: {
     color: '#707070',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(18),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
   },
   active: {
     color: '#94ffb4',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(14),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
   },
   desactive: {
     color: '#cfcfcf',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(14),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
   },
 });

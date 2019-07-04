@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 //utils
 import { resize, PRIMARY_GREEN, AIRBNB_MEDIUM } from '../../utils/styles';
@@ -37,7 +37,7 @@ export default StyleSheet.create({
     color: '#ffffff',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(26),
-    fontWeight: '700',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
     letterSpacing: resize(0.65),
   },
   titleHeader: {
@@ -47,7 +47,7 @@ export default StyleSheet.create({
     color: '#ffffff',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(26),
-    fontWeight: '700',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
     letterSpacing: resize(0.65),
     textAlign: 'right',
   },
@@ -55,7 +55,7 @@ export default StyleSheet.create({
     color: '#ffffff',
     fontFamily: 'Arial',
     fontSize: resize(10),
-    fontWeight: '700',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
     letterSpacing: resize(0.2),
     paddingTop: resize(36, 'h'),
   },
@@ -67,7 +67,7 @@ export default StyleSheet.create({
     color: '#ffffff',
     //fontFamily: 'Cousine',
     fontSize: resize(18),
-    fontWeight: '400',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
     letterSpacing: resize(0.99),
     paddingTop: resize(9, 'h'),
   },
@@ -81,7 +81,7 @@ export default StyleSheet.create({
     color: PRIMARY_GREEN,
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(14),
-    fontWeight: '700',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
     letterSpacing: resize(0.35),
     paddingRight: resize(11)
   },

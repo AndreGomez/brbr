@@ -21,23 +21,13 @@ var lng = {}
 
 class Splash extends Component {
 
-  state = {
-    loading: true
-  }
-
   async componentDidMount() {
     lng = await locale()
     SplashScreen.hide();
 
     this.setState({
-      render: true
+      render: true,
     })
-
-    setTimeout(() => {
-      this.setState({
-        loading: false
-      })
-    }, 2000)
   }
 
   redirect = () => {
@@ -48,34 +38,15 @@ class Splash extends Component {
 
     if (firstTime) return <FirstTimeNavigation />;
 
-    if (!authorize) return <AuthNavigation />;
+    if (!authorize) return <AppNavigation />
 
     return <AppNavigation />
   }
 
   render() {
 
-    const {
-      loading
-    } = this.state
-
     return (
-      loading ?
-        < View
-          style={styles.container}
-        >
-          <Logo
-            imageContainerStyles={styles.logo}
-          />
-          <Text
-            style={styles.slogan}
-          >
-            {lng.splash_slogan}
-          </Text>
-        </View >
-        :
-
-        this.redirect()
+      this.redirect()
     )
   }
 }

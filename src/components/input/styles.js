@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 //utils
 import { resize, width, AIRBNB_MEDIUM } from '../../utils/styles';
@@ -14,7 +14,7 @@ export default StyleSheet.create({
     color: '#ffffff',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(18),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
     letterSpacing: resize(0.45),
     height: '100%',
   },
@@ -22,13 +22,13 @@ export default StyleSheet.create({
     color: '#f9f9f9',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(18),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
     letterSpacing: resize(0.45),
   },
   placeholderFocus: {
     color: '#707070',
     fontFamily: AIRBNB_MEDIUM,
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
     letterSpacing: resize(0.45),
   },
   roundedPlaceholderFocus: {
@@ -55,7 +55,7 @@ export default StyleSheet.create({
   roundedText: {
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(18),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
     letterSpacing: resize(0.45),
     paddingLeft: resize(24),
   },

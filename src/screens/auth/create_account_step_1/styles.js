@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 //utils
 import { resize, TERTIARY_GREY, AIRBNB_MEDIUM } from '../../../utils/styles';
@@ -18,10 +18,10 @@ export default StyleSheet.create({
     textAlign: 'center',
     color: '#ffffff',
     fontSize: resize(28),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
     fontFamily: AIRBNB_MEDIUM,
     letterSpacing: resize(0.7),
-    width: resize(253),
+    width: resize(300),
     alignSelf: 'center',
     marginTop: resize(69, 'height')
   },
@@ -33,9 +33,9 @@ export default StyleSheet.create({
     color: TERTIARY_GREY,
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(18),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
     letterSpacing: resize(0.45),
-    width: resize(280),
+    width: resize(310),
     height: resize(88, 'height'),
     alignSelf: 'center',
     textAlign: 'center',
@@ -49,7 +49,6 @@ export default StyleSheet.create({
   },
   loginContainer: {
     flexDirection: 'row',
-    width: resize(351),
     alignSelf: 'center',
     marginTop: resize(128, 'height'),
   },
@@ -57,7 +56,7 @@ export default StyleSheet.create({
     color: 'rgba(255,255,255,0.5)',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(20),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
     letterSpacing: resize(0.5),
   }
 });

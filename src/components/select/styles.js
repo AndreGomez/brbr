@@ -13,7 +13,7 @@ export default StyleSheet.create({
   inputContainer: {
     color: '#ffffff',
     fontSize: resize(20),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
     letterSpacing: resize(0.5),
     width: '100%',
     height: '100%',

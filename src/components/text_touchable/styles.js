@@ -14,7 +14,7 @@ export default StyleSheet.create({
     height: resize(25),
     color: '#ffffff',
     fontFamily: AIRBNB_MEDIUM,
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
     letterSpacing: resize(0.5),
   }
 });

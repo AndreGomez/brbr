@@ -120,7 +120,7 @@ class EditProfile extends Component {
         if (name.value != '' && name.value != currentUser.name) {
           changes.name = name.value
         }
-        if (avatar != '') {
+        if (avatar) {
           const urlPhoto = await uploadAsset(
             'profileImage',
             avatar.uri,
@@ -135,7 +135,7 @@ class EditProfile extends Component {
       dispatch({
         type: SET_USER,
         payload: {
-          ...res.data
+          ...res.data.user
         }
       });
 

@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 //utils
 import { resize, TERTIARY_GREY, AIRBNB_MEDIUM } from '../../../utils/styles';

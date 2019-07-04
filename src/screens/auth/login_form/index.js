@@ -57,6 +57,7 @@ class LoginForm extends Component {
     const { form } = this.state
 
     try {
+      this.setState({ loading: true })
       await validateFields(form)
 
       const res = await loginUser({
@@ -81,6 +82,7 @@ class LoginForm extends Component {
 
       this.setState({ loading: false })
     } catch (error) {
+      console.log('error', error)
       this.setState({ loading: false })
       return successMessage('Verifique sus datos', 'danger')
     }

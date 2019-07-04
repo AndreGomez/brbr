@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 //utils
 import { resize, AIRBNB_MEDIUM } from '../../utils/styles';
@@ -17,7 +17,7 @@ export default StyleSheet.create({
     color: '#cfcfcf',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(18),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
   },
   top: {
     paddingHorizontal: resize(15),
@@ -30,32 +30,32 @@ export default StyleSheet.create({
     color: '#ffffff',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(20),
-    fontWeight: '700',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
   },
   stars: {
     color: '#ffffff',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(20),
-    fontWeight: '700',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
   },
   txtTouch: {
     textDecorationLine: 'underline',
     color: '#95989a',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(16),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
   },
   city: {
     color: '#95989a',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(16),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
   },
   payment: {
     color: '#95989a',
     fontFamily: 'Airbnb Cereal App',
     fontSize: resize(18),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
   },
   topHeader: {
     width: '100%',

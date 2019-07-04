@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 //utils
 import {
@@ -19,13 +19,13 @@ export default StyleSheet.create({
     color: '#cfcfcf',
     fontFamily: 'Airbnb Cereal App',
     fontSize: resize(16),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
   },
   cancel: {
     color: '#94ffb4',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(16),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
   },
   search: {
     width: resize(375),
@@ -82,7 +82,7 @@ export default StyleSheet.create({
     color: '#95989a',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(16),
-    fontWeight: '600',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
     letterSpacing: resize(0.4),
     paddingLeft: resize(22),
   },
@@ -113,7 +113,7 @@ export default StyleSheet.create({
     color: '#95989a',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(18),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
     letterSpacing: resize(0.45),
     paddingLeft: resize(9)
   },
@@ -132,7 +132,7 @@ export default StyleSheet.create({
     color: '#95989a',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(18),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
     letterSpacing: resize(0.45),
   },
   reco: {
@@ -140,7 +140,7 @@ export default StyleSheet.create({
     fontFamily: AIRBNB_MEDIUM,
     paddingLeft: resize(20),
     fontSize: resize(18),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
     paddingTop: resize(20, 'h')
   }
 });

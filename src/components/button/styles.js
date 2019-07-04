@@ -14,6 +14,22 @@ export default StyleSheet.create({
     height: resize(54, 'height'),
     width: resize(175),
   },
+  raisedGreenJe: {
+    width: resize(115),
+    height: resize(32, 'h'),
+    borderColor: PRIMARY_GREEN,
+    borderStyle: 'solid',
+    borderWidth: 2,
+    backgroundColor: 'transparent',
+    paddingLeft: resize(20),
+    borderRadius: resize(32),
+    paddingTop: resize(5, 'h'),
+    flexDirection: 'row'
+  },
+  iconRightXsJe: {
+    marginLeft: resize(10),
+    marginTop: Platform.OS != 'ios' ? resize(4.5, 'h') : null
+  },
   smPad: {
     paddingTop: Platform.OS === 'android' ? resize(4, 'h') : null
   },
@@ -47,7 +63,7 @@ export default StyleSheet.create({
     color: '#ffffff',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(20),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
     letterSpacing: resize(0.5),
   },
   xsText: {
@@ -71,7 +87,7 @@ export default StyleSheet.create({
   greenText: {
     color: '#94ffb4',
     fontFamily: AIRBNB_MEDIUM,
-    fontWeight: '700',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
     letterSpacing: resize(0.35),
     height: '100%',
     paddingTop: 0,
@@ -89,7 +105,7 @@ export default StyleSheet.create({
     //fontFamily: INTERSTATE_REGULAR,
     color: PRIMARY_GREY,
     fontSize: resize(20),
-    fontWeight: '700',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
     letterSpacing: resize(0.5),
   },
   raised: {
@@ -108,7 +124,7 @@ export default StyleSheet.create({
     color: '#ffffff',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(20),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
     letterSpacing: resize(0.5),
   }
 });

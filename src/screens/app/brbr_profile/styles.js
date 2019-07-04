@@ -41,26 +41,26 @@ export default StyleSheet.create({
     color: '#ffffff',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(24),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
     paddingTop: resize(30, 'h')
   },
   city: {
     color: '#cfcfcf',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(20),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
   },
   stars: {
     color: '#ffffff',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(27),
-    fontWeight: '700',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
   },
   lbl: {
     color: '#95989a',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(18),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
   },
   avatar: {
     width: resize(80, 'h'),

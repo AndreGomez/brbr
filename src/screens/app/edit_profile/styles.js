@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 //utils
 import { resize, AIRBNB_MEDIUM } from '../../../utils/styles';
@@ -23,7 +23,7 @@ export default StyleSheet.create({
     color: '#ffffff',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(18),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
     paddingTop: resize(21, 'h')
   },
   inputContainer: {
@@ -40,7 +40,7 @@ export default StyleSheet.create({
     color: '#94ffb4',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(16),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
     paddingRight: resize(20)
   }
 });

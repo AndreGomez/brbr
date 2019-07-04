@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 //utils
 import { resize, AIRBNB_MEDIUM } from '../../../utils/styles';
@@ -32,7 +32,7 @@ export default StyleSheet.create({
     color: '#000000',
     fontFamily: 'Airbnb Cereal App',
     fontSize: resize(20),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
     letterSpacing: resize(0.5),
     textAlign: 'center',
     marginTop: resize(51, 'h'),

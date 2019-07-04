@@ -1,4 +1,5 @@
 import { dispatchRequest } from './index'
+import { Base64 } from 'js-base64';
 
 const openPayUrl = 'https://sandbox-api.openpay.mx/v1/'
 const openPayMerchantId = 'mekufygnhp9486zophzf'
@@ -7,7 +8,7 @@ const openPayPk = 'pk_a64ea6b36cc4413eb77f2e6c271b2831'
 
 const urlOpenPay = `${openPayUrl}${openPayMerchantId}/tokens`
 
-const credentials = window.btoa(openPayPk + ':' + '')
+const credentials = Base64.encode(openPayPk + ':' + '')
 
 export const addPaymentMethodToken = async (data = {}) => {
   return await dispatchRequest({
@@ -20,7 +21,6 @@ export const addPaymentMethodToken = async (data = {}) => {
 }
 
 export const generateToken = async (data = {}) => {
-  console.log('URL', urlOpenPay)
   try {
     const resolve = await fetch(urlOpenPay, {
       method: 'post',

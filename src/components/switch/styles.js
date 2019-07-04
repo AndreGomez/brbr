@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import { resize, AIRBNB_MEDIUM } from '../../utils/styles';
 
 export default StyleSheet.create({
@@ -20,13 +20,13 @@ export default StyleSheet.create({
     color: 'rgba(255,255,255,0.7)',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(20),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
   },
   activeText: {
     color: '#000000',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(20),
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
   },
   left: {
     borderTopLeftRadius: 6,
