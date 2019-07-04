@@ -15,7 +15,8 @@ export default StyleSheet.create({
   content: {
     alignItems: 'center',
     paddingHorizontal: resize(20),
-    paddingTop: resize(40, 'h')
+    paddingTop: resize(40, 'h'),
+    paddingBottom: 20
   },
   price: {
     color: '#ffffff',

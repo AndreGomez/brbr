@@ -93,7 +93,6 @@ class ServiceReview extends Component {
             <Loading />
             :
             <Content
-              bounces={false}
               contentContainerStyle={styles.content}
             >
               <View

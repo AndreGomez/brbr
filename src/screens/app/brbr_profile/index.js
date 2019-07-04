@@ -27,6 +27,7 @@ import locale from '../../../locale';
 import vipIcon from '../../../assets/icons/vip.png';
 import portraitBack from '../../../assets/images/portrait.png';
 import starIcon from '../../../assets/icons/star.png';
+import arrow_green from '../../../assets/icons/arrow_green.png'
 
 class BrbrProfile extends Component {
 
@@ -100,6 +101,12 @@ class BrbrProfile extends Component {
     />
   )
 
+  navigateTo = (screen, data = {}) => {
+    const { navigation } = this.props
+
+    navigation.navigate(screen, data)
+  }
+
   render() {
 
     const {
@@ -150,7 +157,7 @@ class BrbrProfile extends Component {
           <Text
             style={styles.city}
           >
-            {city}
+            {city}n
           </Text>
           <View
             style={{ position: 'absolute', bottom: 10, right: 10 }}
@@ -158,6 +165,8 @@ class BrbrProfile extends Component {
             <MainButton
               xsRaisedGreen
               text={lng.RESERVE}
+              icon={arrow_green}
+              onPress={() => this.navigateTo('BrbrReserve', {})}
             />
           </View>
         </View>
