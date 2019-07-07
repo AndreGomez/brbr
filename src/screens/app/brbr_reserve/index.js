@@ -90,6 +90,7 @@ class BrbrReserve extends Component {
       {
         this.state.days.map((res, i) =>
           <TouchableOpacity
+            key={i}
             onPress={() => this.setItemList('days', i)}
           >
             <Text
@@ -116,6 +117,7 @@ class BrbrReserve extends Component {
       {
         this.state.hours.map((res, i) =>
           <TouchableOpacity
+            key={i}
             onPress={() => this.setItemList('hours', i)}
             style={
               [

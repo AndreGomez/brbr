@@ -37,6 +37,13 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  talk: {
+    color: '#ffffff',
+    fontFamily: AIRBNB_MEDIUM,
+    fontSize: resize(18),
+    fontWeight: '300',
+    paddingTop: resize(30, 'h')
+  },
   name: {
     color: '#ffffff',
     fontFamily: AIRBNB_MEDIUM,

@@ -140,7 +140,7 @@ class EditProfile extends Component {
       });
 
       successMessage('Usuario actualizado')
-      this.setState({ loadingButton: false })
+      this.setState({ loadingButton: false, change: false })
     } catch (error) {
       this.setState({ loadingButton: false })
     }
@@ -239,8 +239,10 @@ class EditProfile extends Component {
                 <MainInput
                   placeholder={currentUser.email}
                   value={email.value}
+                  keyboardType={'email-address'}
                   onChangeText={(value) => this.onChange('email', value)}
                   customStyle={styles.input}
+                  key
                   icon={
                     <View
                       style={styles.pencil}

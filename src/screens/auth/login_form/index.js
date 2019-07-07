@@ -151,6 +151,7 @@ class LoginForm extends Component {
             rounded
             label={lng.login_email}
             customContainer={styles.input}
+            keyboardType={'email-address'}
           />
           <MainInput
             placeholder={lng.password}

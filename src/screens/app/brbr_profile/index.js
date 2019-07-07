@@ -157,8 +157,17 @@ class BrbrProfile extends Component {
           <Text
             style={styles.city}
           >
-            {city}n
+            {city}
           </Text>
+          <View
+            style={{ position: 'absolute', bottom: 10, left: 10 }}
+          >
+            <Text
+              style={styles.talk}
+            >
+              Habla: EN/ES
+            </Text>
+          </View>
           <View
             style={{ position: 'absolute', bottom: 10, right: 10 }}
           >
