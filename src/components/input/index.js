@@ -90,6 +90,7 @@ export default class MainInput extends Component {
           }
 
           <Input
+            autoCapitalize={keyboardType != 'email-address'}
             keyboardType={keyboardType}
             secureTextEntry={secureTextEntry}
             value={value}

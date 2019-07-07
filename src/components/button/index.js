@@ -41,7 +41,8 @@ export default function MainButton(props) {
           style={
             [
               styles.xsText,
-              styles.greenText
+              styles.greenText,
+              { height: null }
             ]
           }
         >

@@ -23,12 +23,12 @@ export default StyleSheet.create({
     backgroundColor: 'transparent',
     paddingLeft: resize(20),
     borderRadius: resize(32),
-    paddingTop: resize(5, 'h'),
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   iconRightXsJe: {
     marginLeft: resize(10),
-    marginTop: Platform.OS != 'ios' ? resize(4.5, 'h') : null
+    marginTop: Platform.OS != 'ios' ? resize(4.5, 'h') : null,
   },
   smPad: {
     paddingTop: Platform.OS === 'android' ? resize(4, 'h') : null
@@ -50,7 +50,6 @@ export default StyleSheet.create({
     left: null
   },
   smTitle: {
-    backgroundColor: 'red'
   },
   iconRightXs: {
     right: resize(10),

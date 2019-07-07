@@ -23,7 +23,7 @@ const authStackNavigator = createStackNavigator(
     UploadDUI,
   },
   {
-    initialRouteName: 'AddCardForm',
+    initialRouteName: 'Login',
     defaultNavigationOptions: {
       header: null
     }

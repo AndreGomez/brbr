@@ -161,8 +161,13 @@ class AddCardForm extends Component {
         navigation.goBack()
         this.setState({ loadingButton: false })
       } else {
-        this.toggleModal('modalErrorData', lng.card_verify)
-        this.setState({ loadingButton: false })
+        if (card.description === 'expiration_month 22 is invalid, valid expirations months are 01 to 12') {
+          this.toggleModal('modalErrorData', 'El formato de fecha debe ser YY/MM')
+          this.setState({ loadingButton: false })
+        } else {
+          this.toggleModal('modalErrorData', lng.card_verify)
+          this.setState({ loadingButton: false })
+        }
       }
     } catch (error) {
       this.setState({ loadingButton: false })
