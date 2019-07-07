@@ -28,7 +28,8 @@ import firebase from 'react-native-firebase';
 import {
   createAccount,
   loginUser,
-  validateEmail
+  validateEmail,
+  validatePhone
 } from '../../../api/auth';
 
 //actions
@@ -168,13 +169,21 @@ class CreateAccountFormTel extends Component {
 
           if (res.data.exist === false) {
 
-            const phoneNumber = `+${callingCode} ${phone.value}`
+            const cell_phone = `+${callingCode} ${phone.value}`
             await validateFields({ email, name, phone })
-            const confirmResult = await firebase.auth().signInWithPhoneNumber(phoneNumber)
-            this.setState({
-              confirmResult
-            })
-            this.toggleModalConfirmPhone()
+            const confirmResult = await validatePhone({ cell_phone })
+            if (confirmResult.data.code) {
+              this.setState({
+                confirmResult: confirmResult.data.code
+              })
+              this.toggleModalConfirmPhone()
+            } else {
+              this.setState({
+                errorMessage: 'Este telefono ya existe o es invalido',
+                loadingButton: false
+              })
+              return this.toggleModalError()
+            }
           } else {
             this.setState({
               errorMessage: 'Este correo ya esta en uso',
@@ -183,7 +192,6 @@ class CreateAccountFormTel extends Component {
             return this.toggleModalError()
           }
         } catch (error) {
-          console.log(error)
           this.setState({
             errorMessage: 'Revisa tu informacion',
             loadingButton: false
@@ -221,53 +229,49 @@ class CreateAccountFormTel extends Component {
     } = this.props;
 
     try {
-      await confirmResult.confirm(confirmCode.value)
-      this.toggleModalConfirmPhone()
+      if (confirmResult === confirmCode.value) {
+        this.toggleModalConfirmPhone()
+        this.setState({
+          loadingButton: false
+        })
+        await createAccount({
+          email: email.value,
+          password: password.value,
+          name: name.value,
+          lastname: name.value,
+          cell_phone: `+${callingCode} ${phone.value}`
+        })
+
+        const res = await loginUser({
+          email: email.value,
+          password: password.value,
+        })
+
+        dispatch({
+          type: SET_USER,
+          payload: {
+            ...res.data.user
+          }
+        });
+
+        dispatch({
+          type: INIT_SESSION,
+          payload: {
+            authorize: false,
+            token: `Bearer ${res.data.token}`,
+          }
+        });
+
+        this.navigateTo('PaymentMethodAuth', { email, name, phone, callingCode })
+      } else {
+        return successMessage('Codigo invalido', 'danger')
+      }
+    } catch (error) {
       this.setState({
+        errorMessage: 'Revisa tu informacion',
         loadingButton: false
       })
-
-      await createAccount({
-        email: email.value,
-        password: password.value,
-        name: name.value,
-        lastname: name.value,
-        cell_phone: `+${callingCode} ${phone.value}`
-      })
-
-      const res = await loginUser({
-        email: email.value,
-        password: password.value,
-      })
-
-      dispatch({
-        type: SET_USER,
-        payload: {
-          ...res.data.user
-        }
-      });
-
-      dispatch({
-        type: INIT_SESSION,
-        payload: {
-          authorize: false,
-          token: `Bearer ${res.data.token}`,
-        }
-      });
-
-      this.navigateTo('PaymentMethodAuth', { email, name, phone, callingCode })
-    } catch (error) {
-      console.log('error', error.response)
-      if (error.response) {
-        if (error.response.data.message === 'This email has already been registered.') {
-          this.setState({
-            errorMessage: 'Este correo ya esta en uso'
-          })
-          return this.toggleModalError()
-        }
-        return successMessage('Error', 'danger')
-      }
-      return successMessage('Codigo invalido', 'danger')
+      this.toggleModalError()
     }
   }
 
@@ -430,6 +434,11 @@ class CreateAccountFormTel extends Component {
 
         {/* confirm */}
         <ModalAlert
+          close
+          onPressClose={() => {
+            this.setState({ loadingButton: false })
+            this.toggleModalConfirmPhone()
+          }}
           visible={visibleConfirm}
           title={
             <Image

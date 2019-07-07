@@ -38,7 +38,7 @@ class Splash extends Component {
 
     if (firstTime) return <FirstTimeNavigation />;
 
-    if (!authorize) return <AppNavigation />
+    if (!authorize) return <AuthNavigation />
 
     return <AppNavigation />
   }

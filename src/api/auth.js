@@ -29,6 +29,16 @@ export const validateEmail = async (data = {}) => {
   })
 }
 
+export const validatePhone = async (data = {}) => {
+  return await dispatchRequest({
+    method: 'post',
+    url: `users/cell_phone`,
+    data: {
+      ...data
+    }
+  })
+}
+
 export const loginUser = async (data = {}) => {
   return await dispatchRequest({
     method: 'post',

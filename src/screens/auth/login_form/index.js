@@ -64,7 +64,7 @@ class LoginForm extends Component {
         email: form.email.value,
         password: form.password.value,
       })
-
+      console.log('USER', res)
       dispatch({
         type: SET_USER,
         payload: {

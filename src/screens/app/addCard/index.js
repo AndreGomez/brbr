@@ -235,7 +235,11 @@ class AddCardForm extends Component {
           <MainInput
             placeholder={lng.add_card_form_card_number}
             value={cardNumber.value}
-            onChangeText={(value) => this.onChange('cardNumber', value)}
+            onChangeText={(value) => {
+              if (value.length <= 16) {
+                this.onChange('cardNumber', value)
+              }
+            }}
             customStyle={styles.input}
           />
           <View
@@ -244,7 +248,21 @@ class AddCardForm extends Component {
             <MainInput
               placeholder={lng.date_exp}
               value={date.value}
-              onChangeText={(value) => this.onChange('date', value)}
+              onChangeText={(value) => {
+                if (value.length <= 5) {
+                  if (value.length === 2) {
+                    if (this.state.cardInfo.date.value.length === 3) {
+                      return this.onChange('date', value)
+                    } else {
+                      return this.onChange('date', `${value.slice(0, 2)}/${value.slice(3, 4)}`)
+                    }
+                  }
+                  if (this.state.cardInfo.date.value.length === 2 && value.length === 3) {
+                    return this.onChange('date', `${value.slice(0, 2)}/${value.slice(3, 4)}`)
+                  }
+                  return this.onChange('date', value)
+                }
+              }}
               customStyle={styles.input}
               icon={
                 <TouchableOpacity
@@ -261,7 +279,11 @@ class AddCardForm extends Component {
             <MainInput
               placeholder={lng.CVV}
               value={cvv.value}
-              onChangeText={(value) => this.onChange('cvv', value)}
+              onChangeText={(value) => {
+                if (value.length <= 3) {
+                  this.onChange('cvv', value)
+                }
+              }}
               customStyle={styles.input}
               icon={
                 <TouchableOpacity
