@@ -238,6 +238,7 @@ class AddCardForm extends Component {
             customStyle={styles.input}
           />
           <MainInput
+            keyboardType={'numeric'}
             placeholder={lng.add_card_form_card_number}
             value={cardNumber.value}
             onChangeText={(value) => {
@@ -251,6 +252,7 @@ class AddCardForm extends Component {
             style={styles.inputContainer}
           >
             <MainInput
+              keyboardType={'numeric'}
               placeholder={lng.date_exp}
               value={date.value}
               onChangeText={(value) => {
@@ -284,6 +286,7 @@ class AddCardForm extends Component {
             <MainInput
               placeholder={lng.CVV}
               value={cvv.value}
+              keyboardType={'numeric'}
               onChangeText={(value) => {
                 if (value.length <= 3) {
                   this.onChange('cvv', value)
