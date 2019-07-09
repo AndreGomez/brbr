@@ -80,8 +80,6 @@ class Sidebar extends Component {
       currentUser
     } = this.props;
 
-    console.log(currentUser)
-
     return (
       <Container
         style={styles.container}

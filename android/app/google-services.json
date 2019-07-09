@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "378708515483-g2mrf79380hdm8045g0iojmkfu5eoti5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.elaniin.brbr.android",
+            "certificate_hash": "957b082d8de8a835f39af17a9274517fed38ed35"
+          }
+        },
+        {
           "client_id": "378708515483-8kl4bbobi795hbhrgevjsvuaje17f4df.apps.googleusercontent.com",
           "client_type": 3
         }

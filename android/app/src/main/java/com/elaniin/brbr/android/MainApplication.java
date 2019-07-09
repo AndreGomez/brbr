@@ -14,7 +14,6 @@ import java.util.List;
 //firebase
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.storage.RNFirebaseStoragePackage;
-import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 
 //react native splash screen
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
@@ -45,8 +44,7 @@ public class MainApplication extends Application implements ReactApplication {
         new SplashScreenReactPackage(), 
         new RNGestureHandlerPackage(),
         new ImagePickerPackage(),
-        new MapsPackage(),
-        new RNFirebaseAuthPackage()
+        new MapsPackage()
         );
     }
 
