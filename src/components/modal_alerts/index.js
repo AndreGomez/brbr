@@ -83,6 +83,7 @@ export default function ModalAlert(props) {
               placeholder={placeholder}
               style={styles.input}
               onChangeText={onChangeText}
+              keyboardType={'numeric'}
             />
           }
           {

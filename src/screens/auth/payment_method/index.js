@@ -108,7 +108,7 @@ class PaymentMethodAuth extends Component {
       cards,
       lng
     } = this.state
-    if (cards.length >= 2) {
+    if (cards[0].holder_name != '') {
       this.navigateTo('UploadDUI')
     } else {
       return successMessage(lng.more_one_payment_method, 'danger')
