@@ -142,5 +142,14 @@ export default StyleSheet.create({
     fontSize: resize(18),
     fontWeight: Platform.OS === 'ios' ? '500' : '400',
     paddingTop: resize(20, 'h')
+  },
+  empty: {
+    width: '100%',
+    textAlign: 'center',
+    color: '#ffffff',
+    fontFamily: AIRBNB_MEDIUM,
+    fontSize: resize(18),
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
+    marginTop: resize(20, 'h')
   }
 });

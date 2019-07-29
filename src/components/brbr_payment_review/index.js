@@ -12,6 +12,7 @@ import styles from './styles';
 //icons
 import vipIcon from '../../assets/icons/vip.png';
 import starIcon from '../../assets/icons/star.png';
+import ImagesCustom from '../imagesCustom';
 
 export default function BrbrPaymentReview(props) {
 
@@ -55,9 +56,9 @@ export default function BrbrPaymentReview(props) {
           <View
             style={styles.topHeaderContent}
           >
-            <Image
-              source={{ uri: avatar }}
-              style={styles.avatar}
+            <ImagesCustom
+              img={avatar ? { uri: avatar } : null}
+              styles={styles.avatar}
             />
             <View>
               <Text
@@ -67,6 +68,7 @@ export default function BrbrPaymentReview(props) {
               </Text>
               <Text
                 style={styles.city}
+                numberOfLines={2}
               >
                 {city}
               </Text>

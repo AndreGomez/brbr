@@ -70,6 +70,8 @@ const es = {
   vip_experience: 'brbr VIP Experience',
   arround_of_you: 'Barberos cerca de tí',
   start_search: 'Comienza a buscar barberos',
+  accept_permissions: 'Debes aceptar los permisos de location para poder ver los barberos',
+  not_barbers_arround: 'No hay barberos cerca de ti',
 
   //DETAIL SERVICE
   detail_service: 'Resumen del Servicio',

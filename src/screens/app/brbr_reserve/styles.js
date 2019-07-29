@@ -51,6 +51,7 @@ export default StyleSheet.create({
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(20),
     fontWeight: Platform.OS === 'ios' ? '500' : '400',
+    textAlign: 'center'
   },
   stars: {
     color: '#ffffff',
@@ -135,4 +136,14 @@ export default StyleSheet.create({
     fontWeight: Platform.OS === 'ios' ? '500' : '400',
     textAlign: 'center'
   },
+  talk: {
+    color: '#ffffff',
+    fontFamily: AIRBNB_MEDIUM,
+    fontSize: resize(18),
+    fontWeight: '300',
+    paddingTop: resize(30, 'h')
+  },
+  housContainer: {
+    height: 90
+  }
 });

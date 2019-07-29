@@ -50,6 +50,7 @@ export default StyleSheet.create({
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(16),
     fontWeight: Platform.OS === 'ios' ? '500' : '400',
+    width: resize(170)
   },
   payment: {
     color: '#95989a',

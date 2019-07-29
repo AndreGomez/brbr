@@ -24,6 +24,9 @@ import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 //image picker
 import com.imagepicker.ImagePickerPackage;
 
+//linear
+import com.BV.LinearGradient.LinearGradientPackage;
+
 //map
 import com.airbnb.android.react.maps.MapsPackage;
 
@@ -44,7 +47,8 @@ public class MainApplication extends Application implements ReactApplication {
         new SplashScreenReactPackage(), 
         new RNGestureHandlerPackage(),
         new ImagePickerPackage(),
-        new MapsPackage()
+        new MapsPackage(),
+        new LinearGradientPackage()
         );
     }
 

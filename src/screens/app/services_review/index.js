@@ -25,27 +25,39 @@ import locale from '../../../locale';
 import calendarIcon from '../../../assets/icons/calendar.png';
 import locationIcon from '../../../assets/icons/marker.png';
 
+//api
+import { createAppoiment } from '../../../api/appoinments';
+
+//utils
+import parseError from '../../../utils/parse_error';
+import alertMessage from '../../../utils/alertMessaje';
+
 class ServiceReview extends Component {
 
   state = {
     lng: {},
     loading: true,
-    name: 'Andre Gomez',
-    city: 'San Salvador',
-    stars: 4.5,
-    avatar: 'https://content-static.upwork.com/uploads/2014/10/01073427/profilephoto1.jpg',
-    price: 270,
-    service: 'Servicio de Barba',
-    date: 'Jueves 24 Feb, a las 12:00 pm',
-    location: 'Agricultura 104, int 304, Escandón',
-    paymentMethod: '...3234'
+    price: 0,
+    service: '',
+    date: '',
+    location: '',
+    paymentMethod: '...3234',
+    barberInfo: {},
+    loadingBtn: false
   }
 
   async componentDidMount() {
     const lng = await locale()
+    const { navigation, currentUser } = this.props
+
     this.setState({
       lng,
-      loading: false
+      loading: false,
+      price: navigation.state.params.price,
+      location: navigation.state.params.location,
+      date: `${navigation.state.params.daySelected.date}, a las ${navigation.state.params.hourSelected.hour}`,
+      service: `Servicio de${navigation.state.params.servicesSelected.hair ? ' Cabello' : ''}${navigation.state.params.servicesSelected.bear ? ' Barba' : ''}`,
+      barberInfo: this.props.navigation.state.params.item.barber
     })
   }
 
@@ -55,21 +67,54 @@ class ServiceReview extends Component {
     navigation.navigate(screen, data)
   }
 
+  onPressNext = async () => {
+    const { navigation: { state: { params } }, currentUser, navigation } = this.props
+    this.setState({
+      loadingBtn: true
+    })
+    try {
+      const dataAppoiment = {
+        schedule_id: `${params.daySelected._id}`,
+        hour: params.hourSelected.hour,
+        payment: currentUser.payment_methods[0]._id,
+        barber_id: params.item.barber._id,
+        services: {
+          hair: {
+            cost: "2"
+          },
+          eyebrows: {
+            cost: "0"
+          },
+          beard: {
+            cost: "1"
+          }
+        }
+      }
+      const res = await createAppoiment({ ...dataAppoiment })
+      console.log(res)
+      this.setState({
+        loadingBtn: false
+      })
+    } catch (error) {
+      this.setState({
+        loadingBtn: false
+      })
+      return alertMessage('Error al procesar su reserva')
+    }
+  }
+
   render() {
 
     const {
       lng,
       loading,
-      name,
-      city,
-      stars,
-      cuts,
-      avatar,
       price,
       service,
       date,
       location,
-      paymentMethod
+      paymentMethod,
+      barberInfo,
+      loadingBtn
     } = this.state
 
     return (
@@ -135,12 +180,12 @@ class ServiceReview extends Component {
               </View>
               <BrbrPaymentReview
                 lng={lng}
-                avatar={avatar}
-                name={name}
-                city={city}
-                stars={stars}
+                avatar={barberInfo.photo}
+                name={barberInfo.name}
+                city={barberInfo.address.description}
+                stars={barberInfo.qualification}
                 paymentMethod={paymentMethod}
-                onPressProfile={() => this.navigateTo('BrbrProfile')}
+                onPressProfile={() => this.navigateTo('BrbrProfile', { item: { barber: { ...barberInfo } } })}
                 onPressChange={() => this.navigateTo('BrbrProfile')}
               />
               <Text
@@ -151,6 +196,8 @@ class ServiceReview extends Component {
               <MainButton
                 white
                 text={lng.RESERVE}
+                onPress={() => this.onPressNext()}
+                loading={loadingBtn}
               />
             </Content>
         }
@@ -158,5 +205,10 @@ class ServiceReview extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.user
+  }
+};
 
-export default connect()(ServiceReview);
+export default connect(mapStateToProps)(ServiceReview);

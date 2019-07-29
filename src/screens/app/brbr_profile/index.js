@@ -3,10 +3,11 @@ import {
   View,
   Image,
   FlatList,
-  Text
+  Text,
+  TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
-import { Container, Content } from 'native-base';
+import { Container, Content, Spinner } from 'native-base';
 
 //component
 import Loading from '../../../components/loading';
@@ -16,6 +17,7 @@ import BackButton from '../../../components/back_button';
 import Switch from '../../../components/switch';
 import Comment from '../../../components/comment';
 import MainButton from '../../../components/button';
+import ImagesCustom from '../../../components/imagesCustom';
 
 //customs
 import styles from './styles';
@@ -28,6 +30,7 @@ import vipIcon from '../../../assets/icons/vip.png';
 import portraitBack from '../../../assets/images/portrait.png';
 import starIcon from '../../../assets/icons/star.png';
 import arrow_green from '../../../assets/icons/arrow_green.png'
+import { getBarberProfile } from '../../../api/barbers';
 
 class BrbrProfile extends Component {
 
@@ -73,14 +76,19 @@ class BrbrProfile extends Component {
         date: '12/02/1902',
         body: 'Este si que sabe'
       }
-    ]
+    ],
+    barberInfo: null
   }
 
   async componentDidMount() {
     const lng = await locale()
+    const barberProfile = await getBarberProfile(this.props.navigation.state.params.item.barber._id)
+
+
     this.setState({
       lng,
-      loading: false
+      loading: false,
+      barberInfo: barberProfile.data
     })
   }
 
@@ -101,6 +109,38 @@ class BrbrProfile extends Component {
     />
   )
 
+  renderPhotos = () => (
+    <FlatList
+      data={this.state.barberInfo.gallery}
+      keyExtractor={(a, i) => `${i}`}
+      renderItem={(item) => this.renderPhoto(item.item, item.index)}
+      numColumns={4}
+      key={true}
+      columnWrapperStyle={styles.column}
+      contentContainerStyle={styles.rowColumn}
+      ListEmptyComponent={<Text
+        style={styles.empty}
+      >
+        Este barbero aun no tiene fotos
+      </Text>}
+    />
+  )
+
+  renderPhoto = (item, i) => (
+    <TouchableOpacity
+      onPress={() => this.onPressPhoto(item.img, i)}
+    >
+      <ImagesCustom
+        list
+        img={{ uri: item.img }}
+      />
+    </TouchableOpacity>
+  )
+
+  onPressPhoto = (item, i) => {
+    this.navigateTo('Galery', { item: { imageSelect: item, index: i }, images: this.state.barberInfo.gallery })
+  }
+
   navigateTo = (screen, data = {}) => {
     const { navigation } = this.props
 
@@ -112,12 +152,8 @@ class BrbrProfile extends Component {
     const {
       lng,
       loading,
-      name,
-      city,
-      stars,
-      cuts,
-      avatar,
-      switchActive
+      switchActive,
+      barberInfo
     } = this.state
 
     return (
@@ -136,121 +172,138 @@ class BrbrProfile extends Component {
             />
           }
           right={
+            !loading &&
+            barberInfo.vip &&
             <Image
               style={styles.vipIcon}
               source={vipIcon}
             />
           }
         />
-        <Image
-          style={styles.portraitBack}
-          source={portraitBack}
-        />
-        <View
-          style={styles.portraitBackFront}
-        >
-          <Text
-            style={styles.name}
-          >
-            {name}
-          </Text>
-          <Text
-            style={styles.city}
-          >
-            {city}
-          </Text>
-          <View
-            style={{ position: 'absolute', bottom: 10, left: 10 }}
-          >
-            <Text
-              style={styles.talk}
-            >
-              Habla: EN/ES
-            </Text>
-          </View>
-          <View
-            style={{ position: 'absolute', bottom: 10, right: 10 }}
-          >
-            <MainButton
-              xsRaisedGreen
-              text={lng.RESERVE}
-              icon={arrow_green}
-              onPress={() => this.navigateTo('BrbrReserve', {})}
-            />
-          </View>
-        </View>
-        <View
-          style={styles.interSection}
-        >
-          <View
-            style={styles.section}
-          >
-            <View
-              style={{ flexDirection: 'row', alignItems: 'center' }}
-            >
-              <Text
-                style={styles.stars}
-              >
-                {stars}
-              </Text>
-              <Image
-                source={starIcon}
-              />
-            </View>
-            <Text
-              style={styles.lbl}
-            >
-              {lng.rese}
-            </Text>
-          </View>
-          <View
-            style={styles.section}
-          >
-            <Image
-              style={styles.avatar}
-              source={{ uri: avatar }}
-            />
-          </View>
-          <View
-            style={styles.section}
-          >
-            <Text
-              style={styles.stars}
-            >
-              {cuts}
-            </Text>
-            <Text
-              style={styles.lbl}
-            >
-              {lng.cuts}
-            </Text>
-          </View>
-        </View>
-        <View
-          style={styles.switch}
-        >
-          <Switch
-            st={lng.galery}
-            ft={lng.rese}
-            onPress={() => this.setState({ switchActive: !this.state.switchActive })}
-            active={switchActive}
-          />
-        </View>
         {
           loading ?
-            <Loading />
-            :
-            <Content
-              contentContainerStyle={styles.content}
-            >
-
-              {
-                switchActive ?
-                  this.renderComments()
-                  :
-                  null
-              }
+            <Content>
+              <Spinner
+                color={'white'}
+              />
             </Content>
+            :
+            <React.Fragment>
+              <Image
+                style={styles.portraitBack}
+                source={portraitBack}
+              />
+              <View
+                style={styles.portraitBackFront}
+              >
+                <Text
+                  style={styles.name}
+                >
+                  {barberInfo.name}
+                </Text>
+                <Text
+                  style={styles.city}
+                >
+                  {barberInfo.address.description}
+                </Text>
+                <View
+                  style={{ position: 'absolute', bottom: 10, left: 10 }}
+                >
+                  <Text
+                    style={styles.talk}
+                  >
+                    Habla: ES{barberInfo.languages.english && '/EN'}{barberInfo.languages.french && '/FR'}
+                  </Text>
+                </View>
+                {/* <View
+                  style={{ position: 'absolute', bottom: 10, right: 10 }}
+                >
+                  <MainButton
+                    xsRaisedGreen
+                    text={lng.RESERVE}
+                    icon={arrow_green}
+                    onPress={() => this.navigateTo('BrbrReserve', {})}
+                  />
+                </View> */}
+              </View>
+              <View
+                style={styles.interSection}
+              >
+                <View
+                  style={styles.section}
+                >
+                  <View
+                    style={{ flexDirection: 'row', alignItems: 'center' }}
+                  >
+                    <Text
+                      style={styles.stars}
+                    >
+                      {barberInfo.qualification}
+                    </Text>
+                    <Image
+                      source={starIcon}
+                    />
+                  </View>
+                  <Text
+                    style={styles.lbl}
+                  >
+                    {lng.rese}
+                  </Text>
+                </View>
+                <View
+                  style={styles.section}
+                >
+                  <ImagesCustom
+                    styles={styles.avatar}
+                    img={barberInfo.photo ? { uri: barberInfo.photo } : null}
+                  />
+                </View>
+                <View
+                  style={styles.section}
+                >
+                  <Text
+                    style={styles.stars}
+                  >
+                    {0}
+                  </Text>
+                  <Text
+                    style={styles.lbl}
+                  >
+                    {lng.cuts}
+                  </Text>
+                </View>
+              </View>
+              <View
+                style={styles.switch}
+              >
+                <Switch
+                  st={lng.galery}
+                  ft={lng.rese}
+                  onPress={() => this.setState({ switchActive: !this.state.switchActive })}
+                  active={switchActive}
+                />
+              </View>
+            </React.Fragment>
+        }
+        {
+          !loading &&
+          <Content
+            contentContainerStyle={styles.content}
+          >
+
+            {
+              switchActive ?
+                // this.renderComments()
+                <Text
+                  style={styles.empty}
+                >
+                  Este barbero aun no tiene comentarios
+                </Text>
+                :
+                // null
+                this.renderPhotos()
+            }
+          </Content>
         }
       </Container>
     );

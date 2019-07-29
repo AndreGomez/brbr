@@ -14,6 +14,10 @@ export default StyleSheet.create({
   content: {
     paddingHorizontal: resize(20)
   },
+  column: {
+    marginTop: resize(25, 'h'),
+    justifyContent: 'space-between'
+  },
   portraitBack: {
     width: '100%',
     height: resize(200, 'h'),
@@ -56,6 +60,7 @@ export default StyleSheet.create({
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(20),
     fontWeight: Platform.OS === 'ios' ? '500' : '400',
+    textAlign: 'center'
   },
   stars: {
     color: '#ffffff',
@@ -90,5 +95,14 @@ export default StyleSheet.create({
   },
   switch: {
     paddingHorizontal: resize(20)
+  },
+  empty: {
+    color: '#95989a',
+    fontFamily: AIRBNB_MEDIUM,
+    fontSize: resize(14),
+    fontWeight: '300',
+    width: '100%',
+    textAlign: 'center',
+    paddingTop: resize(20)
   }
 });

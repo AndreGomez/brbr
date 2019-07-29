@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>24598765461-afog3rilimkam53nc3og7a9k85bdbcbk.apps.googleusercontent.com</string>
+	<string>378708515483-9no2drrnvjsviqd9ajjubjgb6crmd6kg.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.24598765461-afog3rilimkam53nc3og7a9k85bdbcbk</string>
+	<string>com.googleusercontent.apps.378708515483-9no2drrnvjsviqd9ajjubjgb6crmd6kg</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>378708515483-g2mrf79380hdm8045g0iojmkfu5eoti5.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAp3Dv0h0zLD7yLV45-y6b4vNakXPTrFB4</string>
+	<string>AIzaSyBWdsuzHdctm4P_rkeDEg9uJK3j7fFx_cI</string>
 	<key>GCM_SENDER_ID</key>
-	<string>24598765461</string>
+	<string>378708515483</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.elaniin.ios</string>
+	<string>com.elaniin.brbr.ios</string>
 	<key>PROJECT_ID</key>
-	<string>react-native-core</string>
+	<string>brbr-app</string>
 	<key>STORAGE_BUCKET</key>
-	<string>react-native-core.appspot.com</string>
+	<string>brbr-app.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +31,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:24598765461:ios:fe80bd6dc5ba4e5f</string>
+	<string>1:378708515483:ios:5fb119afb82c94fb</string>
 	<key>DATABASE_URL</key>
-	<string>https://react-native-core.firebaseio.com</string>
+	<string>https://brbr-app.firebaseio.com</string>
 </dict>
 </plist>

@@ -40,6 +40,7 @@ import {
   EditAddress
 } from '../../../api/user';
 import successMessage from '../../../utils/success_message';
+import parseError from '../../../utils/parse_error';
 
 const MAP_KEY = 'AIzaSyAomkkJKfTlE9WOc_yMt2btwNjzkLSjqw0'
 const MAP_API_PLACE = 'https://maps.googleapis.com/maps/api/geocode/'
@@ -125,7 +126,6 @@ class MyAddress extends Component {
       loadingButton: true
     })
     try {
-
       const res = await SaveAddress({
         coordinates: {
           ...coords
@@ -149,6 +149,7 @@ class MyAddress extends Component {
         loadingButton: false,
         editable: false
       })
+      parseError(error)
     }
   }
 
@@ -171,7 +172,7 @@ class MyAddress extends Component {
           ...coords
         },
         description: descriptionAddress
-      }, currentUser.address[0]._id)
+      })
 
       dispatch({
         type: SET_USER,
@@ -249,8 +250,8 @@ class MyAddress extends Component {
                     editable ?
                       descriptionAddress
                       :
-                      currentUser.address.length != 0 ?
-                        currentUser.address[0].description
+                      currentUser.address.location.length != 0 ?
+                        currentUser.address.location[0].description
                         :
                         descriptionAddress
                   }
@@ -261,7 +262,7 @@ class MyAddress extends Component {
                   editable ?
                     true
                     :
-                    currentUser.address.length === 0 ?
+                    currentUser.address.location.length === 0 ?
                       true
                       :
                       false
@@ -276,8 +277,8 @@ class MyAddress extends Component {
                   })
                 }}
                 initialRegion={centerCoordinates([
-                  currentUser.address.length != 0 ?
-                    currentUser.address[0].coordinates
+                  currentUser.address.location.length != 0 ?
+                    currentUser.address.location[0].coordinates
                     :
                     currentLocation
                 ])}
@@ -292,7 +293,7 @@ class MyAddress extends Component {
                   editable ?
                     lng.accept_location
                     :
-                    currentUser.address.length != 0 ?
+                    currentUser.address.location.length != 0 ?
                       lng.edit
                       :
                       lng.accept_location
@@ -304,7 +305,7 @@ class MyAddress extends Component {
                   editable ?
                     this.onPressConfirmEdit()
                     :
-                    currentUser.address.length != 0 ?
+                    currentUser.address.location.length != 0 ?
                       this.onPressEdit()
                       :
                       this.onPressSaveLocation()

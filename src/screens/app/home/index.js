@@ -7,10 +7,11 @@ import {
   Text,
   TextInput,
   StatusBar,
-  Platform
+  Platform,
+  AppState
 } from 'react-native';
 import { connect } from 'react-redux';
-import { Container, Content } from 'native-base';
+import { Container, Content, Spinner } from 'native-base';
 
 //component
 import CustomHeader from '../../../components/header';
@@ -30,6 +31,11 @@ import locale from '../../../locale';
 //actions
 import { DESTROY_SESSION } from '../../../actions/auth';
 
+//api
+import {
+  getBarbersArround
+} from '../../../api/barbers'
+
 //icons
 import prefIcon from '../../../assets/icons/preferencies.png';
 import searchIcon from '../../../assets/icons/search.png';
@@ -39,27 +45,110 @@ import calendarIcon from '../../../assets/icons/calendar.png';
 import brbr_machineIcon from '../../../assets/icons/brbr_machine.png';
 import search_grey from '../../../assets/icons/search_grey.png';
 
+//utils
+import {
+  getLocation,
+  MAP_KEY,
+  MAP_API_PLACE,
+  getMyAddres
+} from '../../../utils/location';
+import { multiplePermissions } from '../../../utils/permissions';
+import parseError from '../../../utils/parse_error';
+import ServicesModal from '../../../components/services_modal';
+import DateModal from '../../../components/date_modal';
+import alertMessaje from '../../../utils/alertMessaje';
+
 class Home extends Component {
 
   state = {
     lng: {},
-    barberVips: [{ img: 'https://content-static.upwork.com/uploads/2014/10/01073427/profilephoto1.jpg', stars: 4.8, addres: 'Santa Ana Santa Ana Santa Ana ', name: 'Andre Gomez, Andre Gomez' }, { img: 'https://content-static.upwork.com/uploads/2014/10/01073427/profilephoto1.jpg', stars: 4, addres: 'Santa Ana', name: 'Andre Gomez' }, { img: 'https://content-static.upwork.com/uploads/2014/10/01073427/profilephoto1.jpg', stars: 4, addres: 'Santa Ana', name: 'Andre Gomez' }],
-    arroundBarbers: [
-      { img: 'https://content-static.upwork.com/uploads/2014/10/01073427/profilephoto1.jpg', stars: 4.8, addres: 'Santa Ana ', name: 'Andre Gomez, Andre Gomez', price: 10.50, },
-      { img: 'https://content-static.upwork.com/uploads/2014/10/01073427/profilephoto1.jpg', stars: 4, addres: 'Santa Ana', name: 'Andre Gomez', price: 10.50, },
-      { img: 'https://content-static.upwork.com/uploads/2014/10/01073427/profilephoto1.jpg', stars: 4, addres: 'Santa Ana', name: 'Andre Gomez', price: 10.50, }],
-    totalBrbr: 20,
+    barberVips: [],
     loading: true,
     search: false,
-    location: 'Agricultura 104, int 304, Escandón Agricultura 104, int 304, Escandón'
+    acceptPermission: false,
+    barbersArround: [],
+    location: '',
+    barbersArroundSearch: null,
+    servicesModal: {
+      visible: false,
+      hair: true,
+      bear: false
+    },
+    dateModal: {
+      visible: false,
+      today: true,
+      thisWeek: false,
+      nextWeek: false
+    },
+    extraData: false,
+    date: 'today'
   }
 
   async componentDidMount() {
     const lng = await locale()
+    AppState.addEventListener('change', this.handleGetResources)
+    await this.verifyPermissions()
     this.setState({
       lng,
       loading: false
     })
+  }
+
+  componentWillUnmount = () => {
+    AppState.removeEventListener('change')
+  }
+
+  handleGetResources = () => {
+    this.verifyPermissions()
+  }
+
+  verifyPermissions = async () => {
+    let permisos = ["ACCESS_FINE_LOCATION"];
+    let requestPermissions = await multiplePermissions(permisos);
+    if (requestPermissions) {
+      await this.getCurrentLocation();
+      return true;
+    }
+
+    this.setState({
+      loading: false,
+      acceptPermission: false,
+      barbersArround: []
+    })
+    return false;
+  }
+
+  getCurrentLocation = async () => {
+    const { state } = this
+
+    try {
+      const position = await getLocation()
+
+      const barbersArround = await getBarbersArround({
+        range: 4,
+        location: [
+          position.coords.latitude,
+          position.coords.longitude
+        ]
+      })
+
+      const resMyAddress = await getMyAddres(position.coords)
+      state.location = resMyAddress.data.results[0].formatted_address
+      state.acceptPermission = true
+      state.locationCoords = position.coords
+      state.barbersArround = barbersArround.data
+      state.loading = false
+      this.setState({
+        ...state
+      })
+    } catch (error) {
+      this.setState({
+        loading: false,
+        acceptPermission: false,
+        barbersArround: []
+      })
+      // parseError(error)
+    }
   }
 
   onDestroySession = () => {
@@ -79,16 +168,17 @@ class Home extends Component {
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.vipList}
       keyExtractor={(a, i) => `${i}`}
+      ListEmptyComponent={<Text style={styles.empty}>{this.state.lng.not_barbers_arround}</Text>}
     />
   )
 
   renderVips = (brbr) => (
     <BarberVip
       onPressBarberVip={() => this.navigateTo('BrbrProfile', brbr)}
-      img={brbr.item.img}
-      addres={brbr.item.addres}
-      stars={brbr.item.stars}
-      name={brbr.item.name}
+      img={brbr.item.barber.img}
+      addres={brbr.item.barber.addres}
+      stars={brbr.item.barber.stars}
+      name={brbr.item.barber.name}
       horizontal={this.state.search}
     />
   )
@@ -99,40 +189,78 @@ class Home extends Component {
 
   renderArroundList = () => (
     <FlatList
-      data={this.state.arroundBarbers}
+      data={this.state.barbersArroundSearch ? this.state.barbersArroundSearch : this.state.barbersArround}
+      ListEmptyComponent={<Text style={styles.empty}>{this.state.lng.not_barbers_arround}</Text>}
       renderItem={(barberArround) => this.renderArround(barberArround)}
       showsVerticalScrollIndicator={false}
       keyExtractor={(a, i) => `${i}`}
     />
   )
 
-  renderArround = (brbr) => (
-    <BarberArround
-      onPressBarberArround={() => this.navigateTo('BrbrProfile', brbr)}
-      img={brbr.item.img}
-      addres={brbr.item.addres}
-      stars={brbr.item.stars}
-      name={brbr.item.name}
-      price={brbr.item.price}
-      cash={this.state.lng.CASH}
-      reserve={this.state.lng.RESERVE}
-      onPress={() => this.navigateTo('BrbrReserve', brbr)}
-    />
-  )
-
-  onPressBarberArround = (id) => {
-
+  renderArround = (brbr) => {
+    const { servicesModal, extraData, date } = this.state
+    return (
+      <BarberArround
+        extraData={extraData}
+        onPressBarberArround={() => this.navigateTo('BrbrProfile', brbr)}
+        img={brbr.item.barber.photo}
+        addres={brbr.item.barber.address.description}
+        stars={brbr.item.barber.qualification}
+        name={`${brbr.item.barber.name}`}
+        price={
+          brbr.item.barber.services.hair.cost ||
+            brbr.item.barber.services.beard.cost ?
+            servicesModal.hair && servicesModal.bear ? brbr.item.barber.services.hair.cost + brbr.item.barber.services.beard.cost :
+              servicesModal.hair ? brbr.item.barber.services.hair.cost :
+                servicesModal.bear ? brbr.item.barber.services.beard.cost :
+                  '0.0'
+            :
+            '0.0'}
+        cash={this.state.lng.CASH}
+        reserve={this.state.lng.RESERVE}
+        onPress={() => this.onPressBarberReserve(brbr)}
+      />
+    )
   }
 
-  onPressLocation = () => {
+  onPressBarberReserve = async (brbr) => {
+    const { servicesModal, dateModal, date } = this.state
 
-  }
+    var passDate = false
+    var passService = false
 
-  onPressCalendar = () => {
+    await Object.keys(servicesModal).map(res => {
+      if (servicesModal[res]) {
+        passDate = true
+      }
+    })
 
-  }
+    await Object.keys(servicesModal).map(res => {
+      if (servicesModal[res]) {
+        passService = true
+      }
+    })
 
-  onPressServices = () => {
+    if (passDate && passService) {
+      this.navigateTo('BrbrReserve',
+        {
+          ...brbr,
+          dateForService: date,
+          location: this.state.location,
+          servicesSelected: { hair: servicesModal.hair, bear: servicesModal.bear },
+          price: brbr.item.barber.services.hair.cost ||
+            brbr.item.barber.services.beard.cost ?
+            servicesModal.hair && servicesModal.bear ? brbr.item.barber.services.hair.cost + brbr.item.barber.services.beard.cost :
+              servicesModal.hair ? brbr.item.barber.services.hair.cost :
+                servicesModal.bear ? brbr.item.barber.services.beard.cost :
+                  '0.0'
+            :
+            '0.0'
+        })
+    } else {
+      alertMessaje('Debe seleccionar un dia y que servicios desea')
+    }
+
 
   }
 
@@ -142,14 +270,73 @@ class Home extends Component {
     navigation.navigate(screen, data)
   }
 
+  searchText = (e) => {
+    const { state } = this
+    let text = e.toLowerCase()
+    let item = state.barbersArround
+    let filteredName = item.filter((item) => {
+      return item.barber.name.toLowerCase().match(text)
+    })
+    if (!text || text === '') {
+      state.barbersArroundSearch = null
+      this.setState({
+        ...state
+      })
+    } else if (!Array.isArray(filteredName) && !filteredName.length) {
+      state.barbersArroundSearch = []
+      this.setState({
+        ...state
+      })
+    } else if (Array.isArray(filteredName)) {
+      state.barbersArroundSearch = filteredName
+      this.setState({
+        ...state
+      })
+    }
+  }
+
+  onPressType = (type) => {
+    const { state } = this
+
+    state.servicesModal[type] = !state.servicesModal[type]
+
+    this.setState({
+      ...state,
+      extraData: !state.extraData
+    })
+  }
+
+  onPressTypeDate = (type) => {
+    const { state } = this
+
+    state.dateModal[type] = !state.dateModal[type]
+    if (type != 'visible') {
+      Object.keys(state.dateModal).map(res => {
+        if (res != type) {
+          state.dateModal[res] = false
+        }
+      })
+      state.date = type
+    }
+
+    this.setState({
+      ...state,
+      extraData: !state.extraData
+    })
+  }
+
   render() {
 
     const {
       lng,
       loading,
-      totalBrbr,
       location,
-      search
+      search,
+      acceptPermission,
+      barbersArround,
+      barberVips,
+      servicesModal,
+      dateModal
     } = this.state
 
     return (
@@ -181,7 +368,7 @@ class Home extends Component {
             right={
               <TouchableOpacity
                 style={styles.searchIcon}
-                onPress={() => this.setState({ search: !this.state.search })}
+                onPress={() => this.setState({ search: !this.state.search, barbersArroundSearch: null })}
               >
                 {
                   search ?
@@ -201,122 +388,165 @@ class Home extends Component {
         </View>
         {
           loading ?
-            <Loading />
+            <Content>
+              <Spinner
+                color={'white'}
+              />
+            </Content>
             :
-            <Content
-              contentContainerStyle={styles.content}
-            >
-              {
-                search ?
-                  <View
-                    style={styles.search}
-                  >
-                    <Image
-                      source={search_grey}
-                    />
-                    <TextInput
-                      placeholder={lng.start_search}
-                      style={styles.input}
-                    />
-                  </View>
-                  :
-                  <View
-                    style={styles.searchContainer}
-                  >
-                    <TouchableOpacity
-                      onPress={() => this.onPressLocation()}
-                      style={styles.location}
-                      activeOpacity={0.8}
-                    >
-                      <Image
-                        source={locationIcon}
-                      />
-                      <Text
-                        numberOfLines={1}
-                        style={styles.locationText}
-                      >
-                        {location}
-                      </Text>
-                    </TouchableOpacity>
-                    <View
-                      style={styles.calendarAndServices}
-                    >
-                      <TouchableOpacity
-                        onPress={() => this.onPressCalendar()}
-                        style={styles.calendar}
-                        activeOpacity={0.8}
-                      >
-                        <Image
-                          source={calendarIcon}
-                        />
-                        <Text
-                          numberOfLines={1}
-                          style={styles.locationText}
-                        >
-                          {lng.add}
-                        </Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        onPress={() => this.onPressServices()}
-                        style={styles.services}
-                        activeOpacity={0.8}
-                      >
-                        <Image
-                          source={brbr_machineIcon}
-                        />
-                        <Text
-                          numberOfLines={1}
-                          style={styles.locationText}
-                        >
-                          {lng.select}
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-              }
-              <View>
+            acceptPermission ?
+              <Content
+                contentContainerStyle={styles.content}
+              >
                 {
                   search ?
-                    <Text
-                      style={styles.reco}
-                    >
-                      {lng.reco}
-                    </Text>
-                    :
                     <View
-                      style={styles.vipContainer}
+                      style={styles.search}
                     >
                       <Image
-                        source={vipIcon}
+                        source={search_grey}
                       />
-                      <Text
-                        style={styles.vipText}
+                      <TextInput
+                        onChangeText={(text) => this.searchText(text)}
+                        placeholder={lng.start_search}
+                        style={styles.input}
+                      />
+                    </View>
+                    :
+                    <View
+                      style={styles.searchContainer}
+                    >
+                      <TouchableOpacity
+                        onPress={() => this.onPressLocation()}
+                        style={styles.location}
+                        activeOpacity={0.8}
                       >
-                        {lng.vip_experience}
-                      </Text>
+                        <Image
+                          source={locationIcon}
+                        />
+                        <Text
+                          numberOfLines={1}
+                          style={styles.locationText}
+                        >
+                          {location}
+                        </Text>
+                      </TouchableOpacity>
+                      <View
+                        style={styles.calendarAndServices}
+                      >
+                        <TouchableOpacity
+                          onPress={() => this.onPressTypeDate('visible')}
+                          style={styles.calendar}
+                          activeOpacity={0.8}
+                        >
+                          <Image
+                            source={calendarIcon}
+                          />
+                          <Text
+                            numberOfLines={1}
+                            style={styles.locationText}
+                          >
+                            {lng.add}
+                          </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => this.onPressType('visible')}
+                          style={styles.services}
+                          activeOpacity={0.8}
+                        >
+                          <Image
+                            source={brbr_machineIcon}
+                          />
+                          <Text
+                            numberOfLines={1}
+                            style={styles.locationText}
+                          >
+                            {lng.select}
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
                     </View>
                 }
+                <View>
+                  {
+                    search ?
+                      <Text
+                        style={styles.reco}
+                      >
+                        {lng.reco}
+                      </Text>
+                      :
 
-                {this.renderVipsList()}
-              </View>
-              <View
-                style={styles.separator}
-              />
-              <View
-                style={styles.brbrArroundContainer}
-              >
-                <Text
-                  style={styles.brbrArroundText}
+                      barberVips.length != 0 &&
+                      <View
+                        style={styles.vipContainer}
+                      >
+                        <Image
+                          source={vipIcon}
+                        />
+                        <Text
+                          style={styles.vipText}
+                        >
+                          {lng.vip_experience}
+                        </Text>
+                      </View>
+                  }
+
+                  {
+                    barberVips.length != 0 && (
+                      this.renderVipsList()
+                    )
+                  }
+                </View>
+                <View
+                  style={styles.separator}
+                />
+                <View
+                  style={styles.brbrArroundContainer}
                 >
-                  {`${totalBrbr} ${lng.arround_of_you}`}
+                  <Text
+                    style={styles.brbrArroundText}
+                  >
+                    {`${barbersArround.length} ${lng.arround_of_you}`}
+                  </Text>
+                  {this.renderArroundList()}
+                </View>
+              </Content>
+              :
+              <Content>
+                <Text
+                  style={styles.empty}
+                >
+                  {lng.accept_permissions}
                 </Text>
-                {this.renderArroundList()}
-              </View>
-            </Content>
+              </Content>
         }
+        <ServicesModal
+          visible={servicesModal.visible}
+          onPress={() => this.onPressType('visible')}
+          onPressClose={() => this.onPressType('visible')}
+          hair={servicesModal.hair}
+          bear={servicesModal.bear}
+          onPressType={(type) => this.onPressType(type)}
+        />
+        <DateModal
+          visible={dateModal.visible}
+          onPress={() => this.onPressTypeDate('visible')}
+          onPressClose={() => this.onPressTypeDate('visible')}
+          today={dateModal.today}
+          thisWeek={dateModal.thisWeek}
+          nextWeek={dateModal.nextWeek}
+          onPressType={(type) => this.onPressTypeDate(type)}
+        />
       </Container>
     );
   }
 }
 
-export default connect()(Home);
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.user
+  }
+};
+
+export default connect(mapStateToProps)(Home);

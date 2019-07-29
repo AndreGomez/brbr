@@ -170,6 +170,9 @@ dependencies {
 
     //maps
     implementation project(':react-native-maps')
+
+    //linear
+    implementation project(':react-native-linear-gradient')
 }
 
 // Run this once to be able to run the application with BUCK

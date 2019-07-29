@@ -165,6 +165,8 @@ class AddCardForm extends Component {
           this.toggleModal('modalErrorData', 'El formato de fecha debe ser YY/MM')
           this.setState({ loadingButton: false })
         } else {
+          console.log(card.description)
+
           this.toggleModal('modalErrorData', lng.card_verify)
           this.setState({ loadingButton: false })
         }

@@ -23,8 +23,8 @@ export const SaveAddress = async (data = {}) => {
 
 export const EditAddress = async (data = {}, id = '') => {
   return await dispatchRequest({
-    method: 'put',
-    url: `users/address/${id}`,
+    method: 'UPDATE',
+    url: `users/address`,
     data: {
       ...data
     }

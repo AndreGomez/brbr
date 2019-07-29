@@ -23,6 +23,7 @@ import styles from './styles';
 
 //icons
 import starIcon from '../../../assets/icons/star.png';
+import ImagesCustom from '../../../components/imagesCustom';
 
 class MyProfile extends Component {
 
@@ -95,9 +96,9 @@ class MyProfile extends Component {
               <View
                 style={styles.row}
               >
-                <Image
-                  style={styles.avatar}
-                  source={{ uri: avatar }}
+                <ImagesCustom
+                  styles={styles.avatar}
+                  img={currentUser.photo ? { uri: currentUser.photo } : null}
                 />
                 <View
                   style={styles.txtContainer}
@@ -112,12 +113,12 @@ class MyProfile extends Component {
                   >
                     {
                       currentUser.address.length != 0 ?
-                        currentUser.address[0].description
+                        currentUser.address.description
                         :
                         ''
                     }
                   </Text>
-                  <View
+                  {/* <View
                     style={styles.row}
                   >
                     <Text
@@ -128,7 +129,7 @@ class MyProfile extends Component {
                     <Image
                       source={starIcon}
                     />
-                  </View>
+                  </View> */}
                 </View>
               </View>
               <View

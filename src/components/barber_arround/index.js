@@ -8,6 +8,7 @@ import {
 
 //components
 import MainButton from '../button';
+import ImagesCustom from '../imagesCustom';
 
 //customs
 import styles from './styles';
@@ -35,9 +36,9 @@ export default function BarberArround(props) {
       style={styles.container}
       onPress={onPressBarberArround}
     >
-      <Image
-        source={{ uri: img }}
-        style={styles.img}
+      <ImagesCustom
+        img={img ? { uri: img } : null}
+        styles={styles.img}
       />
       <View
         style={styles.txtContainer}

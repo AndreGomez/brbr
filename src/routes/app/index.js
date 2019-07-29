@@ -12,6 +12,7 @@ import About from '../../screens/app/about';
 import MyProfile from '../../screens/app/my_profile';
 import UploadDUI from '../../screens/auth/upload_dui';
 import MyAddress from '../../screens/app/my_address';
+import Galery from '../../screens/app/galery';
 
 //components 
 import Sidebar from '../../components/sidebar';
@@ -39,7 +40,8 @@ const appStackNavigator = createStackNavigator(
     ExtraInfo,
     About,
     MyProfile,
-    MyAddress
+    MyAddress,
+    Galery
   },
   {
     initialRouteName: 'drawer',
