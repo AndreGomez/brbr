@@ -417,9 +417,8 @@ class Home extends Component {
                       style={styles.searchContainer}
                     >
                       <TouchableOpacity
-                        onPress={() => this.onPressLocation()}
                         style={styles.location}
-                        activeOpacity={0.8}
+                        activeOpacity={1}
                       >
                         <Image
                           source={locationIcon}

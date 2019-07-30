@@ -68,7 +68,7 @@ class Galery extends Component {
       }
     >
       <ImagesCustom
-        list
+        listy
         img={{ uri: item.img }}
       />
     </TouchableOpacity>
@@ -131,7 +131,7 @@ class Galery extends Component {
             style={styles.graView}
           >
             <LinearGradient
-              colors={['transparent', 'black', 'black', 'black']} style={styles.linearGradient}
+              colors={['transparent', 'transparent']} style={styles.linearGradient}
             >
               {
                 this.renderImgs()

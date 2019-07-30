@@ -14,6 +14,12 @@ export default StyleSheet.create({
     width: resize(74),
     height: resize(74),
     borderRadius: 10,
+    marginHorizontal: resize(10),
+  },
+  listy: {
+    width: resize(74),
+    height: resize(74),
+    borderRadius: 10,
   },
   complete: {
     width: '100%',

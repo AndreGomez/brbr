@@ -19,7 +19,8 @@ export default function ImagesCustom(props) {
     roundedS,
     list,
     complete,
-    roundedXs
+    roundedXs,
+    listy
   } = props
 
   return (
@@ -30,6 +31,7 @@ export default function ImagesCustom(props) {
           roundedNormal && styles.roundedNormal,
           roundedS && styles.roundedS,
           list && styles.list,
+          listy && styles.listy,
           complete && styles.complete,
           roundedXs && styles.roundedXs,
           props.styles

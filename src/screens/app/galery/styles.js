@@ -25,7 +25,7 @@ export default StyleSheet.create({
     marginTop: resize(490, 'h')
   },
   graView: {
-    height: resize(300),
+    height: '100%',
   },
   list: {
     marginTop: resize(69, 'h'),

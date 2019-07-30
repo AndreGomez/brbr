@@ -7,9 +7,9 @@ export default StyleSheet.create({
   container: {
     borderBottomWidth: 1,
     borderColor: 'rgba(255,255,255,0.3)',
-    height: resize(100, 'h'),
+    height: Platform.OS === 'android' ? resize(110, 'h') : resize(100, 'h'),
     flexDirection: 'row',
-    paddingTop: resize(15, 'h')
+    paddingTop: resize(15, 'h'),
   },
   img: {
     width: resize(65),

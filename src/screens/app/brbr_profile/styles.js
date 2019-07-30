@@ -16,7 +16,6 @@ export default StyleSheet.create({
   },
   column: {
     marginTop: resize(25, 'h'),
-    justifyContent: 'space-between'
   },
   portraitBack: {
     width: '100%',
