@@ -131,7 +131,7 @@ export default function BrbrPaymentReview(props) {
 }
 
 BrbrPaymentReview.defaultProps = {
-  vip: true,
+  vip: false,
   avatar: '',
   name: '',
   city: '',

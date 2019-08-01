@@ -58,6 +58,7 @@ export default StyleSheet.create({
     color: '#cfcfcf',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(20),
+    paddingHorizontal: resize(20),
     fontWeight: Platform.OS === 'ios' ? '500' : '400',
     textAlign: 'center'
   },

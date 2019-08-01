@@ -10,3 +10,10 @@ export const createAppoiment = async (data = {}) => {
     }
   })
 }
+
+export const getAppoiment = async (id = '') => {
+  return await dispatchRequest({
+    method: 'GET',
+    url: `appointments/user/${id}`,
+  })
+}

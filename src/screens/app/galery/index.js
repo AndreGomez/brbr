@@ -130,13 +130,13 @@ class Galery extends Component {
           <View
             style={styles.graView}
           >
-            <LinearGradient
-              colors={['transparent', 'transparent']} style={styles.linearGradient}
+            <View
+              style={styles.linearGradient}
             >
               {
                 this.renderImgs()
               }
-            </LinearGradient>
+            </View>
           </View>
         </Content>
       </ImageBackground>

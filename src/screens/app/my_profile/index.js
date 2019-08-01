@@ -3,6 +3,7 @@ import {
   View,
   Text,
   Image,
+  FlatList
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Container, Content } from 'native-base';
@@ -24,26 +25,47 @@ import styles from './styles';
 //icons
 import starIcon from '../../../assets/icons/star.png';
 import ImagesCustom from '../../../components/imagesCustom';
+import { getAppoiment } from '../../../api/appoinments';
+import { getBarberProfile } from '../../../api/barbers';
+import BrbrHistoryReserve from '../../../components/brbr_history_reserve';
 
 class MyProfile extends Component {
 
   state = {
     loading: true,
     lng: {},
-    name: 'Andre Gomez',
-    avatar: 'https://content-static.upwork.com/uploads/2014/10/01073427/profilephoto1.jpg',
-    stars: 4.5,
-    city: 'San Salvador',
     active: true,
-    paymentMethod: '...1234'
+    appoinments: [],
+    proxAppoinment: {}
   }
 
   async componentDidMount() {
+    await this.getAppointemt()
     const lng = await locale()
     this.setState({
       lng,
       loading: false
     })
+  }
+
+  getAppointemt = async () => {
+    const {
+      currentUser
+    } = this.props
+
+    const {
+      state
+    } = this
+
+    try {
+      const res = await getAppoiment(currentUser._id)
+
+      this.setState({
+        ...state,
+        appoinments: res.data,
+      })
+    } catch (error) {
+    }
   }
 
   navigateTo = (screen, data = {}) => {
@@ -52,17 +74,25 @@ class MyProfile extends Component {
     navigation.navigate(screen, data)
   }
 
+  renderHistory = (item) => {
+    console.log(item)
+
+    return (
+      <BrbrHistoryReserve
+        {...item.item}
+      />
+    )
+  }
+
   render() {
 
     const {
       loading,
       lng,
-      name,
-      avatar,
-      stars,
-      city,
       active,
-      paymentMethod
+      paymentMethod,
+      appoinments,
+      proxAppoinment
     } = this.state
 
     const {
@@ -145,16 +175,34 @@ class MyProfile extends Component {
               <View
                 style={styles.separator}
               />
-              <BrbrPaymentReview
-                lng={lng}
-                avatar={avatar}
-                name={name}
-                city={city}
-                stars={stars}
-                paymentMethod={paymentMethod}
-                onPressProfile={() => this.navigateTo('BrbrProfile')}
-                onPressChange={() => this.navigateTo('BrbrProfile')}
-              />
+              {
+                active ?
+                  appoinments.length != 0 ?
+                    <React.Fragment>
+                      <View style={styles.sep} />
+                      <BrbrPaymentReview
+                        lng={lng}
+                        vip={false}
+                        avatar={appoinments[appoinments.length - 1].barber.photo}
+                        name={appoinments[appoinments.length - 1].barber.name}
+                        city={appoinments[appoinments.length - 1].location[2]}
+                        stars={appoinments[appoinments.length - 1].barber.qualification}
+                        paymentMethod={'...'}
+                        onPressProfile={() => this.navigateTo('BrbrProfile', { item: { barber: { ...{ _id: appoinments[appoinments.length - 1].barber.id } } } })}
+                        onPressChange={() => this.navigateTo('BrbrProfile', { item: { barber: { ...{ _id: appoinments[appoinments.length - 1].barber.id } } } })}
+                      />
+                    </React.Fragment>
+                    :
+                    <Text style={styles.empty}>No tienes reservaciones</Text>
+                  :
+                  <FlatList
+                    contentContainerStyle={styles.list}
+                    keyExtractor={(a, i) => `${i}`}
+                    renderItem={(item) => this.renderHistory(item)}
+                    data={appoinments.reverse()}
+                  />
+              }
+
             </Content>
         }
       </Container>

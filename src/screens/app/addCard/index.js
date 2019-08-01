@@ -39,6 +39,7 @@ import {
   addPaymentMethodToken,
   generateToken
 } from '../../../api/payment';
+import { GetMyInfo } from '../../../api/user';
 
 class AddCardForm extends Component {
 
@@ -91,6 +92,7 @@ class AddCardForm extends Component {
 
   async componentDidMount() {
     const lng = await locale()
+    const { currentUser } = this.props
 
     this.setState({
       lng
@@ -124,7 +126,8 @@ class AddCardForm extends Component {
   onPressAccept = async () => {
     const {
       dispatch,
-      navigation
+      navigation,
+      currentUser
     } = this.props
 
     try {
@@ -146,15 +149,17 @@ class AddCardForm extends Component {
       const card = await res.json()
       const device_session_id = await createDeviceSessionId()
       if (card.card) {
-        const resToken = await addPaymentMethodToken({
+        await addPaymentMethodToken({
           device_session_id,
           token: card.id
         })
 
+        const resUser = await GetMyInfo(currentUser._id)
+
         dispatch({
           type: SET_USER,
           payload: {
-            ...resToken.data
+            ...resUser.data
           }
         });
         navigation.state.params.addCard(card.card)
@@ -172,6 +177,7 @@ class AddCardForm extends Component {
         }
       }
     } catch (error) {
+      console.log(error)
       this.setState({ loadingButton: false })
       this.toggleModal('modalErrorData', this.state.lng.all_fields_are_required)
     }
@@ -383,4 +389,10 @@ class AddCardForm extends Component {
   }
 }
 
-export default connect()(AddCardForm);
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.user
+  }
+};
+
+export default connect(mapStateToProps)(AddCardForm);

@@ -6,10 +6,13 @@ import { resize, AIRBNB_MEDIUM } from '../../../utils/styles';
 export default StyleSheet.create({
   container: {
     backgroundColor: 'black',
+    flex: 1
   },
   content: {
     paddingHorizontal: resize(20),
-    paddingTop: resize(40, 'h')
+    paddingTop: resize(40, 'h'),
+    height: '100%',
+    width: '100%'
   },
   row: {
     flexDirection: 'row',
@@ -51,7 +54,19 @@ export default StyleSheet.create({
     height: resize(1),
     borderColor: '#ffffff',
     borderWidth: resize(4),
-    marginVertical: resize(34, 'h'),
+    marginTop: resize(34, 'h'),
     backgroundColor: 'white'
-  }
+  },
+  sep: {
+    marginTop: resize(34, 'h'),
+  },
+  empty: {
+    color: '#ffffff',
+    fontFamily: 'Airbnb Cereal App',
+    fontSize: resize(18),
+    fontWeight: '300',
+  },
+  list: {
+    paddingTop: resize(34, 'h'),
+  },
 });

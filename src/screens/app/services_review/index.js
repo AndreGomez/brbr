@@ -14,6 +14,7 @@ import HeaderTitle from '../../../components/header_title';
 import BackButton from '../../../components/back_button';
 import MainButton from '../../../components/button';
 import BrbrPaymentReview from '../../../components/brbr_payment_review';
+import ModalAlert from '../../../components/modal_alerts';
 
 //customs
 import styles from './styles';
@@ -32,6 +33,10 @@ import { createAppoiment } from '../../../api/appoinments';
 import parseError from '../../../utils/parse_error';
 import alertMessage from '../../../utils/alertMessaje';
 
+import checkIcon from '../../../assets/icons/check.png';
+import { StackActions, NavigationActions } from 'react-navigation';
+import { getObjectCard } from '../../../api/payment';
+
 class ServiceReview extends Component {
 
   state = {
@@ -43,13 +48,19 @@ class ServiceReview extends Component {
     location: '',
     paymentMethod: '...3234',
     barberInfo: {},
-    loadingBtn: false
+    loadingBtn: false,
+    modalData: {
+      visible: false
+    },
   }
 
   async componentDidMount() {
     const lng = await locale()
     const { navigation, currentUser } = this.props
-
+    // try {
+    //   const cardObject = await getObjectCard(currentUser.openpay_id, currentUser.payment_methods[currentUser.payment_methods.length - 1]._id)
+    // } catch (error) {
+    // }
     this.setState({
       lng,
       loading: false,
@@ -76,22 +87,27 @@ class ServiceReview extends Component {
       const dataAppoiment = {
         schedule_id: `${params.daySelected._id}`,
         hour: params.hourSelected.hour,
-        payment: currentUser.payment_methods[0]._id,
+        location: [navigation.state.params.positionAppoint.lat, navigation.state.params.positionAppoint.lng, this.state.location],
+        payment: currentUser.payment_methods[currentUser.payment_methods.length - 1]._id,
         barber_id: params.item.barber._id,
         services: {
           hair: {
-            cost: "2"
+            cost: navigation.state.params.servicesSelected.hair ? navigation.state.params.item.barber.services.hair.cost : '0'
           },
           eyebrows: {
             cost: "0"
           },
           beard: {
-            cost: "1"
+            cost: navigation.state.params.servicesSelected.bear ? navigation.state.params.item.barber.services.beard.cost : '0'
           }
         }
       }
       const res = await createAppoiment({ ...dataAppoiment })
-      console.log(res)
+      this.setState({
+        modalData: {
+          visible: true
+        }
+      })
       this.setState({
         loadingBtn: false
       })
@@ -101,6 +117,24 @@ class ServiceReview extends Component {
       })
       return alertMessage('Error al procesar su reserva')
     }
+  }
+
+  onPressCompleteRegister = () => {
+    this.setState({
+      modalData: {
+        visible: true
+      }
+    })
+    const actionToDispatch = StackActions.reset({
+      index: 0,
+      key: null,
+      actions: [
+        NavigationActions.navigate({
+          routeName: 'drawer',
+        }),
+      ]
+    });
+    this.props.navigation.dispatch(actionToDispatch);
   }
 
   render() {
@@ -114,7 +148,10 @@ class ServiceReview extends Component {
       location,
       paymentMethod,
       barberInfo,
-      loadingBtn
+      loadingBtn,
+      modalData: {
+        visible
+      }
     } = this.state
 
     return (
@@ -138,6 +175,7 @@ class ServiceReview extends Component {
             <Loading />
             :
             <Content
+              bounces={false}
               contentContainerStyle={styles.content}
             >
               <View
@@ -184,7 +222,7 @@ class ServiceReview extends Component {
                 name={barberInfo.name}
                 city={barberInfo.address.description}
                 stars={barberInfo.qualification}
-                paymentMethod={paymentMethod}
+                paymentMethod={`...`}
                 onPressProfile={() => this.navigateTo('BrbrProfile', { item: { barber: { ...barberInfo } } })}
                 onPressChange={() => this.navigateTo('BrbrProfile')}
               />
@@ -201,6 +239,17 @@ class ServiceReview extends Component {
               />
             </Content>
         }
+        <ModalAlert
+          visible={visible}
+          title={
+            <Image
+              source={checkIcon}
+            />
+          }
+          message={'Tu reserva se hizo, Puedes ver el seguimiento en tu perfil'}
+          btnTitle={'Aceptar'}
+          onPress={() => this.onPressCompleteRegister()}
+        />
       </Container>
     );
   }

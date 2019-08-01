@@ -30,3 +30,10 @@ export const EditAddress = async (data = {}, id = '') => {
     }
   })
 }
+
+export const GetMyInfo = async (id = '') => {
+  return await dispatchRequest({
+    method: 'GET',
+    url: `users/${id}`,
+  })
+}

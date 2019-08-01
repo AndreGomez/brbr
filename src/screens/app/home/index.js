@@ -8,7 +8,8 @@ import {
   TextInput,
   StatusBar,
   Platform,
-  AppState
+  AppState,
+  RefreshControl
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Container, Content, Spinner } from 'native-base';
@@ -68,6 +69,7 @@ class Home extends Component {
     acceptPermission: false,
     barbersArround: [],
     location: '',
+    refreshing: false,
     barbersArroundSearch: null,
     servicesModal: {
       visible: false,
@@ -81,7 +83,11 @@ class Home extends Component {
       nextWeek: false
     },
     extraData: false,
-    date: 'today'
+    date: 'today',
+    position: {
+      lat: null,
+      lng: null
+    }
   }
 
   async componentDidMount() {
@@ -133,6 +139,8 @@ class Home extends Component {
       })
 
       const resMyAddress = await getMyAddres(position.coords)
+      state.position.lat = position.coords.latitude
+      state.position.lng = position.coords.longitude
       state.location = resMyAddress.data.results[0].formatted_address
       state.acceptPermission = true
       state.locationCoords = position.coords
@@ -224,7 +232,7 @@ class Home extends Component {
   }
 
   onPressBarberReserve = async (brbr) => {
-    const { servicesModal, dateModal, date } = this.state
+    const { servicesModal, dateModal, date, position } = this.state
 
     var passDate = false
     var passService = false
@@ -245,6 +253,7 @@ class Home extends Component {
       this.navigateTo('BrbrReserve',
         {
           ...brbr,
+          positionAppoint: { ...position },
           dateForService: date,
           location: this.state.location,
           servicesSelected: { hair: servicesModal.hair, bear: servicesModal.bear },
@@ -325,6 +334,12 @@ class Home extends Component {
     })
   }
 
+  _onRefresh = async () => {
+    this.setState({ refreshing: true });
+    await this.verifyPermissions()
+    this.setState({ refreshing: false });
+  };
+
   render() {
 
     const {
@@ -336,7 +351,8 @@ class Home extends Component {
       barbersArround,
       barberVips,
       servicesModal,
-      dateModal
+      dateModal,
+      refreshing
     } = this.state
 
     return (
@@ -396,6 +412,12 @@ class Home extends Component {
             :
             acceptPermission ?
               <Content
+                refreshControl={
+                  <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={this._onRefresh}
+                  />
+                }
                 contentContainerStyle={styles.content}
               >
                 {

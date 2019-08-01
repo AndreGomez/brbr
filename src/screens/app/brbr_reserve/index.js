@@ -35,6 +35,7 @@ import alertMessage from '../../../utils/alertMessaje';
 import moment from 'moment';
 import daysOfTheWeek from '../../../utils/daysOfTheWeek';
 
+
 class BrbrReserve extends Component {
 
   state = {
@@ -98,7 +99,40 @@ class BrbrReserve extends Component {
     }
 
     if (dateToSelectService == 'nextWeek') {
+      var numberDayOfTheWeek = moment().isoWeekday()
+      numberDayOfTheWeek = numberDayOfTheWeek === 7 ? 1 : numberDayOfTheWeek
 
+      var startOfWeek = moment().add(1, 'weeks').startOf('isoWeek');
+      var endOfWeek = moment().add(1, 'weeks').endOf('isoWeek');
+
+      var days = [];
+      var day = startOfWeek;
+
+      while (day <= endOfWeek) {
+        days.push(
+          {
+            date: moment(day).format('YYYY-MM-DD'),
+            day: daysOfTheWeek[moment(day).format('dddd')].dayEs,
+            active: false
+          }
+        );
+        day = day.clone().add(1, 'd');
+      }
+
+      var ultimateDays = []
+
+      days.map((res, i) => {
+        const filter = schedule.filter(scheduleRes => scheduleRes.date == res.date)
+        if (filter.length != 0) {
+          days[i]._id = filter[0]._id
+          days[i].hours = filter[0].hours
+          days[i].active = false
+
+          ultimateDays.push(days[i])
+        }
+      })
+
+      days = ultimateDays
     }
 
     this.setState({
@@ -140,24 +174,30 @@ class BrbrReserve extends Component {
       horizontal
     >
       {
-        this.state.days.map((res, i) =>
-          <TouchableOpacity
-            key={i}
-            onPress={() => this.setItemList('days', i)}
-          >
-            <Text
-              style={
-                [
-                  styles.days,
-                  res.active &&
-                  styles.activeText
-                ]
-              }
+        this.state.days.length != 0 ?
+          this.state.days.map((res, i) =>
+            <TouchableOpacity
+              key={i}
+              onPress={() => this.setItemList('days', i)}
             >
-              {res.day}
-            </Text>
-          </TouchableOpacity>
-        )
+              <Text
+                style={
+                  [
+                    styles.days,
+                    res.active &&
+                    styles.activeText
+                  ]
+                }
+              >
+                {res.day}
+              </Text>
+            </TouchableOpacity>
+
+          )
+          :
+          <Text style={{ color: 'white' }}>
+            Lo sentimos, este barbero no trabajara la proxima semana
+          </Text>
       }
     </ScrollView>
   )
@@ -168,6 +208,7 @@ class BrbrReserve extends Component {
     >
       {
         this.state.hours.map((res, i) =>
+          !res.reserve &&
           <TouchableOpacity
             key={i}
             onPress={() => this.setItemList('hours', i)}
@@ -214,6 +255,8 @@ class BrbrReserve extends Component {
     }
   }
 
+
+
   render() {
 
     const {
@@ -221,7 +264,8 @@ class BrbrReserve extends Component {
       loading,
       price,
       barberInfo,
-      hours
+      hours,
+
     } = this.state
 
     return (
