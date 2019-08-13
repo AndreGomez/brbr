@@ -28,12 +28,14 @@ import ImagesCustom from '../../../components/imagesCustom';
 import { getAppoiment } from '../../../api/appoinments';
 import { getBarberProfile } from '../../../api/barbers';
 import BrbrHistoryReserve from '../../../components/brbr_history_reserve';
+import { getObjectCard } from '../../../api/payment';
 
 class MyProfile extends Component {
 
   state = {
     loading: true,
     lng: {},
+    paymentMethod: '',
     active: true,
     appoinments: [],
     proxAppoinment: {}
@@ -41,6 +43,17 @@ class MyProfile extends Component {
 
   async componentDidMount() {
     await this.getAppointemt()
+    const { navigation, currentUser } = this.props
+    try {
+      const cardObject = await getObjectCard(currentUser.openpay_id, currentUser.payment_methods[currentUser.payment_methods.length - 1].token)
+      const card = await cardObject.json()
+      const paymentMethod = `...${card.card_number[12]}${card.card_number[13]}${card.card_number[14]}${card.card_number[15]}`
+      this.setState({
+        paymentMethod
+      })
+    } catch (error) {
+      console.log('error', error)
+    }
     const lng = await locale()
     this.setState({
       lng,
@@ -187,7 +200,7 @@ class MyProfile extends Component {
                         name={appoinments[appoinments.length - 1].barber.name}
                         city={appoinments[appoinments.length - 1].location[2]}
                         stars={appoinments[appoinments.length - 1].barber.qualification}
-                        paymentMethod={'...'}
+                        paymentMethod={paymentMethod}
                         onPressProfile={() => this.navigateTo('BrbrProfile', { item: { barber: { ...{ _id: appoinments[appoinments.length - 1].barber.id } } } })}
                         onPressChange={() => this.navigateTo('BrbrProfile', { item: { barber: { ...{ _id: appoinments[appoinments.length - 1].barber.id } } } })}
                       />

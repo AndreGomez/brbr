@@ -30,7 +30,9 @@ import vipIcon from '../../../assets/icons/vip.png';
 import portraitBack from '../../../assets/images/portrait.png';
 import starIcon from '../../../assets/icons/star.png';
 import arrow_green from '../../../assets/icons/arrow_green.png'
-import { getBarberProfile } from '../../../api/barbers';
+import { getBarberProfile, getBarberReviews } from '../../../api/barbers';
+
+import Review from '../review';
 
 class BrbrProfile extends Component {
 
@@ -43,68 +45,47 @@ class BrbrProfile extends Component {
     cuts: 120,
     avatar: 'https://content-static.upwork.com/uploads/2014/10/01073427/profilephoto1.jpg',
     switchActive: true,
-    comments: [
-      {
-        avatar: 'https://content-static.upwork.com/uploads/2014/10/01073427/profilephoto1.jpg',
-        title: 'MUY BUEN TRABAJO',
-        city: 'Ecuador',
-        name: 'Fidel Castro',
-        date: '12/02/1902',
-        body: 'Este si que sabe'
-      },
-      {
-        avatar: 'https://content-static.upwork.com/uploads/2014/10/01073427/profilephoto1.jpg',
-        title: 'MUY BUEN TRABAJO',
-        city: 'Ecuador',
-        name: 'Fidel Castro',
-        date: '12/02/1902',
-        body: 'Este si que sabe'
-      },
-      {
-        avatar: 'https://content-static.upwork.com/uploads/2014/10/01073427/profilephoto1.jpg',
-        title: 'MUY BUEN TRABAJO',
-        city: 'Ecuador',
-        name: 'Fidel Castro',
-        date: '12/02/1902',
-        body: 'Este si que sabe'
-      },
-      {
-        avatar: 'https://content-static.upwork.com/uploads/2014/10/01073427/profilephoto1.jpg',
-        title: 'MUY BUEN TRABAJO',
-        city: 'Ecuador',
-        name: 'Fidel Castro',
-        date: '12/02/1902',
-        body: 'Este si que sabe'
-      }
-    ],
+    comments: [],
     barberInfo: null
   }
 
   async componentDidMount() {
-    const lng = await locale()
-    const barberProfile = await getBarberProfile(this.props.navigation.state.params.item.barber._id)
+    try {
+      const lng = await locale()
 
+      const barberProfile = await getBarberProfile(this.props.navigation.state.params.item.barber._id)
+      const comments = await getBarberReviews(this.props.navigation.state.params.item.barber._id)
 
-    this.setState({
-      lng,
-      loading: false,
-      barberInfo: barberProfile.data
-    })
+      this.setState({
+        lng,
+        loading: false,
+        barberInfo: barberProfile.data,
+        comments: comments.data
+      })
+    } catch (error) {
+    }
   }
 
   renderComments = () => (
     <FlatList
       data={this.state.comments}
+      ListEmptyComponent={
+        <Text
+          style={styles.empty}
+        >
+          Este barbero aun no tiene comentarios
+        </Text>
+      }
       renderItem={(item) =>
         <Comment
-          avatar={item.item.avatar}
+          avatar={item.item.user.photo}
           title={item.item.title}
-          city={item.item.city}
-          name={item.item.name}
+          name={`${item.item.user.name}`}
           date={item.item.date}
-          body={item.item.body}
+          body={item.item.comment}
         />
       }
+      style={{ paddingBottom: 20 }}
       keyExtractor={(a, i) => `${i}`}
     />
   )
@@ -238,7 +219,9 @@ class BrbrProfile extends Component {
                     <Text
                       style={styles.stars}
                     >
-                      {barberInfo.qualification}
+                      {
+                        parseFloat(barberInfo.qualification).toFixed(1)
+                      }
                     </Text>
                     <Image
                       source={starIcon}
@@ -293,18 +276,16 @@ class BrbrProfile extends Component {
 
             {
               switchActive ?
-                // this.renderComments()
-                <Text
-                  style={styles.empty}
-                >
-                  Este barbero aun no tiene comentarios
-                </Text>
+                this.renderComments()
                 :
-                // null
                 this.renderPhotos()
             }
           </Content>
         }
+        {/* <Review
+          visible={true}
+          brbrId={'5d4b93dd93a2ad0017fd96b1'}
+        /> */}
       </Container>
     );
   }

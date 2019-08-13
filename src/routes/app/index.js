@@ -7,6 +7,7 @@ import BrbrProfile from '../../screens/app/brbr_profile';
 import BrbrReserve from '../../screens/app/brbr_reserve';
 import ServiceReview from '../../screens/app/services_review';
 import EditProfile from '../../screens/app/edit_profile';
+import AddCardForm from '../../screens/app/addCard';
 import ExtraInfo from '../../screens/app/extra_info';
 import About from '../../screens/app/about';
 import MyProfile from '../../screens/app/my_profile';
@@ -41,7 +42,8 @@ const appStackNavigator = createStackNavigator(
     About,
     MyProfile,
     MyAddress,
-    Galery
+    Galery,
+    AddCardForm
   },
   {
     initialRouteName: 'drawer',

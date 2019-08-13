@@ -8,7 +8,7 @@ const openPayPk = 'pk_a64ea6b36cc4413eb77f2e6c271b2831'
 
 const urlOpenPay = `${openPayUrl}${openPayMerchantId}/tokens`
 
-const credentials = Base64.encode(openPayPk + ':' + '')
+const credentials = Base64.encode(openPaySk + ':' + '')
 
 export const getObjectCard = async (id = '', card_id = '') => {
   try {

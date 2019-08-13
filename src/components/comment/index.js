@@ -8,6 +8,7 @@ import { Spinner } from 'native-base';
 
 //customs
 import styles from './styles';
+import ImagesCustom from '../imagesCustom';
 
 export default function Comment(props) {
 
@@ -27,9 +28,10 @@ export default function Comment(props) {
       <View
         style={styles.header}
       >
-        <Image
-          style={styles.avatar}
-          source={{ uri: avatar }}
+        <ImagesCustom
+          colorLoading={'black'}
+          styles={styles.avatar}
+          img={avatar ? { uri: avatar } : null}
         />
         <View>
           <Text
@@ -37,11 +39,7 @@ export default function Comment(props) {
           >
             {name}
           </Text>
-          <Text
-            style={styles.city}
-          >
-            {city}
-          </Text>
+
         </View>
       </View>
       <View

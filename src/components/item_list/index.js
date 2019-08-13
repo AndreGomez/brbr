@@ -24,7 +24,8 @@ export default function ItemList(props) {
     version,
     notifications,
     active,
-    lng
+    lng,
+    alert
   } = props
 
   return (
@@ -73,6 +74,7 @@ export default function ItemList(props) {
             >
               {text}
             </Text>
+
             {
               version ?
                 <Text
@@ -88,9 +90,22 @@ export default function ItemList(props) {
                     {active ? lng.active : lng.desactive}
                   </Text>
                   :
-                  <Image
-                    source={right_arrow}
-                  />
+                  <View
+                    style={styles.row}
+                  >
+                    {
+                      alert &&
+                      <Text
+                        style={styles.alert}
+                      >
+                        Incompleto
+                      </Text>
+                    }
+                    <Image
+                      source={right_arrow}
+                    />
+                  </View>
+
             }
           </View>
       }
@@ -100,5 +115,6 @@ export default function ItemList(props) {
 
 ItemList.defaultProps = {
   text: '',
-  onPress: () => { }
+  onPress: () => { },
+  alert: false
 }

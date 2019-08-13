@@ -154,6 +154,13 @@ const es = {
 
   my_address: 'Mi direccion',
   accept_location: 'Aceptar ubicacion',
+
+  //Reviews
+  write_review: 'Escribir reseña',
+  touch_to_star: 'Toca una estrella para calificar',
+  title_review: 'Título (Bueno, Muy Bueno, Excelente)',
+  review: 'Reseña',
+  send: 'ENVIAR',
 }
 
 export default es;

@@ -352,7 +352,7 @@ class Home extends Component {
       barberVips,
       servicesModal,
       dateModal,
-      refreshing
+      refreshing,
     } = this.state
 
     return (
@@ -467,7 +467,13 @@ class Home extends Component {
                             numberOfLines={1}
                             style={styles.locationText}
                           >
-                            {lng.add}
+                            {
+                              dateModal.thisWeek || dateModal.today ?
+                                'Esta Semana' :
+                                dateModal.nextWeek ?
+                                  'Prox. Semana' :
+                                  lng.add
+                            }
                           </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
@@ -482,7 +488,12 @@ class Home extends Component {
                             numberOfLines={1}
                             style={styles.locationText}
                           >
-                            {lng.select}
+                            {
+                              servicesModal.hair || servicesModal.bear ?
+                                `${servicesModal.hair ? 'Cabello' : ''} ${servicesModal.bear ? 'Barba' : ''}`
+                                :
+                                lng.select
+                            }
                           </Text>
                         </TouchableOpacity>
                       </View>

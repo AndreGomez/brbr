@@ -40,6 +40,7 @@ import {
   generateToken
 } from '../../../api/payment';
 import { GetMyInfo } from '../../../api/user';
+import successMessage from '../../../utils/success_message';
 
 class AddCardForm extends Component {
 
@@ -92,8 +93,8 @@ class AddCardForm extends Component {
 
   async componentDidMount() {
     const lng = await locale()
-    const { currentUser } = this.props
-
+    const { currentUser, navigation } = this.props
+    console.log(navigation)
     this.setState({
       lng
     })
@@ -162,7 +163,12 @@ class AddCardForm extends Component {
             ...resUser.data
           }
         });
-        navigation.state.params.addCard(card.card)
+
+        if (!navigation.state.params.addExternal) {
+          navigation.state.params.addCard(card.card)
+        }
+
+        successMessage('Agregado exitosamente')
         navigation.goBack()
         this.setState({ loadingButton: false })
       } else {
@@ -170,14 +176,12 @@ class AddCardForm extends Component {
           this.toggleModal('modalErrorData', 'El formato de fecha debe ser YY/MM')
           this.setState({ loadingButton: false })
         } else {
-          console.log(card.description)
 
           this.toggleModal('modalErrorData', lng.card_verify)
           this.setState({ loadingButton: false })
         }
       }
     } catch (error) {
-      console.log(error)
       this.setState({ loadingButton: false })
       this.toggleModal('modalErrorData', this.state.lng.all_fields_are_required)
     }

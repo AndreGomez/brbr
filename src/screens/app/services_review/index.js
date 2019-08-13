@@ -46,7 +46,7 @@ class ServiceReview extends Component {
     service: '',
     date: '',
     location: '',
-    paymentMethod: '...3234',
+    paymentMethod: '',
     barberInfo: {},
     loadingBtn: false,
     modalData: {
@@ -57,10 +57,16 @@ class ServiceReview extends Component {
   async componentDidMount() {
     const lng = await locale()
     const { navigation, currentUser } = this.props
-    // try {
-    //   const cardObject = await getObjectCard(currentUser.openpay_id, currentUser.payment_methods[currentUser.payment_methods.length - 1]._id)
-    // } catch (error) {
-    // }
+    try {
+      const cardObject = await getObjectCard(currentUser.openpay_id, currentUser.payment_methods[currentUser.payment_methods.length - 1].token)
+      const card = await cardObject.json()
+      const paymentMethod = `...${card.card_number[12]}${card.card_number[13]}${card.card_number[14]}${card.card_number[15]}`
+      this.setState({
+        paymentMethod
+      })
+    } catch (error) {
+      console.log('error', error)
+    }
     this.setState({
       lng,
       loading: false,
@@ -84,33 +90,40 @@ class ServiceReview extends Component {
       loadingBtn: true
     })
     try {
-      const dataAppoiment = {
-        schedule_id: `${params.daySelected._id}`,
-        hour: params.hourSelected.hour,
-        location: [navigation.state.params.positionAppoint.lat, navigation.state.params.positionAppoint.lng, this.state.location],
-        payment: currentUser.payment_methods[currentUser.payment_methods.length - 1]._id,
-        barber_id: params.item.barber._id,
-        services: {
-          hair: {
-            cost: navigation.state.params.servicesSelected.hair ? navigation.state.params.item.barber.services.hair.cost : '0'
-          },
-          eyebrows: {
-            cost: "0"
-          },
-          beard: {
-            cost: navigation.state.params.servicesSelected.bear ? navigation.state.params.item.barber.services.beard.cost : '0'
+      if (currentUser.payment_methods.length != 0) {
+        const dataAppoiment = {
+          schedule_id: `${params.daySelected._id}`,
+          hour: params.hourSelected.hour,
+          location: [navigation.state.params.positionAppoint.lat, navigation.state.params.positionAppoint.lng, this.state.location],
+          payment: currentUser.payment_methods[currentUser.payment_methods.length - 1]._id,
+          barber_id: params.item.barber._id,
+          services: {
+            hair: {
+              cost: navigation.state.params.servicesSelected.hair ? navigation.state.params.item.barber.services.hair.cost : '0'
+            },
+            eyebrows: {
+              cost: "0"
+            },
+            beard: {
+              cost: navigation.state.params.servicesSelected.bear ? navigation.state.params.item.barber.services.beard.cost : '0'
+            }
           }
         }
+        const res = await createAppoiment({ ...dataAppoiment })
+        this.setState({
+          modalData: {
+            visible: true
+          }
+        })
+        this.setState({
+          loadingBtn: false
+        })
+      } else {
+        this.setState({
+          loadingBtn: false
+        })
+        return alertMessage('No tienes ningun metodo de pago!')
       }
-      const res = await createAppoiment({ ...dataAppoiment })
-      this.setState({
-        modalData: {
-          visible: true
-        }
-      })
-      this.setState({
-        loadingBtn: false
-      })
     } catch (error) {
       this.setState({
         loadingBtn: false
@@ -222,7 +235,7 @@ class ServiceReview extends Component {
                 name={barberInfo.name}
                 city={barberInfo.address.description}
                 stars={barberInfo.qualification}
-                paymentMethod={`...`}
+                paymentMethod={paymentMethod}
                 onPressProfile={() => this.navigateTo('BrbrProfile', { item: { barber: { ...barberInfo } } })}
                 onPressChange={() => this.navigateTo('BrbrProfile')}
               />

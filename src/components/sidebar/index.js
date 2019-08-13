@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
-  Image
+  Image,
+  Alert
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Container, Content } from 'native-base';
@@ -68,6 +69,31 @@ class Sidebar extends Component {
     })
   }
 
+  onPressPaymentMethod = () => {
+    const {
+      currentUser
+    } = this.props;
+
+    if (currentUser.payment_methods.length === 0) {
+      this.navigateTo('AddCardForm', { addExternal: true })
+    } else {
+      Alert.alert(
+        'Brbr App',
+        'Tu ya tienes un metodo de pago, si agregas otro se eliminara el anterior',
+        [
+          {
+            text: 'Cancel',
+            onPress: () => { },
+            style: 'cancel',
+          },
+          { text: 'Aceptar', onPress: () => this.navigateTo('AddCardForm', { addExternal: true }) },
+        ],
+        { cancelable: false },
+      );
+
+    }
+  }
+
   render() {
 
     const {
@@ -120,6 +146,11 @@ class Sidebar extends Component {
                 <ItemList
                   text={lng.my_profile}
                   onPress={() => this.navigateTo('MyProfile')}
+                />
+                <ItemList
+                  text={'Metodo de pago'}
+                  alert={currentUser.payment_methods.length === 0}
+                  onPress={() => this.onPressPaymentMethod()}
                 />
                 {/* <ItemList
                   text={lng.my_address}

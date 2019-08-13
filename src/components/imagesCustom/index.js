@@ -20,7 +20,8 @@ export default function ImagesCustom(props) {
     list,
     complete,
     roundedXs,
-    listy
+    listy,
+    colorLoading
   } = props
 
   return (
@@ -40,7 +41,7 @@ export default function ImagesCustom(props) {
       source={img ? img : img_empty}
       PlaceholderContent={
         <Spinner
-          color={'white'}
+          color={colorLoading}
           size={'small'}
         />
       }
@@ -49,5 +50,6 @@ export default function ImagesCustom(props) {
 }
 
 ImagesCustom.defaultProps = {
-  avatar: ''
+  avatar: '',
+  colorLoading: 'white'
 }

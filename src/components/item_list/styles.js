@@ -17,6 +17,10 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between'
   },
+  alert: {
+    color: 'red',
+    paddingRight: resize(20)
+  },
   name: {
     color: '#ffffff',
     fontFamily: AIRBNB_MEDIUM,

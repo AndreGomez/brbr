@@ -61,7 +61,9 @@ export default function BrbrHistoryReserve(props) {
           <Text
             style={styles.stars}
           >
-            {props.barber.qualification}
+            {
+              parseFloat(props.barber.qualification).toFixed(1)
+            }
           </Text>
           <Image
             source={starIcon}

@@ -83,7 +83,9 @@ export default function BrbrPaymentReview(props) {
               <Text
                 style={styles.stars}
               >
-                {stars}
+                {
+                  parseFloat(stars).toFixed(1)
+                }
               </Text>
               <Image
                 source={starIcon}

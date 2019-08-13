@@ -13,7 +13,7 @@ export default StyleSheet.create({
   name: {
     color: '#000000',
     fontFamily: AIRBNB_MEDIUM,
-    fontSize: resize(14),
+    fontSize: resize(15),
     fontWeight: Platform.OS === 'ios' ? '500' : '400',
   },
   header: {

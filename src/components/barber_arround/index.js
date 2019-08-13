@@ -61,7 +61,9 @@ export default function BarberArround(props) {
           <Text
             style={styles.starText}
           >
-            {stars}
+            {
+              parseFloat(stars).toFixed(1)
+            }
           </Text>
           <Image
             style={styles.starIcon}

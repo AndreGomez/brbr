@@ -340,7 +340,9 @@ class BrbrReserve extends Component {
                     <Text
                       style={styles.stars}
                     >
-                      {barberInfo.qualification}
+                      {
+                        parseFloat(barberInfo.qualification).toFixed(1)
+                      }
                     </Text>
                     <Image
                       source={starIcon}
