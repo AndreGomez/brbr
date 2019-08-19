@@ -62,6 +62,14 @@ export default StyleSheet.create({
   },
   empty: {
     color: '#ffffff',
+    paddingTop: resize(10, 'h'),
+    fontFamily: 'Airbnb Cereal App',
+    fontSize: resize(18),
+    fontWeight: '300',
+  },
+  empty2: {
+    color: '#ffffff',
+    marginTop: resize(-20, 'h'),
     fontFamily: 'Airbnb Cereal App',
     fontSize: resize(18),
     fontWeight: '300',

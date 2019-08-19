@@ -23,6 +23,8 @@ import BackButton from '../../../components/back_button';
 import { validateFields } from '../../../utils/validators';
 import { loginUser } from '../../../api/auth';
 import successMessage from '../../../utils/success_message';
+import { setToken } from '../../../api/user';
+import firebase from 'react-native-firebase';
 
 class LoginForm extends Component {
 
@@ -64,13 +66,24 @@ class LoginForm extends Component {
         email: form.email.value,
         password: form.password.value,
       })
-      console.log('USER', res)
+
       dispatch({
         type: SET_USER,
         payload: {
           ...res.data.user
         }
       });
+
+      dispatch({
+        type: INIT_SESSION,
+        payload: {
+          authorize: false,
+          token: `Bearer ${res.data.token}`,
+        }
+      });
+
+      const fcmToken = await firebase.messaging().getToken();
+      const a = await setToken({ device_token: fcmToken }, res.data.user._id);
 
       dispatch({
         type: INIT_SESSION,
@@ -82,7 +95,6 @@ class LoginForm extends Component {
 
       this.setState({ loading: false })
     } catch (error) {
-      console.log('error', error)
       this.setState({ loading: false })
       return successMessage('Verifique sus datos', 'danger')
     }

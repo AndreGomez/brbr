@@ -14,6 +14,7 @@ import MyProfile from '../../screens/app/my_profile';
 import UploadDUI from '../../screens/auth/upload_dui';
 import MyAddress from '../../screens/app/my_address';
 import Galery from '../../screens/app/galery';
+import DateDetail from '../../screens/app/date_detail';
 
 //components 
 import Sidebar from '../../components/sidebar';
@@ -40,6 +41,7 @@ const appStackNavigator = createStackNavigator(
     EditProfile,
     ExtraInfo,
     About,
+    DateDetail,
     MyProfile,
     MyAddress,
     Galery,

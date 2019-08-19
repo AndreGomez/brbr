@@ -35,6 +35,8 @@ import star_empty from '../../../assets/icons/star_empty.png';
 import starIcon from '../../../assets/icons/star.png';
 import alertMessaje from '../../../utils/alertMessaje';
 import successMessage from '../../../utils/success_message';
+import { getAppoiment, getAppoimentById } from '../../../api/appoinments';
+import { SET_USER } from '../../../actions/user';
 class Review extends Component {
 
   state = {
@@ -56,24 +58,26 @@ class Review extends Component {
     },
     stars: [1, 2, 3, 4, 5],
     starQ: null,
-    loadingBtn: false
+    loadingBtn: false,
+    brbrId: ''
   }
 
   async componentDidMount() {
     const lng = await locale()
-    const { brbrId } = this.props
+    const { dateId, currentUser } = this.props
 
     try {
-      const barberProfile = await getBarberProfile(brbrId)
+      const dateDetail = await getAppoimentById(dateId)
+      const barberProfile = await getBarberProfile(dateDetail.data.barber._id)
 
       this.setState({
         lng,
         loading: false,
+        brbrId: dateDetail.data.barber._id,
         barberProfile: barberProfile.data
       })
 
     } catch (error) {
-      console.log(error)
     }
   }
 
@@ -87,7 +91,7 @@ class Review extends Component {
       if (formData.title.value != '' && formData.body.value != '' && state.starQ != null) {
 
         const dataSend = {
-          barber_id: this.props.brbrId,
+          barber_id: this.state.brbrId,
           date: moment().format('YYYY/DD/MM'),
           qualification: state.starQ,
           comment: formData.body.value,
@@ -96,6 +100,13 @@ class Review extends Component {
 
 
         await addReview(dataSend)
+
+        this.props.dispatch({
+          type: SET_USER,
+          payload: {
+            appoinmentFinish: null
+          }
+        });
 
         successMessage('Tu review se agrego exitosamente')
 
@@ -111,7 +122,6 @@ class Review extends Component {
         return alertMessaje('Debes escribir titulo, reseña y calificar')
       }
     } catch (error) {
-      console.log(error)
       this.setState({
         loadingBtn: false
       })
@@ -151,17 +161,17 @@ class Review extends Component {
           style={styles.container}
         >
           <CustomHeader
-            right={
-              <TouchableOpacity
-                onPress={() => this.setState({ visible: false })}
-              >
-                <Text
-                  style={styles.cancelTxt}
-                >
-                  {lng.cancel}
-                </Text>
-              </TouchableOpacity>
-            }
+          // right={
+          //   <TouchableOpacity
+          //     onPress={() => this.setState({ visible: false })}
+          //   >
+          //     <Text
+          //       style={styles.cancelTxt}
+          //     >
+          //       {lng.cancel}
+          //     </Text>
+          //   </TouchableOpacity>
+          // }
           />
           {
             loading ?
@@ -263,4 +273,10 @@ class Review extends Component {
   }
 }
 
-export default connect()(Review);
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.user
+  }
+};
+
+export default connect(mapStateToProps)(Review);

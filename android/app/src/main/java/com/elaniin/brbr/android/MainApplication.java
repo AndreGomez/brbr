@@ -14,6 +14,10 @@ import java.util.List;
 //firebase
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.storage.RNFirebaseStoragePackage;
+//message
+import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
+//notifications
+import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 
 //react native splash screen
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
@@ -48,7 +52,9 @@ public class MainApplication extends Application implements ReactApplication {
         new RNGestureHandlerPackage(),
         new ImagePickerPackage(),
         new MapsPackage(),
-        new LinearGradientPackage()
+        new LinearGradientPackage(),
+        new RNFirebaseMessagingPackage(),
+        new RNFirebaseNotificationsPackage()
         );
     }
 

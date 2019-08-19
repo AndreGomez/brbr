@@ -28,6 +28,7 @@ import MainButton from '../button';
 
 //icons
 import brbr_black from '../../assets/images/brbr_black.png';
+import { getMessaging, updtaeTokenFirebase } from '../../api/setToken';
 
 class Sidebar extends Component {
 
@@ -48,8 +49,10 @@ class Sidebar extends Component {
 
   }
 
-  onDestroySession = () => {
+  onDestroySession = async () => {
     const { dispatch } = this.props;
+
+    await updtaeTokenFirebase(true);
 
     dispatch({
       type: DESTROY_SESSION,

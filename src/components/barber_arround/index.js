@@ -82,7 +82,7 @@ export default function BarberArround(props) {
         <Text
           style={styles.price}
         >
-          {`USD ${price}`}
+          {`MXN ${price}`}
         </Text>
         <MainButton
           containerStyle={styles.btn}

@@ -94,7 +94,6 @@ class AddCardForm extends Component {
   async componentDidMount() {
     const lng = await locale()
     const { currentUser, navigation } = this.props
-    console.log(navigation)
     this.setState({
       lng
     })

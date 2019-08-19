@@ -52,7 +52,6 @@ class MyProfile extends Component {
         paymentMethod
       })
     } catch (error) {
-      console.log('error', error)
     }
     const lng = await locale()
     this.setState({
@@ -69,9 +68,19 @@ class MyProfile extends Component {
     const {
       state
     } = this
-
     try {
-      const res = await getAppoiment(currentUser._id)
+      const res = await getAppoiment(currentUser._id,
+        {
+          states: [
+            {
+              state: 'reserved'
+            },
+            {
+              state: 'finish'
+            },
+          ]
+        }
+      )
 
       this.setState({
         ...state,
@@ -88,7 +97,6 @@ class MyProfile extends Component {
   }
 
   renderHistory = (item) => {
-    console.log(item)
 
     return (
       <BrbrHistoryReserve
@@ -201,8 +209,8 @@ class MyProfile extends Component {
                         city={appoinments[appoinments.length - 1].location[2]}
                         stars={appoinments[appoinments.length - 1].barber.qualification}
                         paymentMethod={paymentMethod}
-                        onPressProfile={() => this.navigateTo('BrbrProfile', { item: { barber: { ...{ _id: appoinments[appoinments.length - 1].barber.id } } } })}
-                        onPressChange={() => this.navigateTo('BrbrProfile', { item: { barber: { ...{ _id: appoinments[appoinments.length - 1].barber.id } } } })}
+                        onPressProfile={() => this.navigateTo('BrbrProfile', { item: { barber: { ...{ _id: appoinments[appoinments.length - 1].barber._id } } } })}
+                        onPressChange={() => this.navigateTo('BrbrProfile', { item: { barber: { ...{ _id: appoinments[appoinments.length - 1].barber._id } } } })}
                       />
                     </React.Fragment>
                     :
@@ -211,6 +219,11 @@ class MyProfile extends Component {
                   <FlatList
                     contentContainerStyle={styles.list}
                     keyExtractor={(a, i) => `${i}`}
+                    ListEmptyComponent={
+                      <Text style={styles.empty2}>
+                        No tienes reservaciones
+                      </Text>
+                    }
                     renderItem={(item) => this.renderHistory(item)}
                     data={appoinments.reverse()}
                   />

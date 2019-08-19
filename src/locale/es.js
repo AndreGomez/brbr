@@ -76,6 +76,16 @@ const es = {
   //DETAIL SERVICE
   detail_service: 'Resumen del Servicio',
   payment_method: 'Método de Pago',
+  service_in_progress: 'Servicio en curso',
+  date_program: 'Cita Programada',
+  detail: 'Detalle',
+  client: 'Cliente',
+  CHAT: 'CHAT',
+  service_to: 'Servicio de',
+  day_hour: 'Día - Hora',
+  location: 'Ubicacion',
+  view_map: 'VER MAPA',
+  time: 'Tiempo',
 
   //single
   next: 'Siguiente',

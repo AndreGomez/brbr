@@ -10,8 +10,6 @@ export const multiplePermissions = async Permissions => {
       allPermissions.push(PermissionsAndroid.PERMISSIONS[permiso]);
     });
     const granted = await PermissionsAndroid.requestMultiple(allPermissions);
-    console.log(granted);
-    console.log(granted[allPermissions[0]])
     if (granted[allPermissions[0]] === PermissionsAndroid.RESULTS.GRANTED) {
       return true;
     } else {

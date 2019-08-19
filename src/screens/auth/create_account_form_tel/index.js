@@ -172,14 +172,12 @@ class CreateAccountFormTel extends Component {
             const cell_phone = `+${callingCode} ${phone.value}`
             await validateFields({ email, name, phone })
             const confirmResult = await validatePhone({ cell_phone })
-            console.log(confirmResult.data)
             if (confirmResult.data.code) {
               this.setState({
                 confirmResult: confirmResult.data.code
               })
               this.toggleModalConfirmPhone()
             } else {
-              console.log(res.data)
               this.setState({
                 errorMessage: 'Este telefono ya existe o es invalido',
                 loadingButton: false
@@ -240,8 +238,9 @@ class CreateAccountFormTel extends Component {
           email: email.value,
           password: password.value,
           name: name.value,
-          lastname: name.value,
-          cell_phone: `+${callingCode} ${phone.value}`
+          lastname: '',
+          cell_phone: `+${callingCode} ${phone.value}`,
+          device_token: '000'
         })
 
         const res = await loginUser({

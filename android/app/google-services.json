@@ -15,13 +15,41 @@
       },
       "oauth_client": [
         {
-          "client_id": "378708515483-g2mrf79380hdm8045g0iojmkfu5eoti5.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.elaniin.brbr.android",
-            "certificate_hash": "957b082d8de8a835f39af17a9274517fed38ed35"
-          }
-        },
+          "client_id": "378708515483-8kl4bbobi795hbhrgevjsvuaje17f4df.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6tEOIZ25kSwaV4DfDZfRjEA_pSh8K020"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "378708515483-8kl4bbobi795hbhrgevjsvuaje17f4df.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "378708515483-6mce7klrtnsjbkpp9a5fhsjkjgpaom2e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.elaniin.brbr.barber.ios"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:378708515483:android:cff23365875b17bf",
+        "android_client_info": {
+          "package_name": "com.elaniin.brbrbarber.android"
+        }
+      },
+      "oauth_client": [
         {
           "client_id": "378708515483-8kl4bbobi795hbhrgevjsvuaje17f4df.apps.googleusercontent.com",
           "client_type": 3
@@ -40,10 +68,10 @@
               "client_type": 3
             },
             {
-              "client_id": "378708515483-9no2drrnvjsviqd9ajjubjgb6crmd6kg.apps.googleusercontent.com",
+              "client_id": "378708515483-6mce7klrtnsjbkpp9a5fhsjkjgpaom2e.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.elaniin.brbr.ios"
+                "bundle_id": "com.elaniin.brbr.barber.ios"
               }
             }
           ]

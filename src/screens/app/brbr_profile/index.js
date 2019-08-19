@@ -55,7 +55,6 @@ class BrbrProfile extends Component {
 
       const barberProfile = await getBarberProfile(this.props.navigation.state.params.item.barber._id)
       const comments = await getBarberReviews(this.props.navigation.state.params.item.barber._id)
-
       this.setState({
         lng,
         loading: false,

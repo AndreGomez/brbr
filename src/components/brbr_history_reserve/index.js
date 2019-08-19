@@ -19,7 +19,6 @@ export default function BrbrHistoryReserve(props) {
   const {
     lng,
   } = props
-  console.log(props.barber.photo)
   return (
     <View
       style={styles.container}

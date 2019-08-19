@@ -11,9 +11,29 @@ export const createAppoiment = async (data = {}) => {
   })
 }
 
-export const getAppoiment = async (id = '') => {
+export const updateAppoinment = async (id = '', data = {}) => {
+  return await dispatchRequest({
+    method: 'PUT',
+    url: `appointments/${id}`,
+    data: {
+      ...data
+    }
+  })
+}
+
+export const getAppoiment = async (id = '', data = {}) => {
+  return await dispatchRequest({
+    method: 'POST',
+    url: `appointments/user/${id}`,
+    data: {
+      ...data
+    }
+  })
+}
+
+export const getAppoimentById = async (id = '') => {
   return await dispatchRequest({
     method: 'GET',
-    url: `appointments/user/${id}`,
+    url: `appointments/${id}`,
   })
 }

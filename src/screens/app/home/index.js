@@ -58,6 +58,9 @@ import parseError from '../../../utils/parse_error';
 import ServicesModal from '../../../components/services_modal';
 import DateModal from '../../../components/date_modal';
 import alertMessaje from '../../../utils/alertMessaje';
+import { getAppoiment } from '../../../api/appoinments';
+import MainButton from '../../../components/button';
+import Review from '../review';
 
 class Home extends Component {
 
@@ -87,16 +90,27 @@ class Home extends Component {
     position: {
       lat: null,
       lng: null
-    }
+    },
+    resAppoInProgress: []
   }
 
   async componentDidMount() {
     const lng = await locale()
     AppState.addEventListener('change', this.handleGetResources)
+    const resAppoInProgress = await getAppoiment(this.props.currentUser._id,
+      {
+        states: [
+          {
+            state: 'in progress'
+          }
+        ]
+      }
+    )
     await this.verifyPermissions()
     this.setState({
       lng,
-      loading: false
+      loading: false,
+      resAppoInProgress: resAppoInProgress.data
     })
   }
 
@@ -111,6 +125,7 @@ class Home extends Component {
   verifyPermissions = async () => {
     let permisos = ["ACCESS_FINE_LOCATION"];
     let requestPermissions = await multiplePermissions(permisos);
+    const lng = await locale()
     if (requestPermissions) {
       await this.getCurrentLocation();
       return true;
@@ -119,13 +134,15 @@ class Home extends Component {
     this.setState({
       loading: false,
       acceptPermission: false,
-      barbersArround: []
+      barbersArround: [],
+      lng
     })
     return false;
   }
 
   getCurrentLocation = async () => {
     const { state } = this
+    const lng = await locale()
 
     try {
       const position = await getLocation()
@@ -147,13 +164,15 @@ class Home extends Component {
       state.barbersArround = barbersArround.data
       state.loading = false
       this.setState({
-        ...state
+        ...state,
+        lng
       })
     } catch (error) {
       this.setState({
         loading: false,
         acceptPermission: false,
-        barbersArround: []
+        barbersArround: [],
+        lng
       })
       // parseError(error)
     }
@@ -353,7 +372,12 @@ class Home extends Component {
       servicesModal,
       dateModal,
       refreshing,
+      resAppoInProgress,
     } = this.state
+
+    const {
+      currentUser
+    } = this.props
 
     return (
       <Container
@@ -570,6 +594,22 @@ class Home extends Component {
           nextWeek={dateModal.nextWeek}
           onPressType={(type) => this.onPressTypeDate(type)}
         />
+        {
+          resAppoInProgress.length != 0 &&
+          <MainButton
+            bottom
+            text={lng.service_in_progress}
+            onPress={() => this.navigateTo('DateDetail', { service: true, ...resAppoInProgress[0] })}
+          />
+        }
+        {
+          currentUser.appoinmentFinish &&
+          !loading &&
+          <Review
+            visible={true}
+            dateId={currentUser.appoinmentFinish}
+          />
+        }
       </Container>
     );
   }

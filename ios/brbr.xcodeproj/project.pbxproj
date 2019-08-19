@@ -32,7 +32,8 @@
 		19EFAE2969404D0BBFC7EA9B /* AirbnbCereal-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 515A13C0D2484806BCB5387A /* AirbnbCereal-Medium.ttf */; };
 		1E662EF23FB84EC9BF0D9D40 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BCF7821DF5BC46DC91595A86 /* FontAwesome5_Brands.ttf */; };
 		301AC0AF22C3CF8400AD4D22 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 301AC0AC22C3CF7500AD4D22 /* libRNDeviceInfo.a */; };
-		30204D3922D4C5AA009FEA0B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30204D3822D4C5AA009FEA0B /* GoogleService-Info.plist */; };
+		3057816A2304497E003B0E8A /* libFirebaseMessaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 305781692304497E003B0E8A /* libFirebaseMessaging.a */; };
+		3057819D23045DDB003B0E8A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3057819C23045DDB003B0E8A /* GoogleService-Info.plist */; };
 		3070FE8B22CC48DA00976FA4 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30A6EF3922CB15BB00D9FB82 /* libAirMaps.a */; };
 		30BE8F2722EE7FF1009978FC /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30BE8EF822EE7FEA009978FC /* libBVLinearGradient.a */; };
 		334C3919007540D7AC348CD8 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 425A3AC0009544FCACA780F4 /* FontAwesome5_Solid.ttf */; };
@@ -420,7 +421,8 @@
 		2AFD10DD08464A29B2203318 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/native-base/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		301AC0A622C3CF7300AD4D22 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/ios/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
-		30204D3822D4C5AA009FEA0B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		305781692304497E003B0E8A /* libFirebaseMessaging.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libFirebaseMessaging.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		3057819C23045DDB003B0E8A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "brbr/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		30A6EF3422CB15BB00D9FB82 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 		30BDCDAD22BDDF1300B17EB0 /* brbr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = brbr.entitlements; path = brbr/brbr.entitlements; sourceTree = "<group>"; };
 		30BE8EF122EE7FE9009978FC /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
@@ -458,6 +460,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3057816A2304497E003B0E8A /* libFirebaseMessaging.a in Frameworks */,
 				30BE8F2722EE7FF1009978FC /* libBVLinearGradient.a in Frameworks */,
 				3070FE8B22CC48DA00976FA4 /* libAirMaps.a in Frameworks */,
 				301AC0AF22C3CF8400AD4D22 /* libRNDeviceInfo.a in Frameworks */,
@@ -592,10 +595,10 @@
 		13B07FAE1A68108700A75B9A /* brbr */ = {
 			isa = PBXGroup;
 			children = (
+				3057819C23045DDB003B0E8A /* GoogleService-Info.plist */,
 				30BDCDAD22BDDF1300B17EB0 /* brbr.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
-				30204D3822D4C5AA009FEA0B /* GoogleService-Info.plist */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
@@ -631,6 +634,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				305781692304497E003B0E8A /* libFirebaseMessaging.a */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
@@ -1290,7 +1294,7 @@
 				10D1CCFD2C664083A8D7D525 /* Feather.ttf in Resources */,
 				B9C0A4DE13F0458F865E1DAC /* FontAwesome.ttf in Resources */,
 				1E662EF23FB84EC9BF0D9D40 /* FontAwesome5_Brands.ttf in Resources */,
-				30204D3922D4C5AA009FEA0B /* GoogleService-Info.plist in Resources */,
+				3057819D23045DDB003B0E8A /* GoogleService-Info.plist in Resources */,
 				C420F2DDB9764A8497857B8F /* FontAwesome5_Regular.ttf in Resources */,
 				334C3919007540D7AC348CD8 /* FontAwesome5_Solid.ttf in Resources */,
 				65BA3D445807453C8FFAB69F /* Foundation.ttf in Resources */,
@@ -1419,6 +1423,7 @@
 					"${PODS_ROOT}/Firebase/CoreOnly/Sources",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios",
+					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 				);
 				INFOPLIST_FILE = brbr/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1461,6 +1466,7 @@
 					"${PODS_ROOT}/Firebase/CoreOnly/Sources",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios",
+					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 				);
 				INFOPLIST_FILE = brbr/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;

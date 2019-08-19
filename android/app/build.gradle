@@ -159,6 +159,10 @@ dependencies {
     implementation "com.google.firebase:firebase-core:16.0.9"
     implementation "com.google.firebase:firebase-storage:17.0.0"
 
+    //messagins
+    implementation "com.google.firebase:firebase-messaging:18.0.0"
+    implementation 'me.leolin:ShortcutBadger:1.1.21@aar'
+
     //react native splash screen
     implementation project(':react-native-splash-screen')
 

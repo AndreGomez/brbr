@@ -65,7 +65,6 @@ class ServiceReview extends Component {
         paymentMethod
       })
     } catch (error) {
-      console.log('error', error)
     }
     this.setState({
       lng,

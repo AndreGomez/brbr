@@ -47,7 +47,6 @@ class UploadDUI extends Component {
   }
 
   async componentDidMount() {
-    console.log(await store.getState())
     const lng = await locale()
 
     this.setState({
@@ -74,7 +73,6 @@ class UploadDUI extends Component {
         img: res.uri
       })
     } catch (error) {
-      console.log(error)
     }
   }
 
@@ -87,7 +85,6 @@ class UploadDUI extends Component {
         imgInfo: res
       })
     } catch (error) {
-      console.log(error)
     }
   }
 
