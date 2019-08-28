@@ -10,6 +10,17 @@ export default StyleSheet.create({
     paddingHorizontal: resize(20, 'h'),
     marginTop: resize(15, 'h')
   },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  stars: {
+    color: 'black',
+    fontFamily: AIRBNB_MEDIUM,
+    fontSize: resize(22),
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
+    paddingRight: resize(5),
+  },
   name: {
     color: '#000000',
     fontFamily: AIRBNB_MEDIUM,

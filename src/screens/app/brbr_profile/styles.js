@@ -94,7 +94,8 @@ export default StyleSheet.create({
     justifyContent: 'center'
   },
   switch: {
-    paddingHorizontal: resize(20)
+    paddingHorizontal: resize(20),
+    paddingBottom: resize(10, 'h')
   },
   empty: {
     color: '#95989a',

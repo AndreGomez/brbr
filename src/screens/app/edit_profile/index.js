@@ -57,6 +57,11 @@ class EditProfile extends Component {
       type: '',
       required: true
     },
+    description: {
+      value: '',
+      type: '',
+      required: true
+    },
     change: false,
     loadingButton: false
   }
@@ -103,19 +108,26 @@ class EditProfile extends Component {
       name,
       email,
       phone,
-      avatar
+      avatar,
+      description
     } = this.state
 
     const changes = {}
 
     try {
       this.setState({ loadingButton: true })
-      if (phone.value != '' || email.value != '' || name.value != '' || avatar != '') {
+      if (description.value != '' || phone.value != '' || email.value != '' || name.value != '' || avatar != '') {
         if (phone.value != '' && phone.value != cell_phone) {
           changes.cell_phone = phone.value
         }
+        if (description.value != '' && description.value != currentUser.lastname) {
+          changes.lastname = description.value
+        }
         if (email.value != '' && email.value != currentUser.email) {
           changes.email = email.value
+        }
+        if (name.value != '' && name.value != currentUser.name) {
+          changes.name = name.value
         }
         if (name.value != '' && name.value != currentUser.name) {
           changes.name = name.value
@@ -156,7 +168,8 @@ class EditProfile extends Component {
       phone,
       change,
       avatar,
-      loadingButton
+      loadingButton,
+      description
     } = this.state
 
     const {
@@ -236,6 +249,21 @@ class EditProfile extends Component {
                     </View>
                   }
                 />
+                {/* <MainInput
+                  placeholder={'Descripcion'}
+                  value={description.value}
+                  onChangeText={(value) => this.onChange('description', value)}
+                  customStyle={styles.input}
+                  icon={
+                    <View
+                      style={styles.pencil}
+                    >
+                      <Image
+                        source={pencil}
+                      />
+                    </View>
+                  }
+                /> */}
                 <MainInput
                   placeholder={currentUser.email}
                   value={email.value}

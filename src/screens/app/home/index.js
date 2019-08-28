@@ -22,6 +22,7 @@ import Logo from '../../../components/logo';
 import BarberVip from '../../../components/barber_vip';
 import BarberArround from '../../../components/barber_arround';
 import Loading from '../../../components/loading';
+import calendarIconSearch from '../../../assets/icons/calendar_ligth.png';
 
 //customs
 import styles from './styles';
@@ -61,6 +62,8 @@ import alertMessaje from '../../../utils/alertMessaje';
 import { getAppoiment } from '../../../api/appoinments';
 import MainButton from '../../../components/button';
 import Review from '../review';
+import LocationInput from '../../../components/location_input';
+import { resize } from '../../../utils/styles';
 
 class Home extends Component {
 
@@ -91,12 +94,17 @@ class Home extends Component {
       lat: null,
       lng: null
     },
-    resAppoInProgress: []
+    resAppoInProgress: [],
+    locationSearch: {
+      value: '',
+      type: '',
+      required: false
+    }
   }
 
   async componentDidMount() {
     const lng = await locale()
-    AppState.addEventListener('change', this.handleGetResources)
+    // AppState.addEventListener('change', this.handleGetResources)
     const resAppoInProgress = await getAppoiment(this.props.currentUser._id,
       {
         states: [
@@ -130,7 +138,7 @@ class Home extends Component {
       await this.getCurrentLocation();
       return true;
     }
-
+    console.log('requestPermissions', requestPermissions)
     this.setState({
       loading: false,
       acceptPermission: false,
@@ -168,6 +176,7 @@ class Home extends Component {
         lng
       })
     } catch (error) {
+      console.log('error', error)
       this.setState({
         loading: false,
         acceptPermission: false,
@@ -229,6 +238,7 @@ class Home extends Component {
     return (
       <BarberArround
         extraData={extraData}
+        languages={brbr.item.barber.languages}
         onPressBarberArround={() => this.navigateTo('BrbrProfile', brbr)}
         img={brbr.item.barber.photo}
         addres={brbr.item.barber.address.description}
@@ -359,6 +369,45 @@ class Home extends Component {
     this.setState({ refreshing: false });
   };
 
+  onChange = (key, value) => {
+    const { state } = this
+
+    state[key].value = value
+
+    this.setState({
+      ...state
+    })
+  }
+
+  getCoords = async (data, details) => {
+    console.log(this.state)
+    const description = data.description
+    const lat = details.result.geometry.location.lat
+    const lng = details.result.geometry.location.lng
+
+    try {
+      const barbersArround = await getBarbersArround({
+        range: 4,
+        location: [
+          lat,
+          lng
+        ]
+      })
+
+      this.setState({
+        position: {
+          lat,
+          lng
+        },
+        location: description,
+        locationSearch: { value: '' },
+        barbersArround: barbersArround.data
+      })
+    } catch (error) {
+
+    }
+  }
+
   render() {
 
     const {
@@ -373,6 +422,7 @@ class Home extends Component {
       dateModal,
       refreshing,
       resAppoInProgress,
+      locationSearch
     } = this.state
 
     const {
@@ -408,19 +458,22 @@ class Home extends Component {
             right={
               <TouchableOpacity
                 style={styles.searchIcon}
-                onPress={() => this.setState({ search: !this.state.search, barbersArroundSearch: null })}
+                onPress={() =>
+                  // this.setState({ search: !this.state.search, barbersArroundSearch: null })
+                  this.navigateTo('MyProfile')
+                }
               >
                 {
-                  search ?
-                    <Text
-                      style={styles.cancel}
-                    >
-                      {lng.cancel}
-                    </Text>
-                    :
-                    <Image
-                      source={searchIcon}
-                    />
+                  // search ?
+                  //   <Text
+                  //     style={styles.cancel}
+                  //   >
+                  //     {lng.cancel}
+                  //   </Text>
+                  //   :
+                  <Image
+                    source={calendarIconSearch}
+                  />
                 }
               </TouchableOpacity>
             }
@@ -462,20 +515,26 @@ class Home extends Component {
                     <View
                       style={styles.searchContainer}
                     >
-                      <TouchableOpacity
+                      <View
                         style={styles.location}
                         activeOpacity={1}
                       >
                         <Image
                           source={locationIcon}
                         />
-                        <Text
-                          numberOfLines={1}
-                          style={styles.locationText}
-                        >
-                          {location}
-                        </Text>
-                      </TouchableOpacity>
+                        <LocationInput
+                          text="Starting Point *"
+                          placeholder={{
+                            label: location,
+                            value: null,
+                            color: 'red',
+                          }}
+                          top={resize(45, 'h')}
+                          valueP={locationSearch.value}
+                          onValueChange={(value) => this.onChange('locationSearch', value)}
+                          onPress={(data, details) => this.getCoords(data, details)}
+                        />
+                      </View>
                       <View
                         style={styles.calendarAndServices}
                       >
@@ -492,11 +551,13 @@ class Home extends Component {
                             style={styles.locationText}
                           >
                             {
-                              dateModal.thisWeek || dateModal.today ?
-                                'Esta Semana' :
-                                dateModal.nextWeek ?
-                                  'Prox. Semana' :
-                                  lng.add
+                              dateModal.today ?
+                                'Hoy' :
+                                dateModal.thisWeek ?
+                                  'Esta Semana' :
+                                  dateModal.nextWeek ?
+                                    'Prox. Semana' :
+                                    lng.add
                             }
                           </Text>
                         </TouchableOpacity>

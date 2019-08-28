@@ -57,16 +57,39 @@ class BrbrReserve extends Component {
 
     var days = []
 
-    if (dateToSelectService == 'today' || dateToSelectService == 'thisWeek') {
-      var numberDayOfTheWeek = moment().isoWeekday()
-      numberDayOfTheWeek = numberDayOfTheWeek === 7 ? 1 : numberDayOfTheWeek
+    if (dateToSelectService == 'today') {
       const datToNow = moment().format('YYYY-MM-DD')
-      const dateIn2Sundays =
-        moment(datToNow)
-          .add(2, 'weeks')
-          .format('YYYY-MM-DD')
-      var startOfWeek = moment().add(1, 'days').startOf('isoWeek');
-      var endOfWeek = moment().add(1, 'days').endOf('isoWeek');
+
+      days.push(
+        {
+          date: moment(datToNow).format('YYYY-MM-DD'),
+          day: daysOfTheWeek[moment(datToNow).format('dddd')].dayEs,
+          active: false
+        }
+      );
+
+      var ultimateDays = []
+
+      days.map((res, i) => {
+        const filter = schedule.filter(scheduleRes => scheduleRes.date == res.date)
+        if (filter.length != 0) {
+          days[i]._id = filter[0]._id
+          days[i].hours = filter[0].hours
+          days[i].active = false
+
+          ultimateDays.push(days[i])
+        }
+      })
+
+      days = ultimateDays
+    }
+
+    if (dateToSelectService == 'thisWeek') {
+      var numberDayOfTheWeek = moment().isoWeekday()
+      numberDayOfTheWeek = numberDayOfTheWeek === 7 ? moment().subtract(1, 'days') : moment()
+
+      var startOfWeek = moment(numberDayOfTheWeek).add(1, 'days').startOf('isoWeek');
+      var endOfWeek = moment(numberDayOfTheWeek).add(1, 'days').endOf('isoWeek');
 
       var days = [];
       var day = startOfWeek;
@@ -97,11 +120,7 @@ class BrbrReserve extends Component {
 
       days = ultimateDays
     }
-
     if (dateToSelectService == 'nextWeek') {
-      var numberDayOfTheWeek = moment().isoWeekday()
-      numberDayOfTheWeek = numberDayOfTheWeek === 7 ? 1 : numberDayOfTheWeek
-
       var startOfWeek = moment().add(1, 'weeks').startOf('isoWeek');
       var endOfWeek = moment().add(1, 'weeks').endOf('isoWeek');
 
@@ -146,6 +165,8 @@ class BrbrReserve extends Component {
 
   setItemList = async (key, i) => {
     const { state } = this
+    const today = moment().format('YYYY-MM-DD')
+    const hourToday = moment().add(2, 'hours').format('h:m A')
 
     await state[key].map((res, e) => {
       if (i != e) {
@@ -156,8 +177,22 @@ class BrbrReserve extends Component {
     })
 
     if (key == 'days') {
-      state.hours = state[key][i].hours
       state.daySelected = state[key][i]
+
+      if (state.daySelected.date == today) {
+        const realHours = []
+        state[key][i].hours.map(res => {
+          var beginningTime = moment(hourToday, 'h:m A');
+          var endTime = moment(res.hour, 'h:m A');
+          if (beginningTime.isBefore(endTime)) {
+            realHours.push(res)
+          }
+        })
+
+        state.hours = realHours
+      } else {
+        state.hours = state[key][i].hours
+      }
     }
 
     if (key == 'hours') {
@@ -268,6 +303,10 @@ class BrbrReserve extends Component {
 
     } = this.state
 
+    const {
+      dateForService
+    } = this.props.navigation.state.params
+
     return (
       <Container
         style={styles.container}
@@ -316,7 +355,7 @@ class BrbrReserve extends Component {
                 <Text
                   style={styles.city}
                 >
-                  {barberInfo.address.description}
+                  {barberInfo.lastname}
                 </Text>
                 <View
                   style={{ position: 'absolute', bottom: 10, left: 10 }}
@@ -368,7 +407,7 @@ class BrbrReserve extends Component {
                   <Text
                     style={styles.stars}
                   >
-                    {0}
+                    {barberInfo.appointments}
                   </Text>
                   <Text
                     style={styles.lbl}
@@ -388,6 +427,18 @@ class BrbrReserve extends Component {
                     bounces={false}
                     contentContainerStyle={styles.content}
                   >
+                    <Text
+                      style={styles.dateForService}
+                    >
+                      {
+                        dateForService == 'today' ?
+                          'Hoy' :
+                          dateForService == 'thisWeek' ?
+                            'Esta Semana' :
+                            dateForService == 'nextWeek' &&
+                            'Prox. Semana'
+                      }
+                    </Text>
                     <Text
                       style={styles.lblT}
                     >

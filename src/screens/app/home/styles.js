@@ -14,6 +14,16 @@ export default StyleSheet.create({
   },
   content: {
   },
+  searchInput: {
+    height: '100%',
+    width: '100%',
+    color: '#95989a',
+    fontFamily: AIRBNB_MEDIUM,
+    fontSize: resize(16),
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
+    letterSpacing: resize(0.4),
+    paddingLeft: resize(22),
+  },
   input: {
     paddingLeft: resize(10),
     color: '#cfcfcf',
@@ -46,7 +56,8 @@ export default StyleSheet.create({
     height: resize(54, 'h'),
     borderRadius: 6,
     flexDirection: 'row',
-    marginTop: resize(7, 'h')
+    marginTop: resize(7, 'h'),
+    zIndex: -1
   },
   calendar: {
     borderTopLeftRadius: 6,
@@ -126,7 +137,8 @@ export default StyleSheet.create({
   },
   brbrArroundContainer: {
     marginTop: resize(30, 'h'),
-    paddingHorizontal: resize(20)
+    paddingHorizontal: resize(20),
+    zIndex: -1
   },
   brbrArroundText: {
     color: '#95989a',
@@ -134,6 +146,7 @@ export default StyleSheet.create({
     fontSize: resize(18),
     fontWeight: Platform.OS === 'ios' ? '500' : '400',
     letterSpacing: resize(0.45),
+    zIndex: -1
   },
   reco: {
     color: '#ffffff',

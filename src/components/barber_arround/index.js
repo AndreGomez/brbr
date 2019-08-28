@@ -28,7 +28,8 @@ export default function BarberArround(props) {
     cash,
     reserve,
     onPressBarberArround,
-    onPress
+    onPress,
+    languages
   } = props
 
   return (
@@ -53,7 +54,7 @@ export default function BarberArround(props) {
           style={styles.addres}
           numberOfLines={1}
         >
-          {addres}
+          Habla: ES{languages.english && '/EN'}{languages.french && '/FR'}
         </Text>
         <View
           style={styles.starContainer}
@@ -74,11 +75,11 @@ export default function BarberArround(props) {
       <View
         style={styles.priceContainer}
       >
-        <Text
+        {/* <Text
           style={styles.cash}
         >
           {cash}
-        </Text>
+        </Text> */}
         <Text
           style={styles.price}
         >

@@ -5,10 +5,12 @@ export default StyleSheet.create({
   roundedNormal: {
     width: resize(65, 'h'),
     height: resize(65, 'h'),
+    borderRadius: resize(65, 'h') / 2,
   },
   roundedS: {
     width: resize(48, 'h'),
     height: resize(48, 'h'),
+    borderRadius: resize(48, 'h') / 2,
   },
   list: {
     width: resize(74),

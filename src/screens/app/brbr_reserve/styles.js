@@ -12,9 +12,17 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: 'black',
   },
+  dateForService: {
+    color: '#ffffff',
+    fontFamily: AIRBNB_MEDIUM,
+    fontSize: resize(16),
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
+    width: '100%',
+    textAlign: 'center'
+  },
   content: {
     paddingHorizontal: resize(20),
-    paddingTop: resize(30, 'h')
+    paddingTop: resize(20, 'h')
   },
   portraitBack: {
     width: '100%',

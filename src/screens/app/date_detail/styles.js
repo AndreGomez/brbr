@@ -16,6 +16,9 @@ export default StyleSheet.create({
     alignSelf: 'center',
     marginTop: resize(30, 'h')
   },
+  btnReport: {
+    marginTop: resize(40, 'h')
+  },
   detail: {
     color: '#cfcfcf',
     fontFamily: AIRBNB_MEDIUM,

@@ -13,6 +13,7 @@ import styles from './styles';
 import vipIcon from '../../assets/icons/vip.png';
 import starIcon from '../../assets/icons/star.png';
 import ImagesCustom from '../imagesCustom';
+import moment from 'moment';
 
 export default function BrbrPaymentReview(props) {
 
@@ -21,6 +22,7 @@ export default function BrbrPaymentReview(props) {
     vip,
     avatar,
     name,
+    date,
     city,
     stars,
     paymentMethod,
@@ -43,12 +45,17 @@ export default function BrbrPaymentReview(props) {
           >
             {lng.brbr_profile_title}
           </Text>
-          {
+          {/* {
             vip &&
             <Image
               source={vipIcon}
             />
-          }
+          } */}
+          <Text
+            style={styles.barber}
+          >
+            {moment(date, 'YYYY-MM-DD').format('DD MMM YYYY')}
+          </Text>
         </View>
         <View
           style={styles.topHeader}
@@ -117,7 +124,7 @@ export default function BrbrPaymentReview(props) {
           >
             {paymentMethod}
           </Text>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={onPressChange}
           >
             <Text
@@ -125,7 +132,7 @@ export default function BrbrPaymentReview(props) {
             >
               {lng.change}
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
     </View>
@@ -138,6 +145,7 @@ BrbrPaymentReview.defaultProps = {
   name: '',
   city: '',
   star: 0,
+  date: '',
   paymentMethod: '',
   onPressProfile: () => { },
   onPressChange: () => { }

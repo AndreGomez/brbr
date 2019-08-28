@@ -3,7 +3,8 @@ import {
   View,
   Text,
   Image,
-  FlatList
+  FlatList,
+  Alert
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Container, Content } from 'native-base';
@@ -15,6 +16,7 @@ import BackButton from '../../../components/back_button';
 import Loading from '../../../components/loading';
 import Switch from '../../../components/switch';
 import BrbrPaymentReview from '../../../components/brbr_payment_review';
+import successMessage from '../../../utils/success_message';
 
 //locale
 import locale from '../../../locale';
@@ -25,10 +27,11 @@ import styles from './styles';
 //icons
 import starIcon from '../../../assets/icons/star.png';
 import ImagesCustom from '../../../components/imagesCustom';
-import { getAppoiment } from '../../../api/appoinments';
+import { getAppoiment, updateAppoinment } from '../../../api/appoinments';
 import { getBarberProfile } from '../../../api/barbers';
 import BrbrHistoryReserve from '../../../components/brbr_history_reserve';
 import { getObjectCard } from '../../../api/payment';
+import MainButton from '../../../components/button';
 
 class MyProfile extends Component {
 
@@ -38,7 +41,9 @@ class MyProfile extends Component {
     paymentMethod: '',
     active: true,
     appoinments: [],
-    proxAppoinment: {}
+    proxAppoinment: {},
+    appoReserved: [],
+    loadingBtnCancel: false
   }
 
   async componentDidMount() {
@@ -69,6 +74,16 @@ class MyProfile extends Component {
       state
     } = this
     try {
+      const resReserves = await getAppoiment(currentUser._id,
+        {
+          states: [
+            {
+              state: 'reserved'
+            },
+          ]
+        }
+      )
+
       const res = await getAppoiment(currentUser._id,
         {
           states: [
@@ -85,6 +100,7 @@ class MyProfile extends Component {
       this.setState({
         ...state,
         appoinments: res.data,
+        appoReserved: resReserves.data
       })
     } catch (error) {
     }
@@ -105,6 +121,48 @@ class MyProfile extends Component {
     )
   }
 
+  onPressCancelDate = () => {
+
+    Alert.alert(
+      'Brbr App',
+      'Seguro que quieres cancelar?',
+      [
+        {
+          text: 'No',
+          onPress: () => { },
+          style: 'destructive',
+        },
+        {
+          text: 'Si', onPress: async () => {
+            const reserveDetail = this.state.appoReserved[this.state.appoReserved.length - 1]
+
+            this.setState({
+              loadingBtnCancel: true
+            })
+
+            try {
+              await updateAppoinment(reserveDetail._id, {
+                state: 'canceled'
+              })
+
+              await this.getAppointemt()
+
+              successMessage('Reservacion cancelada exitosamente!')
+              this.setState({
+                loadingBtnCancel: false
+              })
+            } catch (error) {
+              this.setState({
+                loadingBtnCancel: false
+              })
+            }
+          }
+        },
+      ],
+      { cancelable: false },
+    );
+  }
+
   render() {
 
     const {
@@ -113,7 +171,9 @@ class MyProfile extends Component {
       active,
       paymentMethod,
       appoinments,
-      proxAppoinment
+      proxAppoinment,
+      appoReserved,
+      loadingBtnCancel
     } = this.state
 
     const {
@@ -198,20 +258,39 @@ class MyProfile extends Component {
               />
               {
                 active ?
-                  appoinments.length != 0 ?
+                  appoReserved.length != 0 ?
                     <React.Fragment>
                       <View style={styles.sep} />
                       <BrbrPaymentReview
                         lng={lng}
                         vip={false}
-                        avatar={appoinments[appoinments.length - 1].barber.photo}
-                        name={appoinments[appoinments.length - 1].barber.name}
-                        city={appoinments[appoinments.length - 1].location[2]}
-                        stars={appoinments[appoinments.length - 1].barber.qualification}
+                        date={appoReserved[appoReserved.length - 1].date}
+                        avatar={appoReserved[appoReserved.length - 1].barber.photo}
+                        name={appoReserved[appoReserved.length - 1].barber.name}
+                        city={appoReserved[appoReserved.length - 1].location[2]}
+                        stars={appoReserved[appoReserved.length - 1].barber.qualification}
                         paymentMethod={paymentMethod}
                         onPressProfile={() => this.navigateTo('BrbrProfile', { item: { barber: { ...{ _id: appoinments[appoinments.length - 1].barber._id } } } })}
                         onPressChange={() => this.navigateTo('BrbrProfile', { item: { barber: { ...{ _id: appoinments[appoinments.length - 1].barber._id } } } })}
                       />
+                      <View style={styles.rowBtns}>
+                        <MainButton
+                          sm
+                          red
+                          loading={loadingBtnCancel}
+                          text={'Cancelar cita'}
+                          containerStyle={styles.cancelBtn}
+                          onPress={() => this.onPressCancelDate()}
+                        />
+                        <MainButton
+                          sm
+                          white
+                          loading={loadingBtnCancel}
+                          text={'Enviar mensaje'}
+                          containerStyle={styles.cancelBtn}
+                          onPress={() => this.navigateTo('Chat')}
+                        />
+                      </View>
                     </React.Fragment>
                     :
                     <Text style={styles.empty}>No tienes reservaciones</Text>

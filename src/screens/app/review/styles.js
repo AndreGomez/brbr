@@ -78,6 +78,7 @@ export default StyleSheet.create({
     paddingTop: resize(28),
     paddingBottom: resize(14),
     height: resize(150, 'h'),
+    width: '100%'
   },
   avatar: {
     width: resize(100, 'h'),

@@ -3,7 +3,8 @@ import {
   View,
   Text,
   Image,
-  Alert
+  Alert,
+  Linking
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Container, Content } from 'native-base';
@@ -241,6 +242,10 @@ class DateDetail extends Component {
     );
   }
 
+  onPressReport = () => {
+    Linking.openURL('https://wa.me/5215612761842')
+  }
+
   render() {
 
     const {
@@ -380,7 +385,7 @@ class DateDetail extends Component {
                     <Text
                       style={styles.dateHourrr}
                     >
-                      {`${reserveDetail.date}, ${reserveDetail.hour}`}
+                      {`${moment(reserveDetail.date, 'YYYY-MM-DD').format('DD MMM YYYY')}, ${reserveDetail.hour}`}
                     </Text>
                   </View>
                   <View
@@ -412,7 +417,7 @@ class DateDetail extends Component {
                     />
                     <Text
                       style={styles.dateHourrr}
-                      numberOfLines={1}
+                      numberOfLines={2}
                     >
                       {`${reserveDetail.location[2]}`}
                     </Text>
@@ -443,6 +448,12 @@ class DateDetail extends Component {
                   </Text>
                 </View>
               }
+              <MainButton
+                white
+                containerStyle={styles.btnReport}
+                text={'Reportar un problema'}
+                onPress={() => this.onPressReport()}
+              />
             </Content>
         }
         {/* {

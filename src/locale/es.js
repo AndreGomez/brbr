@@ -77,7 +77,7 @@ const es = {
   detail_service: 'Resumen del Servicio',
   payment_method: 'Método de Pago',
   service_in_progress: 'Servicio en curso',
-  date_program: 'Cita Programada',
+  date_program: 'Cita en Curso',
   detail: 'Detalle',
   client: 'Cliente',
   CHAT: 'CHAT',

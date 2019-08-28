@@ -82,6 +82,7 @@ class BrbrProfile extends Component {
           name={`${item.item.user.name}`}
           date={item.item.date}
           body={item.item.comment}
+          stars={item.item.qualification}
         />
       }
       style={{ paddingBottom: 20 }}
@@ -135,7 +136,6 @@ class BrbrProfile extends Component {
       switchActive,
       barberInfo
     } = this.state
-
     return (
       <Container
         style={styles.container}
@@ -184,7 +184,7 @@ class BrbrProfile extends Component {
                 <Text
                   style={styles.city}
                 >
-                  {barberInfo.address.description}
+                  {barberInfo.lastname}
                 </Text>
                 <View
                   style={{ position: 'absolute', bottom: 10, left: 10 }}
@@ -229,7 +229,7 @@ class BrbrProfile extends Component {
                   <Text
                     style={styles.lbl}
                   >
-                    {lng.rese}
+                    Calificación
                   </Text>
                 </View>
                 <View
@@ -246,7 +246,7 @@ class BrbrProfile extends Component {
                   <Text
                     style={styles.stars}
                   >
-                    {0}
+                    {barberInfo.appointments}
                   </Text>
                   <Text
                     style={styles.lbl}

@@ -5,10 +5,13 @@ import {
   Image
 } from 'react-native';
 import { Spinner } from 'native-base';
+import moment from 'moment';
 
 //customs
 import styles from './styles';
 import ImagesCustom from '../imagesCustom';
+import starIcon from '../../assets/icons/star.png';
+
 
 export default function Comment(props) {
 
@@ -18,7 +21,8 @@ export default function Comment(props) {
     city,
     name,
     date,
-    body
+    body,
+    stars
   } = props
 
   return (
@@ -26,20 +30,38 @@ export default function Comment(props) {
       style={styles.container}
     >
       <View
-        style={styles.header}
+        style={styles.row}
       >
-        <ImagesCustom
-          colorLoading={'black'}
-          styles={styles.avatar}
-          img={avatar ? { uri: avatar } : null}
-        />
-        <View>
-          <Text
-            style={styles.name}
-          >
-            {name}
-          </Text>
+        <View
+          style={styles.header}
+        >
+          <ImagesCustom
+            colorLoading={'black'}
+            styles={styles.avatar}
+            img={avatar ? { uri: avatar } : null}
+          />
+          <View>
+            <Text
+              style={styles.name}
+            >
+              {name}
+            </Text>
 
+          </View>
+        </View>
+        <View
+          style={{ flexDirection: 'row', alignItems: 'center' }}
+        >
+          <Text
+            style={styles.stars}
+          >
+            {
+              parseFloat(stars).toFixed(1)
+            }
+          </Text>
+          <Image
+            source={starIcon}
+          />
         </View>
       </View>
       <View
@@ -53,7 +75,7 @@ export default function Comment(props) {
         <Text
           style={styles.date}
         >
-          {date}
+          {moment(date).format('DD MMM YYYY')}
         </Text>
       </View>
       <Text

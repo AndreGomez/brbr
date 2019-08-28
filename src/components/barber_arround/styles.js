@@ -63,6 +63,7 @@ export default StyleSheet.create({
   },
   price: {
     color: '#ffffff',
+    paddingTop: resize(12),
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(14),
     fontWeight: Platform.OS === 'ios' ? '500' : '400',

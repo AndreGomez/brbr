@@ -18,6 +18,12 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center'
   },
+  rowBtns: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: resize(20, 'h')
+  },
   name: {
     color: '#ffffff',
     fontFamily: 'Airbnb Cereal App',
@@ -77,4 +83,5 @@ export default StyleSheet.create({
   list: {
     paddingTop: resize(34, 'h'),
   },
+
 });
