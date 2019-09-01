@@ -60,6 +60,7 @@ class PaymentMethodsList extends Component {
         paymentMethods
       })
     } catch (error) {
+      console.log(error)
       this.setState({
         loading: false
       })
@@ -93,6 +94,7 @@ class PaymentMethodsList extends Component {
 
       successMessage('Metodo de pago cambiado!')
     } catch (error) {
+      console.log(error)
       this.setState({
         loading: false
       })

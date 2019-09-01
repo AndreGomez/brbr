@@ -7,15 +7,17 @@ import {
 import { connect } from 'react-redux';
 import { Container, Content } from 'native-base';
 import { Image } from 'react-native-elements';
+import CountryPicker from 'react-native-country-picker-modal';
 
 //component
 import CustomHeader from '../../../components/header';
 import HeaderTitle from '../../../components/header_title';
 import Loading from '../../../components/loading';
 import BackButton from '../../../components/back_button';
+import checkIcon from '../../../assets/icons/check.png';
 
 //customs
-import styles from './styles';
+import styles, { modalDark } from './styles';
 
 //locale
 import locale from '../../../locale';
@@ -35,6 +37,10 @@ import { EditProfileUser } from '../../../api/user';
 import successMessage from '../../../utils/success_message';
 import ImageSelect from '../../../utils/image_picker';
 import uploadAsset from '../../../utils/upload_asset';
+import ModalAlert from '../../../components/modal_alerts';
+import { validatePhone } from '../../../api/auth';
+import storeIcon from '../../../assets/icons/store.png';
+import parseError from '../../../utils/parse_error';
 
 class EditProfile extends Component {
 
@@ -42,6 +48,11 @@ class EditProfile extends Component {
     lng: {},
     loading: true,
     avatar: null,
+    confirmCode: {
+      value: '',
+      type: '',
+      required: true
+    },
     email: {
       value: '',
       type: '',
@@ -63,7 +74,14 @@ class EditProfile extends Component {
       required: true
     },
     change: false,
-    loadingButton: false
+    loadingButton: false,
+    confirmResult: '',
+    modalConfirmPhone: {
+      visibleConfirm: false
+    },
+    validatePhoneVar: true,
+    cca2: 'SV',
+    callingCode: '503',
   }
 
   async componentDidMount() {
@@ -90,8 +108,18 @@ class EditProfile extends Component {
   onChange = (key, value) => {
     let { state } = this;
 
-    state[key].value = value;
-    this.setState({ ...state, change: true });
+    if (key === 'phone') {
+      value = value.split(' ')
+
+      state[key].value = value[1] ? value[1] : ''
+      this.setState({
+        ...state,
+        change: true
+      })
+    } else {
+      state[key].value = value;
+      this.setState({ ...state, change: true });
+    }
   }
 
   onPressSave = async () => {
@@ -109,16 +137,32 @@ class EditProfile extends Component {
       email,
       phone,
       avatar,
-      description
+      description,
+      validatePhoneVar,
+      callingCode
     } = this.state
 
     const changes = {}
 
+    const newPhone = `+${callingCode} ${phone.value}`
+
     try {
       this.setState({ loadingButton: true })
       if (description.value != '' || phone.value != '' || email.value != '' || name.value != '' || avatar != '') {
-        if (phone.value != '' && phone.value != cell_phone) {
-          changes.cell_phone = phone.value
+        if (phone.value != '' && newPhone != cell_phone) {
+          changes.cell_phone = newPhone
+          if (validatePhoneVar) {
+            const confirmResult = await validatePhone({ cell_phone: newPhone })
+            if (confirmResult.data.code) {
+              this.setState({
+                confirmResult: confirmResult.data.code
+              })
+              return this.toggleModalConfirmPhone()
+            } else {
+              console.log('1')
+              return successMessage('Este telefono ya existe o es invalido')
+            }
+          }
         }
         if (description.value != '' && description.value != currentUser.lastname) {
           changes.lastname = description.value
@@ -155,6 +199,46 @@ class EditProfile extends Component {
       this.setState({ loadingButton: false, change: false })
     } catch (error) {
       this.setState({ loadingButton: false })
+      return successMessage('Telefono incorrecto', 'danger')
+    }
+  }
+
+  toggleModalConfirmPhone = () => {
+    this.setState({
+      modalConfirmPhone: {
+        ...this.state.modalConfirmPhone,
+        visibleConfirm: !this.state.modalConfirmPhone.visibleConfirm
+      }
+    })
+  }
+
+  onPressConfirmCode = async () => {
+    const {
+      confirmCode,
+      confirmResult,
+    } = this.state
+
+    try {
+      if (confirmResult === confirmCode.value) {
+        await this.setState({
+          validatePhoneVar: false
+        })
+        await this.onPressSave()
+
+        this.setState({
+          validatePhoneVar: true
+        })
+
+        this.toggleModalConfirmPhone()
+      } else {
+        return successMessage('Codigo invalido', 'danger')
+      }
+    } catch (error) {
+      this.setState({
+        errorMessage: 'Revisa tu informacion',
+        loadingButton: false
+      })
+      this.toggleModalError()
     }
   }
 
@@ -169,7 +253,10 @@ class EditProfile extends Component {
       change,
       avatar,
       loadingButton,
-      description
+      description,
+      cca2,
+      callingCode,
+      modalConfirmPhone,
     } = this.state
 
     const {
@@ -283,15 +370,32 @@ class EditProfile extends Component {
                 />
                 <MainInput
                   placeholder={currentUser.cell_phone}
-                  value={phone.value}
+                  value={`+(${callingCode}) ${phone.value}`}
                   onChangeText={(value) => this.onChange('phone', value)}
-                  customStyle={styles.input}
+                  customStyle={styles.inputCus}
+                  keyboardType={'phone-pad'}
                   icon={
                     <View
-                      style={styles.pencil}
+                      style={styles.country}
                     >
-                      <Image
-                        source={pencil}
+                      <CountryPicker
+                        showCallingCode
+                        onChange={value => {
+                          this.setState({
+                            cca2: value.cca2,
+                            callingCode: value.callingCode
+                          })
+                        }}
+                        styles={modalDark}
+                        cca2={cca2}
+                        translation="eng"
+                        filterPlaceholderTextColor={'rgba(255,255,255,0.2)'}
+                        closeable
+                        animationType={'slide'}
+                        filterable
+                        filterPlaceholder={'Buscar'}
+                        closeButtonImage={storeIcon}
+                        showCountryNameWithFlag
                       />
                     </View>
                   }
@@ -299,6 +403,27 @@ class EditProfile extends Component {
               </View>
             </Content>
         }
+        {/* confirm */}
+        <ModalAlert
+          close
+          onPressClose={() => {
+            this.setState({ loadingButton: false })
+            this.toggleModalConfirmPhone()
+          }}
+          visible={modalConfirmPhone.visibleConfirm}
+          title={
+            <Image
+              source={checkIcon}
+            />
+          }
+          phoneNumber
+          onChangeText={(value) => this.onChange('confirmCode', value)}
+          message={lng.confirm_your_code}
+          subtitle={lng.set_code}
+          btnTitle={lng.confirm}
+          placeholder={lng.code}
+          onPress={() => this.onPressConfirmCode()}
+        />
       </Container>
     );
   }

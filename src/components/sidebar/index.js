@@ -151,6 +151,10 @@ class Sidebar extends Component {
                   onPress={() => { }}
                 />
                 <ItemList
+                  text={'Código de descuento'}
+                  onPress={() => this.navigateTo('MeCode')}
+                />
+                <ItemList
                   text={lng.notifications}
                   onPress={() => this.toggleModal()}
                   notifications
