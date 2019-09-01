@@ -54,6 +54,13 @@ export default StyleSheet.create({
     fontSize: resize(14),
     fontWeight: Platform.OS === 'ios' ? '500' : '400',
   },
+  inUse: {
+    color: '#94ffb4',
+    fontFamily: AIRBNB_MEDIUM,
+    fontSize: resize(14),
+    paddingRight: resize(20),
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
+  },
   desactive: {
     color: '#cfcfcf',
     fontFamily: AIRBNB_MEDIUM,

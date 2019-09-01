@@ -80,20 +80,7 @@ class Sidebar extends Component {
     if (currentUser.payment_methods.length === 0) {
       this.navigateTo('AddCardForm', { addExternal: true })
     } else {
-      Alert.alert(
-        'Brbr App',
-        'Tu ya tienes un metodo de pago, si agregas otro se eliminara el anterior',
-        [
-          {
-            text: 'Cancel',
-            onPress: () => { },
-            style: 'cancel',
-          },
-          { text: 'Aceptar', onPress: () => this.navigateTo('AddCardForm', { addExternal: true }) },
-        ],
-        { cancelable: false },
-      );
-
+      this.navigateTo('PaymentMethodsList')
     }
   }
 
@@ -151,7 +138,7 @@ class Sidebar extends Component {
                   onPress={() => this.navigateTo('MyProfile')}
                 />
                 <ItemList
-                  text={'Metodo de pago'}
+                  text={'Metodos de pago'}
                   alert={currentUser.payment_methods.length === 0}
                   onPress={() => this.onPressPaymentMethod()}
                 />

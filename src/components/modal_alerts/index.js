@@ -10,6 +10,7 @@ import MainButton from '../button';
 
 //assets
 import closeModal from '../../assets/icons/close_modal.png';
+import navIcon from '../../assets/icons/navaja.png';
 
 export default function ModalAlert(props) {
 
@@ -26,6 +27,7 @@ export default function ModalAlert(props) {
     subtitle,
     onChangeText,
     placeholder,
+    finish
   } = props
 
   return (
@@ -62,6 +64,14 @@ export default function ModalAlert(props) {
                 source={closeModal}
               />
             </TouchableOpacity>
+          }
+          {
+            finish &&
+            <Image
+              style={styles.nav}
+              source={navIcon}
+              resizeMode={'contain'}
+            />
           }
           {title}
           <Text

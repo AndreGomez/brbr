@@ -13,6 +13,9 @@ export default StyleSheet.create({
   bottomContainer: {
     alignItems: 'flex-end',
   },
+  nav: {
+    height: resize(100)
+  },
   content: {
     borderRadius: 12,
     backgroundColor: 'white',

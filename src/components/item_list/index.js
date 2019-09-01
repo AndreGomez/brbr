@@ -25,13 +25,16 @@ export default function ItemList(props) {
     notifications,
     active,
     lng,
-    alert
+    alert,
+    customStyles,
+    card,
+    use
   } = props
 
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={styles.container}
+      style={[styles.container, customStyles]}
     >
       {
         name ?
@@ -101,9 +104,22 @@ export default function ItemList(props) {
                         Incompleto
                       </Text>
                     }
-                    <Image
-                      source={right_arrow}
-                    />
+                    {
+                      use &&
+                      <Text
+                        style={styles.inUse}
+                      >
+                        En uso
+                      </Text>
+                    }
+                    {
+                      !card ?
+                        <Image
+                          source={right_arrow} />
+                        :
+                        card
+                    }
+
                   </View>
 
             }

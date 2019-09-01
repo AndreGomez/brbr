@@ -16,6 +16,7 @@ import MyAddress from '../../screens/app/my_address';
 import Galery from '../../screens/app/galery';
 import DateDetail from '../../screens/app/date_detail';
 import Chat from '../../screens/app/chat';
+import PaymentMethodsList from '../../screens/app/payment_methods_list'
 
 //components 
 import Sidebar from '../../components/sidebar';
@@ -46,6 +47,7 @@ const appStackNavigator = createStackNavigator(
     MyProfile,
     MyAddress,
     Galery,
+    PaymentMethodsList,
     AddCardForm,
     Chat
   },

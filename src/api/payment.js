@@ -36,6 +36,14 @@ export const addPaymentMethodToken = async (data = {}) => {
   })
 }
 
+export const usePaymentMethod = async (id = '') => {
+  return await dispatchRequest({
+    method: 'GET',
+    url: `users/payment/${id}`,
+
+  })
+}
+
 export const generateToken = async (data = {}) => {
   try {
     const resolve = await fetch(urlOpenPay, {

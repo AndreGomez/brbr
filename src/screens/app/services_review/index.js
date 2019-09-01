@@ -58,9 +58,10 @@ class ServiceReview extends Component {
     const lng = await locale()
     const { navigation, currentUser } = this.props
     try {
-      const cardObject = await getObjectCard(currentUser.openpay_id, currentUser.payment_methods[currentUser.payment_methods.length - 1].token)
+      const filter = currentUser.payment_methods.filter(res => res.use)
+      const cardObject = await getObjectCard(currentUser.openpay_id, filter[0].token)
       const card = await cardObject.json()
-      const paymentMethod = `...${card.card_number[12]}${card.card_number[13]}${card.card_number[14]}${card.card_number[15]}`
+      const paymentMethod = `...${card.card_number[card.card_number.length - 1]}${card.card_number[card.card_number.length - 2]}${card.card_number[card.card_number.length - 3]}${card.card_number[card.card_number.length - 4]}`
       this.setState({
         paymentMethod
       })
@@ -90,11 +91,12 @@ class ServiceReview extends Component {
     })
     try {
       if (currentUser.payment_methods.length != 0) {
+        const filter = currentUser.payment_methods.filter(res => res.use)
         const dataAppoiment = {
           schedule_id: `${params.daySelected._id}`,
           hour: params.hourSelected.hour,
           location: [navigation.state.params.positionAppoint.lat, navigation.state.params.positionAppoint.lng, this.state.location],
-          payment: currentUser.payment_methods[currentUser.payment_methods.length - 1]._id,
+          payment: filter[0]._id,
           barber_id: params.item.barber._id,
           services: {
             hair: {
@@ -235,6 +237,7 @@ class ServiceReview extends Component {
                 city={barberInfo.address.description}
                 stars={barberInfo.qualification}
                 paymentMethod={paymentMethod}
+                date={date}
                 onPressProfile={() => this.navigateTo('BrbrProfile', { item: { barber: { ...barberInfo } } })}
                 onPressChange={() => this.navigateTo('BrbrProfile')}
               />

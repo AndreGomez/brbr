@@ -17,6 +17,7 @@ import Loading from '../../../components/loading';
 import Switch from '../../../components/switch';
 import BrbrPaymentReview from '../../../components/brbr_payment_review';
 import successMessage from '../../../utils/success_message';
+import ModalAlert from '../../../components/modal_alerts';
 
 //locale
 import locale from '../../../locale';
@@ -33,6 +34,8 @@ import BrbrHistoryReserve from '../../../components/brbr_history_reserve';
 import { getObjectCard } from '../../../api/payment';
 import MainButton from '../../../components/button';
 
+import moment, { duration } from 'moment';
+
 class MyProfile extends Component {
 
   state = {
@@ -43,7 +46,13 @@ class MyProfile extends Component {
     appoinments: [],
     proxAppoinment: {},
     appoReserved: [],
-    loadingBtnCancel: false
+    loadingBtnCancel: false,
+    cancelModal: {
+      visible: false
+    },
+    infoCancelModal: {
+      visible: false
+    },
   }
 
   async componentDidMount() {
@@ -121,46 +130,76 @@ class MyProfile extends Component {
     )
   }
 
-  onPressCancelDate = () => {
+  onPressCancelDate = async () => {
+    const reserveDetail = this.state.appoReserved[this.state.appoReserved.length - 1]
 
-    Alert.alert(
-      'Brbr App',
-      'Seguro que quieres cancelar?',
-      [
-        {
-          text: 'No',
-          onPress: () => { },
-          style: 'destructive',
-        },
-        {
-          text: 'Si', onPress: async () => {
-            const reserveDetail = this.state.appoReserved[this.state.appoReserved.length - 1]
+    this.setState({
+      loadingBtnCancel: true
+    })
 
-            this.setState({
-              loadingBtnCancel: true
-            })
+    try {
+      await updateAppoinment(reserveDetail._id, {
+        state: 'canceled'
+      })
 
-            try {
-              await updateAppoinment(reserveDetail._id, {
-                state: 'canceled'
-              })
+      await this.getAppointemt()
 
-              await this.getAppointemt()
+      successMessage('Reservacion cancelada exitosamente!')
+      this.toggleModal('cancelModal')
+      this.toggleModal('infoCancelModal')
+      this.setState({
+        loadingBtnCancel: false
+      })
+    } catch (error) {
+      this.setState({
+        loadingBtnCancel: false
+      })
+    }
+  }
 
-              successMessage('Reservacion cancelada exitosamente!')
-              this.setState({
-                loadingBtnCancel: false
-              })
-            } catch (error) {
-              this.setState({
-                loadingBtnCancel: false
-              })
-            }
-          }
-        },
-      ],
-      { cancelable: false },
-    );
+  toggleModal = (type = 'modal') => {
+    this.setState({
+      [type]: {
+        visible: !this.state[type].visible
+      }
+    })
+  }
+
+  cancelDate = async () => {
+    const {
+      reserveDetail
+    } = this.state
+
+    this.setState({
+      loadingBtnCancel: true
+    })
+
+    this.toggleModal('cancelModal')
+
+    try {
+
+      await updateAppoinment(reserveDetail._id, {
+        state: 'canceled'
+      })
+
+      successMessage('Reservacion cancelada exitosamente!')
+
+      const actionToDispatch = StackActions.reset({
+        index: 0,
+        key: null,
+        actions: [
+          NavigationActions.navigate({
+            routeName: 'drawer',
+          }),
+        ]
+      });
+      this.props.navigation.dispatch(actionToDispatch);
+
+    } catch (error) {
+      this.setState({
+        loadingBtnCancel: false
+      })
+    }
   }
 
   render() {
@@ -173,7 +212,9 @@ class MyProfile extends Component {
       appoinments,
       proxAppoinment,
       appoReserved,
-      loadingBtnCancel
+      loadingBtnCancel,
+      cancelModal,
+      infoCancelModal
     } = this.state
 
     const {
@@ -280,13 +321,12 @@ class MyProfile extends Component {
                           loading={loadingBtnCancel}
                           text={'Cancelar cita'}
                           containerStyle={styles.cancelBtn}
-                          onPress={() => this.onPressCancelDate()}
+                          onPress={() => this.toggleModal('cancelModal')}
                         />
                         <MainButton
                           sm
                           white
-                          loading={loadingBtnCancel}
-                          text={'Enviar mensaje'}
+                          text={'Mensaje'}
                           containerStyle={styles.cancelBtn}
                           onPress={() => this.navigateTo('Chat')}
                         />
@@ -310,6 +350,39 @@ class MyProfile extends Component {
 
             </Content>
         }
+        {
+          appoReserved.length != 0 &&
+          <ModalAlert
+            lng={lng}
+            visible={cancelModal.visible}
+            message={
+              moment.duration(moment().diff(appoReserved[appoReserved.length - 1].createdAt)).as('hours') <= 24 ?
+                'Se te cobrará un 50% porque ya habías agendado con un barbero' :
+                '¿Seguro que quieres cancelar? Se te cobrará un 20% porque ya habías agendado con un barbero'
+            }
+            title={
+              <Text
+                style={styles.cancelSecure}
+              >
+                ¿Seguro que quieres cancelar?
+            </Text>
+            }
+            close
+            onPressClose={() => this.toggleModal('cancelModal')}
+            onPress={() => this.onPressCancelDate()}
+            btnTitle={'Si'}
+          />
+        }
+        <ModalAlert
+          lng={lng}
+          visible={infoCancelModal.visible}
+          finish
+          message={'Te hemos enviado un codigo de descuento a tu correo para tu proximo corte.'}
+          close
+          onPressClose={() => this.toggleModal('infoCancelModal')}
+          onPress={() => this.toggleModal('infoCancelModal')}
+          btnTitle={'Ok'}
+        />
       </Container>
     );
   }

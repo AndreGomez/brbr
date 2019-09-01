@@ -175,12 +175,13 @@ class AddCardForm extends Component {
           this.toggleModal('modalErrorData', 'El formato de fecha debe ser YY/MM')
           this.setState({ loadingButton: false })
         } else {
-
+          console.log('error', card)
           this.toggleModal('modalErrorData', lng.card_verify)
           this.setState({ loadingButton: false })
         }
       }
     } catch (error) {
+      console.log('error', error.response)
       this.setState({ loadingButton: false })
       this.toggleModal('modalErrorData', this.state.lng.all_fields_are_required)
     }
@@ -299,7 +300,7 @@ class AddCardForm extends Component {
               value={cvv.value}
               keyboardType={'numeric'}
               onChangeText={(value) => {
-                if (value.length <= 3) {
+                if (value.length <= 4) {
                   this.onChange('cvv', value)
                 }
               }}

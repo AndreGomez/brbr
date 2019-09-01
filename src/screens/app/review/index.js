@@ -83,6 +83,7 @@ class Review extends Component {
 
   onPressSend = async () => {
     const { state: { formData }, state } = this
+    const { dateId } = this.props
     this.setState({
       loadingBtn: true
     })
@@ -95,9 +96,9 @@ class Review extends Component {
           date: moment().format('YYYY/DD/MM'),
           qualification: state.starQ,
           comment: formData.body.value,
-          title: formData.title.value
+          title: formData.title.value,
+          appointments_id: dateId
         }
-
 
         await addReview(dataSend)
 

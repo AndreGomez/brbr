@@ -95,6 +95,7 @@ class LoginForm extends Component {
 
       this.setState({ loading: false })
     } catch (error) {
+      console.log('eerrr', error)
       this.setState({ loading: false })
       return successMessage('Verifique sus datos', 'danger')
     }

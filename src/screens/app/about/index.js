@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
+  Linking
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Container, Content } from 'native-base';
@@ -87,6 +88,10 @@ class About extends Component {
                 <ItemList
                   text={lng.POP}
                   onPress={() => this.navigateTo('ExtraInfo', { title: lng.pop })}
+                />
+                <ItemList
+                  text={'Reportar un problema'}
+                  onPress={() => Linking.openURL('https://wa.me/5215612761842')}
                 />
               </View>
             </Content>

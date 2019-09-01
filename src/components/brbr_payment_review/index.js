@@ -14,6 +14,7 @@ import vipIcon from '../../assets/icons/vip.png';
 import starIcon from '../../assets/icons/star.png';
 import ImagesCustom from '../imagesCustom';
 import moment from 'moment';
+import getFormatDate from '../../utils/getFormatDate';
 
 export default function BrbrPaymentReview(props) {
 
@@ -29,7 +30,7 @@ export default function BrbrPaymentReview(props) {
     onPressProfile,
     onPressChange,
   } = props
-
+  console.log('DATE', date)
   return (
     <View
       style={styles.container}
@@ -54,7 +55,7 @@ export default function BrbrPaymentReview(props) {
           <Text
             style={styles.barber}
           >
-            {moment(date, 'YYYY-MM-DD').format('DD MMM YYYY')}
+            {getFormatDate(date, 'es')}
           </Text>
         </View>
         <View
@@ -145,7 +146,7 @@ BrbrPaymentReview.defaultProps = {
   name: '',
   city: '',
   star: 0,
-  date: '',
+  date: '2017-01-01',
   paymentMethod: '',
   onPressProfile: () => { },
   onPressChange: () => { }

@@ -38,6 +38,7 @@ import {
   updateAppoinment
 } from '../../../api/appoinments';
 import { StackActions, NavigationActions } from 'react-navigation';
+import getFormatDate from '../../../utils/getFormatDate';
 
 class DateDetail extends Component {
 
@@ -385,7 +386,7 @@ class DateDetail extends Component {
                     <Text
                       style={styles.dateHourrr}
                     >
-                      {`${moment(reserveDetail.date, 'YYYY-MM-DD').format('DD MMM YYYY')}, ${reserveDetail.hour}`}
+                      {`${getFormatDate(reserveDetail.date, 'es')}, ${reserveDetail.hour}`}
                     </Text>
                   </View>
                   <View

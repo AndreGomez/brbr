@@ -11,6 +11,7 @@ import moment from 'moment';
 import styles from './styles';
 import ImagesCustom from '../imagesCustom';
 import starIcon from '../../assets/icons/star.png';
+import getFormatDate from '../../utils/getFormatDate';
 
 
 export default function Comment(props) {
@@ -75,7 +76,7 @@ export default function Comment(props) {
         <Text
           style={styles.date}
         >
-          {moment(date).format('DD MMM YYYY')}
+          {getFormatDate(date, 'es')}
         </Text>
       </View>
       <Text

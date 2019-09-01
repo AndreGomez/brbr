@@ -14,6 +14,13 @@ export default StyleSheet.create({
     height: '100%',
     width: '100%'
   },
+  cancelSecure: {
+    color: 'black',
+    fontFamily: 'Airbnb Cereal App',
+    fontSize: resize(20),
+    fontWeight: '700',
+    paddingTop: resize(20, 'h')
+  },
   row: {
     flexDirection: 'row',
     alignItems: 'center'
@@ -35,7 +42,6 @@ export default StyleSheet.create({
     fontFamily: 'Airbnb Cereal App',
     fontSize: resize(20),
     fontWeight: '300',
-
   },
   avatar: {
     width: resize(82, 'h'),

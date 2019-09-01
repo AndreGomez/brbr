@@ -114,7 +114,7 @@ export default StyleSheet.create({
     paddingRight: resize(23)
   },
   hours: {
-    color: '#2d2d2d',
+    color: 'white',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(20),
     fontWeight: Platform.OS === 'ios' ? '500' : '400',
@@ -124,7 +124,6 @@ export default StyleSheet.create({
   },
   hour: {
     borderWidth: 1,
-    borderColor: '#2d2d2d',
     borderRadius: 7,
     alignItems: 'center',
     justifyContent: 'center',
