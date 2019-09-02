@@ -59,7 +59,7 @@ import parseError from '../../../utils/parse_error';
 import ServicesModal from '../../../components/services_modal';
 import DateModal from '../../../components/date_modal';
 import alertMessaje from '../../../utils/alertMessaje';
-import { getAppoiment } from '../../../api/appoinments';
+import { getAppoiment, getAppoimentPendingReview } from '../../../api/appoinments';
 import MainButton from '../../../components/button';
 import Review from '../review';
 import LocationInput from '../../../components/location_input';
@@ -99,7 +99,8 @@ class Home extends Component {
       value: '',
       type: '',
       required: false
-    }
+    },
+    appoPendingReview: null
   }
 
   async componentDidMount() {
@@ -114,11 +115,15 @@ class Home extends Component {
         ]
       }
     )
+    const resAppoPendingReview = await getAppoimentPendingReview()
+
+
     await this.verifyPermissions()
     this.setState({
       lng,
       loading: false,
-      resAppoInProgress: resAppoInProgress.data
+      resAppoInProgress: resAppoInProgress.data,
+      appoPendingReview: resAppoPendingReview.data != 0 ? resAppoPendingReview.data[0] : null
     })
   }
 
@@ -422,7 +427,8 @@ class Home extends Component {
       dateModal,
       refreshing,
       resAppoInProgress,
-      locationSearch
+      locationSearch,
+      appoPendingReview
     } = this.state
 
     const {
@@ -669,6 +675,22 @@ class Home extends Component {
           <Review
             visible={true}
             dateId={currentUser.appoinmentFinish}
+          />
+        }
+        {
+          currentUser.appoinmentFinish &&
+          !loading &&
+          <Review
+            visible={true}
+            dateId={currentUser.appoinmentFinish}
+          />
+        }
+        {
+          appoPendingReview &&
+          !loading &&
+          <Review
+            visible={true}
+            dateId={appoPendingReview._id}
           />
         }
       </Container>

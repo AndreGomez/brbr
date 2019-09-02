@@ -36,6 +36,8 @@ import alertMessage from '../../../utils/alertMessaje';
 import checkIcon from '../../../assets/icons/check.png';
 import { StackActions, NavigationActions } from 'react-navigation';
 import { getObjectCard } from '../../../api/payment';
+import { GetMyInfo } from '../../../api/user';
+import { SET_USER } from '../../../actions/user';
 
 class ServiceReview extends Component {
 
@@ -85,40 +87,67 @@ class ServiceReview extends Component {
   }
 
   onPressNext = async () => {
-    const { navigation: { state: { params } }, currentUser, navigation } = this.props
+    const { navigation: { state: { params } }, currentUser, navigation, dispatch } = this.props
     this.setState({
       loadingBtn: true
     })
     try {
       if (currentUser.payment_methods.length != 0) {
-        const filter = currentUser.payment_methods.filter(res => res.use)
-        const dataAppoiment = {
-          schedule_id: `${params.daySelected._id}`,
-          hour: params.hourSelected.hour,
-          location: [navigation.state.params.positionAppoint.lat, navigation.state.params.positionAppoint.lng, this.state.location],
-          payment: filter[0]._id,
-          barber_id: params.item.barber._id,
-          services: {
-            hair: {
-              cost: navigation.state.params.servicesSelected.hair ? navigation.state.params.item.barber.services.hair.cost : '0'
-            },
-            eyebrows: {
-              cost: "0"
-            },
-            beard: {
-              cost: navigation.state.params.servicesSelected.bear ? navigation.state.params.item.barber.services.beard.cost : '0'
+        if (currentUser.auth_identity) {
+          const filter = currentUser.payment_methods.filter(res => res.use)
+
+          var hairCost = navigation.state.params.servicesSelected.hair ? navigation.state.params.item.barber.services.hair.cost : '0'
+          if (currentUser.promotion.use_code.code) {
+
+            const percent = (hairCost / 100) * parseInt(currentUser.promotion.use_code.percentage)
+            hairCost = hairCost - percent
+          }
+
+          const dataAppoiment = {
+            schedule_id: `${params.daySelected._id}`,
+            hour: params.hourSelected.hour,
+            location: [navigation.state.params.positionAppoint.lat, navigation.state.params.positionAppoint.lng, this.state.location],
+            payment: filter[0]._id,
+            barber_id: params.item.barber._id,
+            services: {
+              hair: {
+                cost: `${hairCost}`
+              },
+              eyebrows: {
+                cost: "0"
+              },
+              beard: {
+                cost: navigation.state.params.servicesSelected.bear ? navigation.state.params.item.barber.services.beard.cost : '0'
+              }
             }
           }
+          console.log(dataAppoiment)
+
+          await createAppoiment({ ...dataAppoiment })
+
+          const resUser = await GetMyInfo(currentUser._id)
+
+          await dispatch({
+            type: SET_USER,
+            payload: {
+              ...resUser.data
+            }
+          });
+
+          this.setState({
+            modalData: {
+              visible: true
+            }
+          })
+          this.setState({
+            loadingBtn: false
+          })
+        } else {
+          this.setState({
+            loadingBtn: false
+          })
+          return alertMessage('Aun no tienes tu identificacion personal!')
         }
-        const res = await createAppoiment({ ...dataAppoiment })
-        this.setState({
-          modalData: {
-            visible: true
-          }
-        })
-        this.setState({
-          loadingBtn: false
-        })
       } else {
         this.setState({
           loadingBtn: false
@@ -126,6 +155,7 @@ class ServiceReview extends Component {
         return alertMessage('No tienes ningun metodo de pago!')
       }
     } catch (error) {
+      console.log(error.response)
       this.setState({
         loadingBtn: false
       })

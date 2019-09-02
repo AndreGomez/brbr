@@ -37,6 +37,13 @@ export const EditAddress = async (data = {}, id = '') => {
   })
 }
 
+export const AddPromoCode = async (code = '') => {
+  return await dispatchRequest({
+    method: 'GET',
+    url: `promotion/${code}`,
+  })
+}
+
 export const setToken = async (data = {}, id = null) => {
   if (!id) {
     const _state = await state()

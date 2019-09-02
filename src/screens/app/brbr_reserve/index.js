@@ -167,7 +167,7 @@ class BrbrReserve extends Component {
     const { state } = this
     const today = moment().format('YYYY-MM-DD')
 
-    const hourToday = moment().format('h:m A')
+    var hourToday = moment().format('h:m A')
 
     if (moment().format('hh') < 10) {
       hourToday = moment().add(2, 'hours').format('h:m A')

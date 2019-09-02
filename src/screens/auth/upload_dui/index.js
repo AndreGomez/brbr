@@ -37,6 +37,7 @@ import { SET_USER } from '../../../actions/user';
 import {
   authIdentityConfirm
 } from '../../../api/auth';
+import { GetMyInfo } from '../../../api/user';
 
 class UploadDUI extends Component {
 
@@ -101,6 +102,49 @@ class UploadDUI extends Component {
     });
   }
 
+  onPressAcept = async () => {
+    const {
+      img,
+      lng,
+      imgInfo
+    } = this.state
+
+    const {
+      dispatch
+    } = this.props;
+
+    if (img) {
+      try {
+        this.setState({ loadingButton: true })
+
+        const res = await uploadAsset('authIdentiry', imgInfo.uri, imgInfo.fileName, { contentType: imgInfo.type })
+
+        const storeState = await store.getState()
+
+        await authIdentityConfirm(storeState.user._id, {
+          auth_identity: res
+        })
+
+        const resUser = await GetMyInfo(storeState.user._id)
+
+        dispatch({
+          type: SET_USER,
+          payload: {
+            ...resUser.data
+          }
+        });
+
+        this.setState({ loadingButton: false })
+        successMessage('Exitoso!')
+        return this.props.navigation.goBack()
+      } catch (error) {
+        this.setState({ loadingButton: false })
+      }
+    } else {
+      return successMessage(lng.photo_identify, 'danger')
+    }
+  }
+
   onPressNext = async () => {
     const {
       img,
@@ -152,6 +196,10 @@ class UploadDUI extends Component {
       img,
       loadingButton
     } = this.state
+
+    const {
+      navigation
+    } = this.props
 
     return (
       <Container
@@ -222,23 +270,38 @@ class UploadDUI extends Component {
           >
             {lng.id_oficial_label2}
           </Text>
-          <View
-            style={styles.btnContainer}
-          >
-            <MainButton
-              raised_green
-              text={lng.skip}
-              sm
-              onPress={() => this.onPressSkip()}
-            />
-            <MainButton
-              white
-              text={lng.next}
-              sm
-              onPress={() => this.onPressNext()}
-              loading={loadingButton}
-            />
-          </View>
+          {
+            !navigation.state.params.addExternal ?
+              <View
+                style={styles.btnContainer}
+              >
+                <MainButton
+                  raised_green
+                  text={lng.skip}
+                  sm
+                  onPress={() => this.onPressSkip()}
+                />
+                <MainButton
+                  white
+                  text={lng.next}
+                  sm
+                  onPress={() => this.onPressNext()}
+                  loading={loadingButton}
+                />
+              </View>
+              :
+              <View
+                style={styles.btnContainerNoParams}
+              >
+                <MainButton
+                  white
+                  text={lng.accept}
+                  sm
+                  onPress={() => this.onPressAcept()}
+                  loading={loadingButton}
+                />
+              </View>
+          }
         </Content>
       </Container>
     );

@@ -31,6 +31,13 @@ export const getAppoiment = async (id = '', data = {}) => {
   })
 }
 
+export const getAppoimentPendingReview = async () => {
+  return await dispatchRequest({
+    method: 'GET',
+    url: `appointments/review/pending`,
+  })
+}
+
 export const getAppoimentById = async (id = '') => {
   return await dispatchRequest({
     method: 'GET',

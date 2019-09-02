@@ -19,6 +19,13 @@ export default StyleSheet.create({
     width: '100%',
     marginTop: resize(60, 'h')
   },
+  btnContainerNoParams: {
+    flexDirection: 'row',
+    marginHorizontal: resize(20),
+    justifyContent: 'center',
+    width: '100%',
+    marginTop: resize(60, 'h')
+  },
   cameraText: {
     color: '#95989a',
     fontFamily: AIRBNB_MEDIUM,

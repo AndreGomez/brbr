@@ -39,6 +39,7 @@ import {
 } from '../../../api/appoinments';
 import { StackActions, NavigationActions } from 'react-navigation';
 import getFormatDate from '../../../utils/getFormatDate';
+import serviceEnES from '../../../utils/getServiceEnEs';
 
 class DateDetail extends Component {
 
@@ -324,7 +325,7 @@ class DateDetail extends Component {
                           style={styles.name}
                           numberOfLines={1}
                         >
-                          {`${reserveDetail.barber.name}fdsafdsad`}
+                          {`${reserveDetail.barber.name}`}
                         </Text>
                       </View>
                     </View>
@@ -356,7 +357,7 @@ class DateDetail extends Component {
                     >
                       {`${lng.service_to}${Object.keys(reserveDetail.services).map(res => {
                         if (reserveDetail.services[res].cost != 0) {
-                          return ` ${res}`
+                          return ` ${serviceEnES(res)}`
                         } else {
                           return ''
                         }

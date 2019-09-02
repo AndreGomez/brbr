@@ -155,6 +155,11 @@ class Sidebar extends Component {
                   onPress={() => this.navigateTo('MeCode')}
                 />
                 <ItemList
+                  text={'Identificación personal'}
+                  alert={!currentUser.auth_identity}
+                  onPress={() => this.navigateTo('UploadDUI', { addExternal: true })}
+                />
+                <ItemList
                   text={lng.notifications}
                   onPress={() => this.toggleModal()}
                   notifications

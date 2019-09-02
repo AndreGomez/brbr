@@ -51,7 +51,8 @@ const appStackNavigator = createStackNavigator(
     PaymentMethodsList,
     AddCardForm,
     Chat,
-    MeCode
+    MeCode,
+    UploadDUI
   },
   {
     initialRouteName: 'drawer',

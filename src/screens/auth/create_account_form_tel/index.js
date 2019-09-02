@@ -84,8 +84,8 @@ class CreateAccountFormTel extends Component {
     modalData: {
       visible: false
     },
-    cca2: 'MX',
-    callingCode: '52',
+    cca2: 'SV',
+    callingCode: '503',
     errorMessage: '',
     loadingButton: false
   }
@@ -166,8 +166,8 @@ class CreateAccountFormTel extends Component {
             loadingButton: true
           })
           const res = await validateEmail({ email: email.value })
-
-          if (res.data.exist === false) {
+          console.log(res)
+          if (res.data.exist == false) {
 
             const cell_phone = `+${callingCode} ${phone.value}`
             await validateFields({ email, name, phone })
@@ -192,6 +192,7 @@ class CreateAccountFormTel extends Component {
             return this.toggleModalError()
           }
         } catch (error) {
+          console.log('error', error)
           this.setState({
             errorMessage: 'Revisa tu informacion',
             loadingButton: false
@@ -234,14 +235,17 @@ class CreateAccountFormTel extends Component {
         this.setState({
           loadingButton: false
         })
-        await createAccount({
+
+        const dataSend = {
           email: email.value,
           password: password.value,
           name: name.value,
-          lastname: '',
+          lastname: 'Me encanta mi trabajo!',
           cell_phone: `+${callingCode} ${phone.value}`,
           device_token: '000'
-        })
+        }
+
+        await createAccount(dataSend)
 
         const res = await loginUser({
           email: email.value,
@@ -268,6 +272,7 @@ class CreateAccountFormTel extends Component {
         return successMessage('Codigo invalido', 'danger')
       }
     } catch (error) {
+      console.log('error', error.response)
       this.setState({
         errorMessage: 'Revisa tu informacion',
         loadingButton: false
