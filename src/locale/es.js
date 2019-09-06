@@ -46,13 +46,13 @@ const es = {
 
 
   //first_time
-  calified_brbr: 'Barberos Calificados',
+  calified_brbr: 'Seguridad',
   calified_brbr_message: 'Lorem dolor sit amet consectetur adipisicing elit, sed do eiusmod tempor incididunt.',
-  calified_brbr_2: 'Header Title 2',
+  calified_brbr_2: 'Tus datos están protegidos',
   calified_brbr_message_2: 'Lorem dolor sit amet consectetur adipisicing elit, sed do eiusmod tempor incididunt.',
-  calified_brbr_3: 'Header Title 3',
+  calified_brbr_3: 'Barberos calificados',
   calified_brbr_message_3: 'Lorem dolor sit amet consectetur adipisicing elit, sed do eiusmod tempor incididunt.',
-  calified_brbr_4: 'Reserva tu primera experiencia ',
+  calified_brbr_4: 'Disfruta tu experiencia',
   calified_brbr_message_4: 'Lorem dolor sit amet consectetur adipisicing elit, sed do eiusmod tempor incididunt.',
 
   //login
@@ -63,7 +63,7 @@ const es = {
   password_validation: '8 caracteres como mínimo, distingue mayúsculas de minúsculas',
   reset_password: 'Reestablecer contraseña',
   id_oficial: 'Identificación oficial',
-  id_oficial_label1: 'Por tu seguridad sube una foto de tu galería o tómate una',
+  id_oficial_label1: 'Queremos hacer que esta plataforma sea segura para nuestros barberos y nuestros clientes. Tus datos están seguros, lee nuestro aviso de privacidad.',
   id_oficial_label2: 'Si utilizas tu cámara recuerda sacar el rostro completo',
 
   //HOME

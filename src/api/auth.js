@@ -9,6 +9,22 @@ export const authenticateUser = async (data = {}) => {
   });
 }
 
+export const resetPassword = async (data = {}) => {
+  return await dispatchRequest({
+    method: 'post',
+    url: 'users/password/email',
+    data
+  });
+}
+
+export const resetPasswordSend = async (data = {}) => {
+  return await dispatchRequest({
+    method: 'post',
+    url: 'users/password/reset',
+    data
+  });
+}
+
 export const createAccount = async (data = {}) => {
   return await dispatchRequest({
     method: 'post',

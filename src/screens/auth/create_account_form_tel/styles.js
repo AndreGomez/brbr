@@ -15,6 +15,14 @@ export default StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: resize(20)
   },
+  check: {
+    marginTop: resize(20, 'h')
+  },
+  upsTitle: {
+    fontSize: resize(80),
+    fontFamily: AIRBNB_MEDIUM,
+    fontWeight: '700'
+  },
   input: {
     marginTop: resize(25, 'height'),
   },
@@ -23,7 +31,7 @@ export default StyleSheet.create({
     width: '100%'
   },
   btn: {
-    marginTop: resize(100, 'height'),
+    marginTop: resize(40, 'height'),
   },
   ups: {
 

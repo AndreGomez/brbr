@@ -38,6 +38,7 @@ import { SET_USER } from '../../../actions/user';
 
 //utils
 import { validateFields } from '../../../utils/validators';
+import { CheckBox } from 'react-native-elements';
 
 const PLACEHOLDER_COLOR = "rgba(255,255,255,0.2)";
 
@@ -84,8 +85,9 @@ class CreateAccountFormTel extends Component {
     modalData: {
       visible: false
     },
-    cca2: 'SV',
-    callingCode: '503',
+    check: false,
+    cca2: 'MX',
+    callingCode: '52',
     errorMessage: '',
     loadingButton: false
   }
@@ -156,59 +158,73 @@ class CreateAccountFormTel extends Component {
       phone,
       callingCode,
       password,
-      rPassword
+      rPassword,
+      check
     } = this.state
 
-    if (password.value === rPassword.value) {
-      if (password.value.length >= 8) {
-        try {
-          this.setState({
-            loadingButton: true
-          })
-          const res = await validateEmail({ email: email.value })
-          console.log(res)
-          if (res.data.exist == false) {
+    if (check) {
+      if (password.value === rPassword.value) {
+        if (password.value.length >= 8) {
+          try {
+            this.setState({
+              loadingButton: true
+            })
+            const res = await validateEmail({ email: email.value })
+            if (res.data.exist == false) {
 
-            const cell_phone = `+${callingCode} ${phone.value}`
-            await validateFields({ email, name, phone })
-            const confirmResult = await validatePhone({ cell_phone })
-            if (confirmResult.data.code) {
-              this.setState({
-                confirmResult: confirmResult.data.code
-              })
-              this.toggleModalConfirmPhone()
+              const cell_phone = `+${callingCode} ${phone.value}`
+              await validateFields({ email, name, phone })
+              const confirmResult = await validatePhone({ cell_phone })
+              if (confirmResult.data.code) {
+                this.setState({
+                  confirmResult: confirmResult.data.code
+                })
+                this.toggleModalConfirmPhone()
+              } else {
+                this.setState({
+                  errorMessage: 'Este telefono ya existe o es invalido',
+                  loadingButton: false
+                })
+                return this.toggleModalError()
+              }
             } else {
               this.setState({
-                errorMessage: 'Este telefono ya existe o es invalido',
+                errorMessage: 'Este correo ya esta en uso',
                 loadingButton: false
               })
               return this.toggleModalError()
             }
-          } else {
+          } catch (error) {
+            console.log('error', error.response)
             this.setState({
-              errorMessage: 'Este correo ya esta en uso',
+              errorMessage:
+                error == 'invalid_email' ?
+                  'Correo invalido' :
+                  error.response.data &&
+                    error.response.data.message === 'There was an error sending the message.' ?
+                    'Error al enviar el mensaje, revisa que el numero sea valido'
+                    :
+                    'Revisa tu info',
               loadingButton: false
             })
-            return this.toggleModalError()
+            this.toggleModalError()
           }
-        } catch (error) {
-          console.log('error', error)
+          // this.toggleModal()
+        } else {
           this.setState({
-            errorMessage: 'Revisa tu informacion',
-            loadingButton: false
+            errorMessage: 'La contraseña debe contener minimo 8 caracteres'
           })
-          this.toggleModalError()
+          return this.toggleModalError()
         }
-        // this.toggleModal()
       } else {
         this.setState({
-          errorMessage: 'La contraseña debe contener minimo 8 caracteres'
+          errorMessage: 'las contraseñas no son iguales'
         })
         return this.toggleModalError()
       }
     } else {
       this.setState({
-        errorMessage: 'las contraseñas no son iguales'
+        errorMessage: 'Debe aceptar los terminos y condiciones'
       })
       return this.toggleModalError()
     }
@@ -231,10 +247,6 @@ class CreateAccountFormTel extends Component {
 
     try {
       if (confirmResult === confirmCode.value) {
-        this.toggleModalConfirmPhone()
-        this.setState({
-          loadingButton: false
-        })
 
         const dataSend = {
           email: email.value,
@@ -266,6 +278,11 @@ class CreateAccountFormTel extends Component {
             token: `Bearer ${res.data.token}`,
           }
         });
+
+        this.toggleModalConfirmPhone()
+        this.setState({
+          loadingButton: false
+        })
 
         this.navigateTo('PaymentMethodAuth', { email, name, phone, callingCode })
       } else {
@@ -314,7 +331,8 @@ class CreateAccountFormTel extends Component {
         visibleConfirm,
       },
       password,
-      rPassword
+      rPassword,
+      check
     } = this.state
 
     return (
@@ -398,6 +416,13 @@ class CreateAccountFormTel extends Component {
             secureTextEntry
             value={rPassword.value}
           />
+          <CheckBox
+            containerStyle={styles.check}
+            checked={check}
+            checkedColor={'black'}
+            onPress={() => this.setState({ check: !check })}
+            title={'He Leído y estoy de acuerdo con los términos y condiciones del servicio.'}
+          />
           <MainButton
             onPress={() => this.onPressNext()}
             text={lng.next}
@@ -412,9 +437,11 @@ class CreateAccountFormTel extends Component {
         <ModalAlert
           visible={visibleError}
           title={
-            <Image
-              source={upsIcon}
-            />
+            <Text
+              style={styles.upsTitle}
+            >
+              ¡Ups!
+            </Text>
           }
           message={errorMessage}
           btnTitle={lng.accept}

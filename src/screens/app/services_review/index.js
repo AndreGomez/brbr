@@ -38,6 +38,7 @@ import { StackActions, NavigationActions } from 'react-navigation';
 import { getObjectCard } from '../../../api/payment';
 import { GetMyInfo } from '../../../api/user';
 import { SET_USER } from '../../../actions/user';
+import { createDeviceSessionId } from 'openpay-react-native';
 
 class ServiceReview extends Component {
 
@@ -103,7 +104,10 @@ class ServiceReview extends Component {
             hairCost = hairCost - percent
           }
 
+          const device_session_id = await createDeviceSessionId()
+
           const dataAppoiment = {
+            device_session_id,
             schedule_id: `${params.daySelected._id}`,
             hour: params.hourSelected.hour,
             location: [navigation.state.params.positionAppoint.lat, navigation.state.params.positionAppoint.lng, this.state.location],

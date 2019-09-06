@@ -32,11 +32,15 @@ export default StyleSheet.create({
   },
   btnContainer: {
     flexDirection: 'row',
-    width: '100%',
-    justifyContent: 'space-between'
+    justifyContent: 'center',
+  },
+  btnContainer2: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: resize(300, 'height')
   },
   btn: {
-    marginTop: resize(247, 'height')
+    marginTop: resize(100, 'height')
   },
   txtTouch: {
     marginTop: resize(10, 'height'),

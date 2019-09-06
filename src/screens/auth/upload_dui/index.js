@@ -70,8 +70,10 @@ class UploadDUI extends Component {
   onPressTakePhoto = async () => {
     try {
       const res = await Camera.ImageCamera()
+
       this.setState({
-        img: res.uri
+        img: res.uri,
+        imgInfo: res
       })
     } catch (error) {
     }

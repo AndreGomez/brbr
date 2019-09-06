@@ -45,7 +45,7 @@ export default StyleSheet.create({
     marginTop: resize(15, 'h')
   },
   icon: {
-    marginTop: resize(85, 'h'),
+    marginTop: resize(35, 'h'),
     width: resize(56),
     height: resize(56)
   },
@@ -65,7 +65,7 @@ export default StyleSheet.create({
     letterSpacing: resize(0.45),
     textAlign: 'center',
     marginTop: resize(20, 'h'),
-    paddingHorizontal: resize(80)
+    paddingHorizontal: resize(20)
   },
   label2: {
     paddingHorizontal: resize(50)

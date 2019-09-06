@@ -15,6 +15,11 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center'
   },
+  openLogo: {
+    height: resize(50, 'h'),
+    alignSelf: 'center',
+    marginTop: resize(20, 'h')
+  },
   title: {
     color: '#ffffff',
     fontFamily: AIRBNB_MEDIUM,
@@ -44,7 +49,7 @@ export default StyleSheet.create({
   btnContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: resize(80, 'h'),
+    marginTop: resize(50, 'h'),
     width: '100%'
   },
   select: {

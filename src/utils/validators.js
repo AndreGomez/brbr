@@ -15,16 +15,16 @@ export const validateFields = async (state = {}) => {
 
     if (_state.required) {
       if (_state.value === '' || _state.value === null) {
-        errorMessage = en[`required_${key}`];
+        errorMessage = `required_${key}`
         break;
       } else if (_regex) {
         if (!_regex.test(_state.value)) {
-          errorMessage = en[`invalid_${key}`];
+          errorMessage = `invalid_${key}`
           break;
         }
       } else if (_state.type === 'confirmPassword') {
         if (_state.value !== state['password'].value) {
-          errorMessage = en[`invalid_${key}`];
+          errorMessage = `pass_${key}`
           break;
         }
       }

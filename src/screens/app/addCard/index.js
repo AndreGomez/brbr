@@ -24,6 +24,7 @@ import cardsIcon from '../../../assets/icons/cards.png';
 import cuestionIcon from '../../../assets/icons/cuestion.png';
 import dateIcon from '../../../assets/icons/date_exp.png';
 import cvvIcon from '../../../assets/icons/cvv.png';
+import logoOpenPay from '../../../assets/images/logoOpenpay.png';
 
 //utils
 import countrys from '../../../utils/country_list';
@@ -174,17 +175,52 @@ class AddCardForm extends Component {
         if (card.description === 'expiration_month 22 is invalid, valid expirations months are 01 to 12') {
           this.toggleModal('modalErrorData', 'El formato de fecha debe ser YY/MM')
           this.setState({ loadingButton: false })
+        }
+        if (card.description === 'expiration_month 22 is invalid, valid expirations months are 01 to 12') {
+          this.toggleModal('modalErrorData', 'El formato de fecha debe ser YY/MM')
+          this.setState({ loadingButton: false })
         } else {
-          console.log('error', card)
-          this.toggleModal('modalErrorData', lng.card_verify)
+          this.toggleModal('modalErrorData', this.error_callbak(card))
           this.setState({ loadingButton: false })
         }
       }
     } catch (error) {
-      console.log('error', error.response)
       this.setState({ loadingButton: false })
       this.toggleModal('modalErrorData', this.state.lng.all_fields_are_required)
     }
+  }
+
+  error_callbak = (response) => {
+    var desc = response.description != undefined ? response.description : response.message;
+    var error_code = response.http_code;
+    var error_code2 = response.error_code;
+    error_message = ''
+    if (error_code === 400 && desc === 'card_number is required, holder_name is required, expiration_year expiration_month is required' ||
+      error_code === 400 && desc === 'holder_name is required, card_number is required, expiration_year expiration_month is required' ||
+      error_code === 400 && desc === 'holder_name is required, expiration_year expiration_month is required' ||
+      error_code === 400 && desc === 'The CVV2 security code is required' ||
+      error_code === 400 && desc === 'holder_name is required' ||
+      error_code === 400 && desc === 'card_number is required, card_number is required' ||
+      error_code === 400 && desc === 'expiration_year expiration_month is required' ||
+      error_code === 400 && desc === 'expiration_month 00 is invalid, valid expirations months are 01 to 12' ||
+      error_code === 400 && desc === 'holder_name is required, expiration_month 00 is invalid, valid expirations months are 01 to 12' ||
+      error_code === 400 && desc === 'card_number is required, holder_name is required, card_number is required' ||
+      error_code === 400 && desc === 'card_number is required, expiration_year expiration_month is required' ||
+      error_code === 400 && desc === 'holder_name is required, card_number is required, card_number is required' ||
+      error_code === 400 && desc === 'holder_name is required, card_number length is invalid' ||
+      error_code === 400 && desc === 'card_number length is invalid') {
+      error_message = 'Por favor, proporciona todos los datos que se solicitan de la tarjeta.';
+    } else if (error_code === 400 && desc === 'cvv2 length must be 3 digits' || error_code === 400 && desc === 'cvv2 length must be 4 digits' || error_code === 400 && desc === 'cvv2 must contain only digits') {
+      error_message = 'Por favor, proporciona correctamente el código de seguridad de la tarjeta.';
+    } else if (error_code === 422 && desc === 'The card number verification digit is invalid') {
+      error_message = 'Por favor, proporciona de forma correcta todos los datos que se solicitan de la tarjeta.';
+    } else if (error_code === 400 && desc === 'The expiration date has already passed') {
+      error_message = 'Por favor, proporciona de forma correcta la fecha de vencimiento de la tarjeta año/mes.';
+    } else if (error_code === 400 && desc === 'card_number must contain only digits') {
+      error_message = 'Por favor, proporciona de forma correcta el número de la tarjeta.';
+    }
+
+    return error_message
   }
 
   render() {
@@ -324,6 +360,11 @@ class AddCardForm extends Component {
             value={country.value}
             onValueChange={(value) => this.onChange('country', value)}
             customContainerStyle={styles.select}
+          />
+          <Image
+            source={logoOpenPay}
+            resizeMode={'contain'}
+            style={styles.openLogo}
           />
           <View
             style={styles.btnContainer}
