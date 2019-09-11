@@ -75,13 +75,3 @@ export const GetMyInfo = async (id = '') => {
     url: `users/${id}`,
   })
 }
-
-export const sendPush = async (data = {}, id = '') => {
-  return await dispatchRequest({
-    method: 'POST',
-    url: `utilities/send/push/${id}`,
-    data: {
-      ...data
-    }
-  })
-}
