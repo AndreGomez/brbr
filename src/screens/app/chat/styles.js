@@ -11,7 +11,8 @@ export default StyleSheet.create({
     backgroundColor: 'white',
     flex: 1,
     flexDirection: 'row',
-    paddingHorizontal: resize(30)
+    paddingHorizontal: resize(30),
+    paddingBottom: resize(65, 'h')
   },
   inputContainer: {
     width: width,
@@ -65,6 +66,9 @@ export default StyleSheet.create({
     alignSelf: 'flex-end',
     alignItems: 'flex-end',
     marginTop: resize(25, 'h')
+  },
+  list: {
+    paddingBottom: resize(10, 'h')
   },
   messageReciever: {
     borderTopLeftRadius: 12,

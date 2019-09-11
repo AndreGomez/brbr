@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { Container, Content } from 'native-base';
+import { Container, Content, Spinner } from 'native-base';
 
 //component
 import CustomHeader from '../../../components/header';
@@ -21,47 +21,98 @@ import locale from '../../../locale';
 //customs
 import styles from './styles';
 
+//firebase
+import firebase from 'react-native-firebase';
+
+//moment
+import moment from 'moment';
+import { sendPush } from '../../../api/user';
+
+let unsubscribe;
+
 class Chat extends Component {
 
   state = {
     loading: true,
     lng: {},
     message: '',
-    messages: [
-      {
-        message: 'Hola',
-        type: 'owner'
-      },
-      {
-        message: 'Hola',
-        type: 'reciever'
-      },
-      {
-        message: 'Hola',
-        type: 'owner'
-      }
-    ],
-    extraData: false
+    messages: [],
+    extraData: false,
+    loadingBtn: false
   }
 
   async componentDidMount() {
+    const { currentUser } = this.props
+
+    const idCollection = `${currentUser._id}-${this.props.navigation.state.params.idBarber}`
+
+    unsubscribe = firebase.firestore().collection(idCollection).onSnapshot(async (doc) => {
+      const allMessages = []
+      const data = await firebase.firestore().collection(idCollection).orderBy('numerMessage').get()
+
+      data.forEach((doc) => {
+        allMessages.push({
+          ...doc._data,
+          type: doc._data.sendMessage == currentUser._id ? 'owner' : 'receiver'
+        })
+      });
+
+      this.setState({
+        messages: allMessages,
+        loadingBtn: false,
+        message: ''
+      })
+    })
+
+    const data = await firebase.firestore().collection(idCollection).orderBy('numerMessage').get()
+
+    const allMessages = []
+
+    data.forEach((doc) => {
+      allMessages.push({
+        ...doc._data,
+        type: doc._data.sendMessage == currentUser._id ? 'owner' : 'receiver'
+      })
+    });
+
     const lng = await locale()
     this.setState({
       loading: false,
-      lng
+      lng,
+      messages: allMessages
     })
   }
 
-  onPressSend = () => {
+  async componentWillUnmount() {
+    unsubscribe();
+  }
+
+  onPressSend = async () => {
     const { message, messages, extraData } = this.state
+    const { currentUser } = this.props
 
     if (message != '') {
-      this.scrollView.scrollToEnd({ animated: true })
-      messages.push({ message, type: 'owner' })
+
       this.setState({
-        messages,
-        message: '',
-        extraData: !extraData
+        loadingBtn: true
+      })
+
+      const idCollection = `${currentUser._id}-${this.props.navigation.state.params.idBarber}`
+
+      await sendPush({
+        title: `Nuevo mensaje de ${currentUser.name}`,
+        body: message,
+        data: {}
+      }, this.props.navigation.state.params.idBarber)
+
+      firebase.firestore().collection(idCollection).add({
+        idUser: currentUser._id,
+        idBarber: this.props.navigation.state.params.idBarber,
+        date: moment().format('YYYY-MM-DD'),
+        hour: moment().format('H:m'),
+        message: message,
+        sendMessage: currentUser._id,
+        numerMessage: messages.length
       })
     }
   }
@@ -72,11 +123,14 @@ class Chat extends Component {
       extraData={this.state.extraData}
       data={this.state.messages}
       keyExtractor={(a, i) => `${i}`}
+      showsVerticalScrollIndicator={false}
+      onContentSizeChange={() => this.scrollView.scrollToEnd({ animated: false })}
       renderItem={(item) => this.renderMessageItem(item.item)}
     />
   )
 
   renderMessageItem = (item) => {
+    const { currentUser } = this.props
     if (item.type === 'owner') {
       return (
         <View
@@ -109,7 +163,8 @@ class Chat extends Component {
     const {
       loading,
       lng,
-      message
+      message,
+      loadingBtn
     } = this.state
 
     return (
@@ -152,11 +207,16 @@ class Chat extends Component {
                   style={styles.btn}
                   onPress={() => this.onPressSend()}
                 >
-                  <Text
-                    style={styles.btnText}
-                  >
-                    {'ENVIAR'}
-                  </Text>
+                  {
+                    loadingBtn ?
+                      <Spinner color={'white'} size={'small'} />
+                      :
+                      <Text
+                        style={styles.btnText}
+                      >
+                        {'ENVIAR'}
+                      </Text>
+                  }
                 </TouchableOpacity>
               </View>
             </Content>
@@ -166,4 +226,10 @@ class Chat extends Component {
   }
 }
 
-export default connect()(Chat);
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.user
+  }
+};
+
+export default connect(mapStateToProps)(Chat);

@@ -336,7 +336,7 @@ class MyProfile extends Component {
                             white
                             text={'Mensaje'}
                             containerStyle={styles.cancelBtn}
-                            onPress={() => this.navigateTo('Chat')}
+                            onPress={() => this.navigateTo('Chat', { idBarber: res.barber._id })}
                           />
                         </View>
                       </React.Fragment>
