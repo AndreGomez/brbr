@@ -33,6 +33,6 @@ export default StyleSheet.create({
     marginTop: resize(30, 'height')
   },
   txtTouch: {
-    marginTop: resize(42, 'height')
+    marginTop: resize(232, 'height')
   }
 });

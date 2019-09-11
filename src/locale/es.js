@@ -18,7 +18,7 @@ const es = {
   create_account_email: 'Correo Electrónico',
   create_account_tel: 'Teléfono',
   create_account_name_message: 'Puedes escribir un nombre y un apellido si deseas',
-  create_account_tel_message: 'Te enviaremos un código de verficiación',
+  create_account_tel_message: 'Te enviaremos un código de verificación',
   create_account_email_used: 'Prueba iniciando sesión',
   create_account_email_pass: 'Completar Registro',
   create_account_email_pass_message: 'Tu correo electrónico se ha registrado satisfactoriamente!',
@@ -128,7 +128,7 @@ const es = {
   card_verify: 'Verifique que todos los datos de su tarjeta sean correctos',
 
   preferencies: 'Preferencias',
-  edit_profile: 'Editar perfil',
+  edit_profile: 'Editar Información',
   lang: 'Idioma de la app',
   notifications: 'Notificaciones',
   about: 'Acerca de',

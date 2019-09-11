@@ -83,11 +83,15 @@ class About extends Component {
                 />
                 <ItemList
                   text={lng.TOU}
-                  onPress={() => this.navigateTo('ExtraInfo', { title: lng.tou })}
+                  onPress={() => this.navigateTo('ExtraInfo', { title: lng.tou, type: 0 })}
                 />
                 <ItemList
                   text={lng.POP}
-                  onPress={() => this.navigateTo('ExtraInfo', { title: lng.pop })}
+                  onPress={() => this.navigateTo('ExtraInfo', { title: lng.pop, type: 1 })}
+                />
+                <ItemList
+                  text={'Contacto'}
+                  onPress={() => this.navigateTo('ExtraInfo', { title: lng.pop, type: 2 })}
                 />
                 <ItemList
                   text={'Reportar un problema'}

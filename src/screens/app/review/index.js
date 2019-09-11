@@ -109,7 +109,7 @@ class Review extends Component {
           }
         });
 
-        successMessage('Tu review se agrego exitosamente')
+        successMessage('Tu review se agregó exitosamente')
 
         this.setState({
           loadingBtn: false

@@ -10,6 +10,8 @@ import LoginForm from '../../screens/auth/login_form';
 import forgotPassword from '../../screens/auth/forgot_password';
 import UploadDUI from '../../screens/auth/upload_dui';
 import FirstTime from '../../screens/app/fist_time';
+import About from '../../screens/app/about';
+import ExtraInfo from '../../screens/app/extra_info';
 
 const authStackNavigator = createStackNavigator(
   {
@@ -21,6 +23,8 @@ const authStackNavigator = createStackNavigator(
     LoginForm,
     forgotPassword,
     UploadDUI,
+    About,
+    ExtraInfo
   },
   {
     initialRouteName: 'Login',

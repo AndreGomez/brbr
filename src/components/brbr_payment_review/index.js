@@ -29,8 +29,10 @@ export default function BrbrPaymentReview(props) {
     paymentMethod,
     onPressProfile,
     onPressChange,
+    hour,
+    change
   } = props
-  console.log('DATE', date)
+
   return (
     <View
       style={styles.container}
@@ -55,7 +57,7 @@ export default function BrbrPaymentReview(props) {
           <Text
             style={styles.barber}
           >
-            {getFormatDate(date, 'es')}
+            {/* {`${getFormatDate(date, 'es')}, ${hour}`} */}
           </Text>
         </View>
         <View
@@ -125,15 +127,18 @@ export default function BrbrPaymentReview(props) {
           >
             {paymentMethod}
           </Text>
-          {/* <TouchableOpacity
-            onPress={onPressChange}
-          >
-            <Text
-              style={styles.txtTouch}
+          {
+            change &&
+            <TouchableOpacity
+              onPress={onPressChange}
             >
-              {lng.change}
-            </Text>
-          </TouchableOpacity> */}
+              <Text
+                style={styles.txtTouch}
+              >
+                {'Cambiar o agregar'}
+              </Text>
+            </TouchableOpacity>
+          }
         </View>
       </View>
     </View>
@@ -146,8 +151,9 @@ BrbrPaymentReview.defaultProps = {
   name: '',
   city: '',
   star: 0,
-  date: '2017-01-01',
+  date: '',
   paymentMethod: '',
   onPressProfile: () => { },
-  onPressChange: () => { }
+  onPressChange: () => { },
+  hour: ''
 }

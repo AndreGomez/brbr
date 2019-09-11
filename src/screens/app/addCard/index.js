@@ -186,6 +186,15 @@ class AddCardForm extends Component {
       }
     } catch (error) {
       this.setState({ loadingButton: false })
+      if (error.response) {
+        if (error.response.data) {
+          if (error.response.data.error) {
+            if (error.response.data.error.description) {
+              return this.toggleModal('modalErrorData', 'Hemos tenido problemas para agregar esta tarjeta')
+            }
+          }
+        }
+      }
       this.toggleModal('modalErrorData', this.state.lng.all_fields_are_required)
     }
   }
@@ -361,11 +370,22 @@ class AddCardForm extends Component {
             onValueChange={(value) => this.onChange('country', value)}
             customContainerStyle={styles.select}
           />
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('About')}
+            style={styles.aboutContainer}
+          >
+            <Text
+              style={styles.about}
+            >
+              Ver terminos y condiciones, contacto, privacidad
+            </Text>
+          </TouchableOpacity>
           <Image
             source={logoOpenPay}
             resizeMode={'contain'}
             style={styles.openLogo}
           />
+
           <View
             style={styles.btnContainer}
           >

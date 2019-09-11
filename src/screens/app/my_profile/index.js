@@ -53,6 +53,7 @@ class MyProfile extends Component {
     infoCancelModal: {
       visible: false
     },
+    cancelId: ''
   }
 
   async componentDidMount() {
@@ -131,7 +132,11 @@ class MyProfile extends Component {
   }
 
   onPressCancelDate = async () => {
-    const reserveDetail = this.state.appoReserved[this.state.appoReserved.length - 1]
+    const { cancelId } = this.state
+
+    const filter = this.state.appoReserved.filter(res => res._id == cancelId)
+
+    const reserveDetail = filter[0]
 
     this.setState({
       loadingBtnCancel: true
@@ -157,11 +162,12 @@ class MyProfile extends Component {
     }
   }
 
-  toggleModal = (type = 'modal') => {
+  toggleModal = (type = 'modal', id) => {
     this.setState({
       [type]: {
         visible: !this.state[type].visible
-      }
+      },
+      cancelId: id
     })
   }
 
@@ -243,7 +249,6 @@ class MyProfile extends Component {
             :
             <Content
               contentContainerStyle={styles.content}
-              bounces={false}
             >
               <View
                 style={styles.row}
@@ -300,38 +305,42 @@ class MyProfile extends Component {
               {
                 active ?
                   appoReserved.length != 0 ?
-                    <React.Fragment>
-                      <View style={styles.sep} />
-                      <BrbrPaymentReview
-                        lng={lng}
-                        vip={false}
-                        date={appoReserved[appoReserved.length - 1].date}
-                        avatar={appoReserved[appoReserved.length - 1].barber.photo}
-                        name={appoReserved[appoReserved.length - 1].barber.name}
-                        city={appoReserved[appoReserved.length - 1].location[2]}
-                        stars={appoReserved[appoReserved.length - 1].barber.qualification}
-                        paymentMethod={paymentMethod}
-                        onPressProfile={() => this.navigateTo('BrbrProfile', { item: { barber: { ...{ _id: appoinments[appoinments.length - 1].barber._id } } } })}
-                        onPressChange={() => this.navigateTo('BrbrProfile', { item: { barber: { ...{ _id: appoinments[appoinments.length - 1].barber._id } } } })}
-                      />
-                      <View style={styles.rowBtns}>
-                        <MainButton
-                          sm
-                          red
-                          loading={loadingBtnCancel}
-                          text={'Cancelar cita'}
-                          containerStyle={styles.cancelBtn}
-                          onPress={() => this.toggleModal('cancelModal')}
+                    appoReserved.map((res, i) => {
+                      console.log(res)
+                      return <React.Fragment>
+                        <View style={styles.sep} />
+                        <BrbrPaymentReview
+                          lng={lng}
+                          vip={false}
+                          date={res.date}
+                          avatar={res.barber.photo}
+                          name={res.barber.name}
+                          hour={res.hour}
+                          city={res.location[2]}
+                          stars={res.barber.qualification}
+                          paymentMethod={paymentMethod}
+                          onPressProfile={() => this.navigateTo('BrbrProfile', { item: { barber: { ...{ _id: res.barber._id } } } })}
+                          onPressChange={() => this.navigateTo('BrbrProfile', { item: { barber: { ...{ _id: res.barber._id } } } })}
                         />
-                        <MainButton
-                          sm
-                          white
-                          text={'Mensaje'}
-                          containerStyle={styles.cancelBtn}
-                          onPress={() => this.navigateTo('Chat')}
-                        />
-                      </View>
-                    </React.Fragment>
+                        <View style={styles.rowBtns}>
+                          <MainButton
+                            sm
+                            red
+                            loading={loadingBtnCancel}
+                            text={'Cancelar cita'}
+                            containerStyle={styles.cancelBtn}
+                            onPress={() => this.toggleModal('cancelModal', res._id)}
+                          />
+                          <MainButton
+                            sm
+                            white
+                            text={'Mensaje'}
+                            containerStyle={styles.cancelBtn}
+                            onPress={() => this.navigateTo('Chat')}
+                          />
+                        </View>
+                      </React.Fragment>
+                    })
                     :
                     <Text style={styles.empty}>No tienes reservaciones</Text>
                   :
@@ -357,8 +366,8 @@ class MyProfile extends Component {
             visible={cancelModal.visible}
             message={
               moment.duration(moment().diff(appoReserved[appoReserved.length - 1].createdAt)).as('hours') <= 24 ?
-                'Se te cobrará un 50% porque ya habías agendado con un barbero' :
-                '¿Seguro que quieres cancelar? Se te cobrará un 20% porque ya habías agendado con un barbero'
+                'Se te cobrará un 20% porque ya habías agendado con un barbero' :
+                'Se te cobrará un 50% porque ya habías agendado con un barbero'
             }
             title={
               <Text

@@ -76,7 +76,7 @@ class Login extends Component {
             raised_white
             icon={mostacheIcon}
           />
-          <MainButton
+          {/* <MainButton
             onPress={() => { }}
             text={lng.login_with_fb}
             blue
@@ -89,7 +89,7 @@ class Login extends Component {
             red
             icon={ggIcon}
             containerStyle={styles.btn}
-          />
+          /> */}
           <TextTouchable
             text={lng.login_button_text}
             customStyle={styles.txtTouch}

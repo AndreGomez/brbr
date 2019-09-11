@@ -28,7 +28,8 @@ export default function ItemList(props) {
     alert,
     customStyles,
     card,
-    use
+    use,
+    emoji
   } = props
 
   return (
@@ -79,49 +80,52 @@ export default function ItemList(props) {
             </Text>
 
             {
-              version ?
-                <Text
-                  style={styles.version}
-                >
-                  {version}
+              emoji ?
+                <Text>
+                  {emoji}
                 </Text>
                 :
-                notifications ?
+                version ?
                   <Text
-                    style={active ? styles.active : styles.desactive}
+                    style={styles.version}
                   >
-                    {active ? lng.active : lng.desactive}
+                    {version}
                   </Text>
                   :
-                  <View
-                    style={styles.row}
-                  >
-                    {
-                      alert &&
-                      <Text
-                        style={styles.alert}
-                      >
-                        Incompleto
+                  notifications ?
+                    <Text
+                      style={active ? styles.active : styles.desactive}
+                    >
+                      {active ? lng.active : lng.desactive}
+                    </Text>
+                    :
+                    <View
+                      style={styles.row}
+                    >
+                      {
+                        alert &&
+                        <Text
+                          style={styles.alert}
+                        >
+                          Incompleto
                       </Text>
-                    }
-                    {
-                      use &&
-                      <Text
-                        style={styles.inUse}
-                      >
-                        En uso
+                      }
+                      {
+                        use &&
+                        <Text
+                          style={styles.inUse}
+                        >
+                          En uso
                       </Text>
-                    }
-                    {
-                      !card ?
-                        <Image
-                          source={right_arrow} />
-                        :
-                        card
-                    }
-
-                  </View>
-
+                      }
+                      {
+                        !card ?
+                          <Image
+                            source={right_arrow} />
+                          :
+                          card
+                      }
+                    </View>
             }
           </View>
       }

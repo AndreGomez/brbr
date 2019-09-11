@@ -21,7 +21,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     marginHorizontal: resize(20),
     justifyContent: 'space-between',
-    marginTop: resize(440, 'h')
+    marginTop: resize(230, 'h')
   },
   listCards: {
     alignItems: 'center',

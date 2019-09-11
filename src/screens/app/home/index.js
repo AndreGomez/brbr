@@ -84,12 +84,12 @@ class Home extends Component {
     },
     dateModal: {
       visible: false,
-      today: true,
-      thisWeek: false,
+      today: false,
+      thisWeek: true,
       nextWeek: false
     },
     extraData: false,
-    date: 'today',
+    date: 'thisWeek',
     position: {
       lat: null,
       lng: null
@@ -284,6 +284,12 @@ class Home extends Component {
     })
 
     if (passDate && passService) {
+      var hairCost = servicesModal.hair ? brbr.item.barber.services.hair.cost : '0'
+      if (this.props.currentUser.promotion.use_code.code) {
+
+        const percent = (hairCost / 100) * parseInt(this.props.currentUser.promotion.use_code.percentage)
+        hairCost = hairCost - percent
+      }
       this.navigateTo('BrbrReserve',
         {
           ...brbr,
@@ -293,8 +299,8 @@ class Home extends Component {
           servicesSelected: { hair: servicesModal.hair, bear: servicesModal.bear },
           price: brbr.item.barber.services.hair.cost ||
             brbr.item.barber.services.beard.cost ?
-            servicesModal.hair && servicesModal.bear ? brbr.item.barber.services.hair.cost + brbr.item.barber.services.beard.cost :
-              servicesModal.hair ? brbr.item.barber.services.hair.cost :
+            servicesModal.hair && servicesModal.bear ? hairCost + brbr.item.barber.services.beard.cost :
+              servicesModal.hair ? hairCost :
                 servicesModal.bear ? brbr.item.barber.services.beard.cost :
                   '0.0'
             :

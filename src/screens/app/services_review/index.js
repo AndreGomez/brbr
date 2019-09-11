@@ -40,6 +40,9 @@ import { GetMyInfo } from '../../../api/user';
 import { SET_USER } from '../../../actions/user';
 import { createDeviceSessionId } from 'openpay-react-native';
 
+import { withNavigationFocus } from "react-navigation";
+import getFormatDate from '../../../utils/getFormatDate';
+
 class ServiceReview extends Component {
 
   state = {
@@ -58,8 +61,13 @@ class ServiceReview extends Component {
   }
 
   async componentDidMount() {
+    await this.getData()
+  }
+
+  getData = async () => {
     const lng = await locale()
     const { navigation, currentUser } = this.props
+    this.setState({ loading: true })
     try {
       const filter = currentUser.payment_methods.filter(res => res.use)
       const cardObject = await getObjectCard(currentUser.openpay_id, filter[0].token)
@@ -75,10 +83,16 @@ class ServiceReview extends Component {
       loading: false,
       price: navigation.state.params.price,
       location: navigation.state.params.location,
-      date: `${navigation.state.params.daySelected.date}, a las ${navigation.state.params.hourSelected.hour}`,
+      date: `${getFormatDate(navigation.state.params.daySelected.date, 'es')}, a las ${navigation.state.params.hourSelected.hour}`,
       service: `Servicio de${navigation.state.params.servicesSelected.hair ? ' Cabello' : ''}${navigation.state.params.servicesSelected.bear ? ' Barba' : ''}`,
       barberInfo: this.props.navigation.state.params.item.barber
     })
+  }
+
+  async componentDidUpdate(props, state) {
+    if (props.isFocused !== this.props.isFocused && this.props.isFocused) {
+      await this.getData()
+    }
   }
 
   navigateTo = (screen, data = {}) => {
@@ -104,6 +118,8 @@ class ServiceReview extends Component {
             hairCost = hairCost - percent
           }
 
+          hairCost = parseFloat(hairCost).toFixed(2)
+
           const device_session_id = await createDeviceSessionId()
 
           const dataAppoiment = {
@@ -125,7 +141,6 @@ class ServiceReview extends Component {
               }
             }
           }
-          console.log(dataAppoiment)
 
           await createAppoiment({ ...dataAppoiment })
 
@@ -271,15 +286,21 @@ class ServiceReview extends Component {
                 city={barberInfo.address.description}
                 stars={barberInfo.qualification}
                 paymentMethod={paymentMethod}
-                date={date}
+                change
+                // date={date}
+                // hour={this.props.navigation.state.params.hourSelected.hour}
                 onPressProfile={() => this.navigateTo('BrbrProfile', { item: { barber: { ...barberInfo } } })}
-                onPressChange={() => this.navigateTo('BrbrProfile')}
+                onPressChange={() => this.navigateTo('PaymentMethodsList')}
               />
               <Text
                 style={styles.price}
               >
-                {`MXN $${price}`}
+                {`MXN $${parseFloat(price).toFixed(2)}`}
               </Text>
+              {
+                this.props.currentUser.promotion.use_code.code &&
+                <Text style={styles.porcent}>Este Servicio tiene un código de descuento del {this.props.currentUser.promotion.use_code.percentage}%</Text>
+              }
               <MainButton
                 white
                 text={lng.RESERVE}
@@ -309,4 +330,4 @@ const mapStateToProps = (state) => {
   }
 };
 
-export default connect(mapStateToProps)(ServiceReview);
+export default withNavigationFocus(connect(mapStateToProps)(ServiceReview));

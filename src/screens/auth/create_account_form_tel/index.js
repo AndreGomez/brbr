@@ -39,6 +39,7 @@ import { SET_USER } from '../../../actions/user';
 //utils
 import { validateFields } from '../../../utils/validators';
 import { CheckBox } from 'react-native-elements';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const PLACEHOLDER_COLOR = "rgba(255,255,255,0.2)";
 
@@ -86,8 +87,8 @@ class CreateAccountFormTel extends Component {
       visible: false
     },
     check: false,
-    cca2: 'MX',
-    callingCode: '52',
+    cca2: 'SV',
+    callingCode: '503',
     errorMessage: '',
     loadingButton: false
   }
@@ -350,7 +351,6 @@ class CreateAccountFormTel extends Component {
           }
         />
         <Content
-          bounces={false}
           contentContainerStyle={styles.content}
         >
           <MainInput
@@ -416,6 +416,16 @@ class CreateAccountFormTel extends Component {
             secureTextEntry
             value={rPassword.value}
           />
+          <TouchableOpacity
+            onPress={() => this.navigateTo('About')}
+            style={styles.aboutContainer}
+          >
+            <Text
+              style={styles.about}
+            >
+              Ver terminos y condiciones
+            </Text>
+          </TouchableOpacity>
           <CheckBox
             containerStyle={styles.check}
             checked={check}

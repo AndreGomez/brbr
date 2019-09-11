@@ -55,7 +55,7 @@ export default function DateModal(props) {
           >
             Selecciona uno o varios servicios
           </Text>
-          <View
+          {/* <View
             style={styles.row}
           >
             <Text
@@ -74,7 +74,7 @@ export default function DateModal(props) {
                 />
               }
             </TouchableOpacity>
-          </View>
+          </View> */}
           <View
             style={styles.row}
           >

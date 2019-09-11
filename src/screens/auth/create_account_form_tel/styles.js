@@ -13,15 +13,25 @@ export default StyleSheet.create({
   },
   content: {
     alignItems: 'center',
-    paddingHorizontal: resize(20)
+    paddingHorizontal: resize(20),
+    paddingBottom: resize(25, 'h')
   },
   check: {
-    marginTop: resize(20, 'h')
+    marginTop: resize(10, 'h')
   },
   upsTitle: {
     fontSize: resize(80),
     fontFamily: AIRBNB_MEDIUM,
     fontWeight: '700'
+  },
+  aboutContainer: {
+    width: resize(370),
+    alignSelf: 'flex-start',
+    marginTop: resize(10, 'h')
+  },
+  about: {
+    color: 'white',
+    textDecorationLine: 'underline',
   },
   input: {
     marginTop: resize(25, 'height'),

@@ -80,8 +80,8 @@ class EditProfile extends Component {
       visibleConfirm: false
     },
     validatePhoneVar: true,
-    cca2: 'SV',
-    callingCode: '503',
+    cca2: 'MX',
+    callingCode: '52',
   }
 
   async componentDidMount() {

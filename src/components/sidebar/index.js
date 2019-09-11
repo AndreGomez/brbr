@@ -146,18 +146,19 @@ class Sidebar extends Component {
                   text={lng.my_address}
                   onPress={() => this.navigateTo('MyAddress')}
                 /> */}
-                <ItemList
+                {/* <ItemList
                   text={lng.lang}
                   onPress={() => { }}
-                />
+                /> */}
                 <ItemList
-                  text={'Código de descuento'}
+                  text={'Promociones'}
+                  emoji={'🎁'}
                   onPress={() => this.navigateTo('MeCode')}
                 />
                 <ItemList
                   text={'Identificación personal'}
                   alert={!currentUser.auth_identity}
-                  onPress={() => this.navigateTo('UploadDUI', { addExternal: true })}
+                  onPress={() => this.navigateTo('UploadDUI', { addExternal: true, userData: currentUser })}
                 />
                 <ItemList
                   text={lng.notifications}

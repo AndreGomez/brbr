@@ -11,4 +11,7 @@ export default StyleSheet.create({
     backgroundColor: 'white',
     height: '100%'
   },
+  paraf: {
+    paddingHorizontal: resize(20)
+  }
 });

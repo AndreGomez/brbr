@@ -177,6 +177,7 @@ class MeCode extends Component {
                     </Text>
                     :
                     <MainInput
+                      rounded
                       placeholder={'Agrega un código de promoción'}
                       value={code.value}
                       onChangeText={(value) => this.onChange('code', value)}
@@ -184,14 +185,14 @@ class MeCode extends Component {
                       underText={'Puedes recibir descuentos cuando cancelas una cita o escribiendo el codigo de un amigo aqui, El codigo solo se aplica a un corte de cabello!'}
                     />
                 }
-                <Text
+                {/* <Text
                   style={styles.codeInfo}>
                   Tu codigo brbr es:
-                </Text>
+                  </Text>
                 <Text
                   style={styles.code}>
                   {currentUser.promotion.me_code.code}
-                </Text>
+                </Text> */}
               </View>
             </Content>
         }

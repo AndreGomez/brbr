@@ -257,12 +257,21 @@ class UploadDUI extends Component {
           >
             {lng.id_oficial_label1}
           </Text>
-          <Image
-            style={img ? styles.img : styles.empty_img}
-            source={img ? { uri: img } : id_empty}
-            resizeMode={'contain'}
-          />
-          <Text
+          {
+            !navigation.state.params.addExternal ?
+              <Image
+                style={img ? styles.img : styles.empty_img}
+                source={img ? { uri: img } : id_empty}
+                resizeMode={'contain'}
+              />
+              :
+              <Image
+                style={img ? styles.img : navigation.state.params.userData.auth_identity ? styles.img : styles.empty_img}
+                source={img ? { uri: img } : navigation.state.params.userData.auth_identity ? { uri: navigation.state.params.userData.auth_identity } : id_empty}
+                resizeMode={'contain'}
+              />
+          }
+          {/* <Text
             style={
               [
                 styles.label,
@@ -271,7 +280,7 @@ class UploadDUI extends Component {
             }
           >
             {lng.id_oficial_label2}
-          </Text>
+          </Text> */}
           {
             !navigation.state.params.addExternal ?
               <View

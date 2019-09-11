@@ -80,7 +80,10 @@ class PaymentMethodAuth extends Component {
   }
 
   onPressCard = (i) => {
-    this.navigateTo('AddCardForm', { addCard: (card) => this.addCard(card) })
+    const { cards } = this.state
+    if (cards[0].holder_name == '' && cards[cards.length - 1].holder_name == '') {
+      this.navigateTo('AddCardForm', { addCard: (card) => this.addCard(card) })
+    }
   }
 
   addCard = (card) => {
@@ -153,13 +156,13 @@ class PaymentMethodAuth extends Component {
             title={lng.payment_methods_pay_with_card}
             card
             check={cards[0].holder_name != ''}
-            isCollapsed={collapsable === 0}
+            isCollapsed={true}
             content={
               <View
                 style={styles.listCards}
               >
                 {this.renderCards()}
-                {
+                {/* {
                   cards[0].holder_name != '' &&
                   cards[cards.length - 1].holder_name != '' &&
                   <TouchableOpacity
@@ -176,7 +179,7 @@ class PaymentMethodAuth extends Component {
                       {lng.payment_methods_add_card}
                     </Text>
                   </TouchableOpacity>
-                }
+                } */}
               </View>
             }
             onPress={() => this.onPressCollaps(0)}

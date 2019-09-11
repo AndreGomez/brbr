@@ -11,7 +11,7 @@ export default StyleSheet.create({
     paddingHorizontal: resize(20)
   },
   itemContainer: {
-    height: resize(150, 'h'),
+    height: resize(200, 'h'),
     justifyContent: 'space-between',
     marginTop: resize(58, 'h'),
   }

@@ -71,7 +71,7 @@ export default function BrbrHistoryReserve(props) {
         <Text
           style={styles.efecti}
         >
-          Efectivo
+          Tarjeta
         </Text>
         <Text
           style={styles.money}

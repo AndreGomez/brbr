@@ -83,6 +83,7 @@ export default StyleSheet.create({
   location: {
     width: resize(375),
     height: resize(54, 'h'),
+    maxHeight: 54,
     borderRadius: 6,
     backgroundColor: '#ffffff',
     flexDirection: 'row',

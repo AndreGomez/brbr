@@ -42,7 +42,7 @@ export default StyleSheet.create({
   img: {
     height: resize(120, 'h'),
     width: '100%',
-    marginTop: resize(15, 'h')
+    marginTop: resize(50, 'h')
   },
   icon: {
     marginTop: resize(35, 'h'),
@@ -60,7 +60,7 @@ export default StyleSheet.create({
   label: {
     color: '#95989a',
     fontFamily: AIRBNB_MEDIUM,
-    fontSize: resize(18),
+    fontSize: resize(14),
     fontWeight: Platform.OS === 'ios' ? '500' : '400',
     letterSpacing: resize(0.45),
     textAlign: 'center',

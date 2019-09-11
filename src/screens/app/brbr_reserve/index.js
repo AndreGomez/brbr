@@ -51,9 +51,11 @@ class BrbrReserve extends Component {
   async componentDidMount() {
     const lng = await locale()
     const barberProfile = await getBarberProfile(this.props.navigation.state.params.item.barber._id)
-
+    console.log('barberProfile', barberProfile)
     const dateToSelectService = this.props.navigation.state.params.dateForService
-    const schedule = this.props.navigation.state.params.item.barber.schedule
+    console.log('dateToSelectService', dateToSelectService)
+    const schedule = barberProfile.data.schedule
+    console.log('schedule', schedule)
 
     var days = []
 
@@ -236,7 +238,15 @@ class BrbrReserve extends Component {
           )
           :
           <Text style={{ color: 'white' }}>
-            Lo sentimos, este barbero no trabajara la proxima semana
+            Lo sentimos, este barbero no trabajara
+            {
+              this.props.navigation.state.params.dateForService == 'today' ?
+                ' hoy' :
+                this.props.navigation.state.params.dateForService == 'thisWeek' ?
+                  ' esta semana' :
+                  this.props.navigation.state.params.dateForService == 'nextWeek' &&
+                  ' la proxima semana'
+            }
           </Text>
       }
     </ScrollView>
@@ -469,7 +479,7 @@ class BrbrReserve extends Component {
                     <Text
                       style={styles.price}
                     >
-                      {`MXN $${price}`}
+                      {`MXN $${parseFloat(price).toFixed(2)}`}
                     </Text>
                   </Content>
               }
@@ -477,7 +487,6 @@ class BrbrReserve extends Component {
                 !loading &&
                 <MainButton
                   bottom
-                  icon={brbr_sithIcon}
                   text={lng.reserve_now}
                   onPress={() => this.onPressNext()}
                 />

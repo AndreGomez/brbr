@@ -5,6 +5,7 @@ import {
   resize,
   AIRBNB_MEDIUM,
   width,
+  PRIMARY_GREEN,
 } from '../../../utils/styles';
 
 export default StyleSheet.create({
@@ -16,7 +17,8 @@ export default StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: resize(20),
     paddingTop: resize(40, 'h'),
-    paddingBottom: 20
+    paddingBottom: 20,
+    marginBottom: resize(15, 'h')
   },
   price: {
     color: '#ffffff',
@@ -26,7 +28,14 @@ export default StyleSheet.create({
     width: '100%',
     textAlign: 'center',
     marginTop: resize(38, 'h'),
-    marginBottom: resize(77, 'h')
+  },
+  porcent: {
+    color: PRIMARY_GREEN,
+    fontSize: resize(18),
+    marginTop: resize(10, 'h'),
+    marginBottom: resize(15, 'h'),
+    textAlign:'center',
+    width:'100%',
   },
   header: {
     width: '100%',

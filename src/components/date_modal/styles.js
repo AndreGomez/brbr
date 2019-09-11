@@ -61,7 +61,7 @@ export default StyleSheet.create({
     borderWidth: 1,
   },
   btn: {
-    marginTop: resize(18, 'h'),
+    marginTop: resize(58, 'h'),
   },
   row: {
     flexDirection: 'row',
@@ -69,7 +69,7 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
     paddingHorizontal: resize(36),
-    marginTop: resize(18, 'h'),
+    marginTop: resize(45, 'h'),
     height: resize(26, 'h'),
   }
 });

@@ -11,8 +11,8 @@ export default StyleSheet.create({
   content: {
     paddingHorizontal: resize(20),
     paddingTop: resize(40, 'h'),
-    height: '100%',
-    width: '100%'
+    width: '100%',
+    paddingBottom: resize(50, 'h')
   },
   cancelSecure: {
     color: 'black',

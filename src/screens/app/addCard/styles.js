@@ -15,6 +15,15 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center'
   },
+  aboutContainer: {
+    width: resize(370),
+    alignSelf: 'flex-start',
+    marginTop: resize(10, 'h')
+  },
+  about: {
+    color: 'white',
+    textDecorationLine: 'underline',
+  },
   openLogo: {
     height: resize(50, 'h'),
     alignSelf: 'center',
@@ -49,7 +58,7 @@ export default StyleSheet.create({
   btnContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: resize(50, 'h'),
+    marginTop: resize(5, 'h'),
     width: '100%'
   },
   select: {

@@ -107,6 +107,7 @@ export default class LocationInput extends Component {
             style={styles.container}
           >
             <TextInput
+              numberOfLines={1}
               style={styles.input}
               onChangeText={(txt) => this.onChange(txt)}
               // placeholderTextColor={PLACEHOLDER_COLOR}
