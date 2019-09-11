@@ -27,6 +27,17 @@ export const SaveAddress = async (data = {}) => {
   })
 }
 
+export const sendPush = async (data = {}, id = '') => {
+  return await dispatchRequest({
+    method: 'POST',
+    url: `utilities/send/push/${id}`,
+    data: {
+      ...data
+    },
+
+  }, false)
+}
+
 export const EditAddress = async (data = {}, id = '') => {
   return await dispatchRequest({
     method: 'UPDATE',

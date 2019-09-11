@@ -15,7 +15,8 @@ const instance = axios.create({
   baseURL: BASE_URL
 });
 
-export const dispatchRequest = async (request) => {
+export const dispatchRequest = async (request, key = true) => {
+
   const _state = await state();
 
   instance.defaults.headers.common['Content-Type'] = 'application/json';
@@ -23,7 +24,9 @@ export const dispatchRequest = async (request) => {
   instance.defaults.headers.common['Authorization'] = _state.auth.token;
 
   try {
-    Keyboard.dismiss();
+    if (key) {
+      Keyboard.dismiss();
+    }
 
     const resource = await instance(request);
 

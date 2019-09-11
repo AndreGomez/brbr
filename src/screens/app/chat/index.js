@@ -199,7 +199,7 @@ class Chat extends Component {
               >
                 <TextInput
                   style={styles.input}
-                  placeholder={`Mensaje a Andre`}
+                  placeholder={`Escribe tu mensaje`}
                   value={message}
                   onChangeText={(message) => this.setState({ message })}
                 />
