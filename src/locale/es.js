@@ -46,13 +46,13 @@ const es = {
 
 
   //first_time
-  calified_brbr: 'Seguridad',
-  calified_brbr_message: 'Lorem dolor sit amet consectetur adipisicing elit, sed do eiusmod tempor incididunt.',
-  calified_brbr_2: 'Tus datos están protegidos',
-  calified_brbr_message_2: 'Lorem dolor sit amet consectetur adipisicing elit, sed do eiusmod tempor incididunt.',
-  calified_brbr_3: 'Barberos calificados',
-  calified_brbr_message_3: 'Lorem dolor sit amet consectetur adipisicing elit, sed do eiusmod tempor incididunt.',
-  calified_brbr_4: 'Disfruta tu experiencia',
+  calified_brbr: 'SEGURIDAD',
+  calified_brbr_message: 'barberos elegidos y capacitados cuidadosamente para entrar en tu Domicilio!',
+  calified_brbr_2: 'PRIVACIDAD',
+  calified_brbr_message_2: 'Tus datos están protegidos',
+  calified_brbr_3: 'BARBEROS CALIFICADOS',
+  calified_brbr_message_3: 'Cada barbero es puesto a prueba antes de trabajar con nosotros',
+  calified_brbr_4: 'DISFRUTA TU EXPERIENCIA!!',
   calified_brbr_message_4: 'Lorem dolor sit amet consectetur adipisicing elit, sed do eiusmod tempor incididunt.',
 
   //login

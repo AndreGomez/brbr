@@ -89,7 +89,7 @@ class FirstTime extends Component {
               <Text
                 style={styles.message}
               >
-                {/* {lng.calified_brbr_message} */}
+                {lng.calified_brbr_message}
               </Text>
             </View>
           </Tab>
@@ -109,7 +109,7 @@ class FirstTime extends Component {
               <Text
                 style={styles.message}
               >
-                {/* {lng.calified_brbr_message_2} */}
+                {lng.calified_brbr_message_2}
               </Text>
             </View>
           </Tab>
@@ -129,7 +129,7 @@ class FirstTime extends Component {
               <Text
                 style={styles.message}
               >
-                {/* {lng.calified_brbr_message_3} */}
+                {lng.calified_brbr_message_3}
               </Text>
             </View>
           </Tab>

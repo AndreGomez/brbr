@@ -33,8 +33,8 @@
 		1E662EF23FB84EC9BF0D9D40 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BCF7821DF5BC46DC91595A86 /* FontAwesome5_Brands.ttf */; };
 		301AC0AF22C3CF8400AD4D22 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 301AC0AC22C3CF7500AD4D22 /* libRNDeviceInfo.a */; };
 		3057816A2304497E003B0E8A /* libFirebaseMessaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 305781692304497E003B0E8A /* libFirebaseMessaging.a */; };
-		3057819D23045DDB003B0E8A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3057819C23045DDB003B0E8A /* GoogleService-Info.plist */; };
 		3070FE8B22CC48DA00976FA4 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30A6EF3922CB15BB00D9FB82 /* libAirMaps.a */; };
+		30770AFB2329CA7F006684C7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30770AFA2329CA7F006684C7 /* GoogleService-Info.plist */; };
 		30BE8F2722EE7FF1009978FC /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30BE8EF822EE7FEA009978FC /* libBVLinearGradient.a */; };
 		334C3919007540D7AC348CD8 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 425A3AC0009544FCACA780F4 /* FontAwesome5_Solid.ttf */; };
 		3D2240B3D9A448CCA8904DD6 /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6661EF4F8EA04D7CB50FE540 /* Roboto.ttf */; };
@@ -422,7 +422,7 @@
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		301AC0A622C3CF7300AD4D22 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/ios/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
 		305781692304497E003B0E8A /* libFirebaseMessaging.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libFirebaseMessaging.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		3057819C23045DDB003B0E8A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "brbr/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		30770AFA2329CA7F006684C7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "brbr/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		30A6EF3422CB15BB00D9FB82 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 		30BDCDAD22BDDF1300B17EB0 /* brbr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = brbr.entitlements; path = brbr/brbr.entitlements; sourceTree = "<group>"; };
 		30BE8EF122EE7FE9009978FC /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
@@ -595,7 +595,7 @@
 		13B07FAE1A68108700A75B9A /* brbr */ = {
 			isa = PBXGroup;
 			children = (
-				3057819C23045DDB003B0E8A /* GoogleService-Info.plist */,
+				30770AFA2329CA7F006684C7 /* GoogleService-Info.plist */,
 				30BDCDAD22BDDF1300B17EB0 /* brbr.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -835,7 +835,7 @@
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 7RQFGG78B4;
+						DevelopmentTeam = 79AGF28Y5Q;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -1294,7 +1294,7 @@
 				10D1CCFD2C664083A8D7D525 /* Feather.ttf in Resources */,
 				B9C0A4DE13F0458F865E1DAC /* FontAwesome.ttf in Resources */,
 				1E662EF23FB84EC9BF0D9D40 /* FontAwesome5_Brands.ttf in Resources */,
-				3057819D23045DDB003B0E8A /* GoogleService-Info.plist in Resources */,
+				30770AFB2329CA7F006684C7 /* GoogleService-Info.plist in Resources */,
 				C420F2DDB9764A8497857B8F /* FontAwesome5_Regular.ttf in Resources */,
 				334C3919007540D7AC348CD8 /* FontAwesome5_Solid.ttf in Resources */,
 				65BA3D445807453C8FFAB69F /* Foundation.ttf in Resources */,
@@ -1404,7 +1404,7 @@
 				CODE_SIGN_ENTITLEMENTS = brbr/brbr.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = 7RQFGG78B4;
+				DEVELOPMENT_TEAM = 79AGF28Y5Q;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
@@ -1434,7 +1434,7 @@
 					"$(inherited)",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.elaniin.brbr.client.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brbrapp.client.ios;
 				PRODUCT_NAME = brbr;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1447,7 +1447,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = brbr/brbr.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7RQFGG78B4;
+				DEVELOPMENT_TEAM = 79AGF28Y5Q;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
@@ -1477,7 +1477,7 @@
 					"$(inherited)",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.elaniin.brbr.client.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brbrapp.client.ios;
 				PRODUCT_NAME = brbr;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

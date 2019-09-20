@@ -68,7 +68,7 @@ export default StyleSheet.create({
     fontSize: resize(20),
     fontWeight: Platform.OS === 'ios' ? '500' : '400',
     paddingLeft: resize(13),
-    maxWidth: resize(150)
+    width: resize(150)
   },
   stars: {
     color: '#ffffff',

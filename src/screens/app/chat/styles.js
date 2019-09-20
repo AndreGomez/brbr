@@ -14,6 +14,13 @@ export default StyleSheet.create({
     paddingHorizontal: resize(30),
     paddingBottom: resize(65, 'h')
   },
+  dateHourTxt: {
+    color: 'white',
+    paddingTop: resize(10, 'h')
+  },
+  dateToTxt: {
+    paddingTop: resize(10, 'h')
+  },
   inputContainer: {
     width: width,
     height: resize(63, 'h'),

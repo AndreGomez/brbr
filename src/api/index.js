@@ -29,9 +29,10 @@ export const dispatchRequest = async (request, key = true) => {
     }
 
     const resource = await instance(request);
-
+    console.log(resource)
     return Promise.resolve(resource);
   } catch (error) {
+    console.log(error)
     return Promise.reject(error);
   }
 }

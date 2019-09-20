@@ -61,7 +61,30 @@ class DateDetail extends Component {
       this.setState({
         loading: false,
         lng,
-        reserveDetail: this.props.navigation.state.params
+        reserveDetail: this.props.navigation.state.params,
+        // reserveDetail: {
+        //   user: {
+        //     photo: null,
+
+        //   },
+        //   barber: {
+        //     name: 'Juan'
+        //   },
+        //   date: '2018-01-02',
+        //   services: {
+        //     beard: {
+        //       cost: 100
+        //     },
+        //     hair: {
+        //       cost: 100
+        //     },
+        //     eyebrows: {
+        //       cost: 100
+        //     }
+        //   },
+        //   hour: '12:20',
+        //   location: [12, 21, 'Col la cima 2']
+        // }
       })
 
       if (this.props.navigation.state.params.state === 'in progress') {
@@ -458,7 +481,7 @@ class DateDetail extends Component {
               />
             </Content>
         }
-        {/* {
+        {
           navigation.state.params.service &&
           <MainButton
             bottom
@@ -466,8 +489,8 @@ class DateDetail extends Component {
             text={lng.finish_service}
             onPress={() => this.toggleModal()}
           />
-        } */}
-        {/* <ModalAlert
+        }
+        <ModalAlert
           lng={lng}
           finish
           visible={modal.visible}
@@ -476,7 +499,7 @@ class DateDetail extends Component {
           onPressClose={() => this.toggleModal()}
           onPress={() => this.onPressFinishService()}
           btnTitle={lng.accept}
-        /> */}
+        />
       </Container>
     );
   }

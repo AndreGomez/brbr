@@ -15,7 +15,6 @@ export default StyleSheet.create({
     backgroundColor: 'white',
     height: resize(450, 'height'),
     width: resize(350),
-    maxHeight: 450,
     alignSelf: 'center',
     alignItems: 'center',
     paddingTop: resize(52, 'height'),

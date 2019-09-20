@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>378708515483-hr21n6iipqq8b6kcb5u40noalf1p1m7o.apps.googleusercontent.com</string>
+	<string>378708515483-ckqetaqq50rqj60ioq72fo3g8a42voh4.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.378708515483-hr21n6iipqq8b6kcb5u40noalf1p1m7o</string>
+	<string>com.googleusercontent.apps.378708515483-ckqetaqq50rqj60ioq72fo3g8a42voh4</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>378708515483-g2mrf79380hdm8045g0iojmkfu5eoti5.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.elaniin.brbr.client.ios</string>
+	<string>com.brbrapp.client.ios</string>
 	<key>PROJECT_ID</key>
 	<string>brbr-app</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,7 +31,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:378708515483:ios:e6c9173321cb691f</string>
+	<string>1:378708515483:ios:60a0597777ee888f2f043e</string>
 	<key>DATABASE_URL</key>
 	<string>https://brbr-app.firebaseio.com</string>
 </dict>

@@ -28,6 +28,9 @@ import firebase from 'react-native-firebase';
 import moment from 'moment';
 import { sendPush } from '../../../api/user';
 
+//utis
+import formatDateEnEs from '../../../utils/getFormatDate';
+
 let unsubscribe;
 
 class Chat extends Component {
@@ -141,6 +144,10 @@ class Chat extends Component {
           >
             {item.message}
           </Text>
+          <Text
+            style={styles.dateHourTxt}>
+            {formatDateEnEs(item.date)}, {item.hour}
+          </Text>
         </View>
       )
     } else {
@@ -152,6 +159,10 @@ class Chat extends Component {
             style={styles.textReciever}
           >
             {item.message}
+          </Text>
+          <Text
+            style={styles.dateToTxt}>
+            {formatDateEnEs(item.date)}, {item.hour}
           </Text>
         </View>
       )

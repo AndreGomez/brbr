@@ -27,7 +27,7 @@ export default StyleSheet.create({
   openLogo: {
     height: resize(50, 'h'),
     alignSelf: 'center',
-    marginTop: resize(20, 'h')
+    marginTop: resize(60, 'h')
   },
   title: {
     color: '#ffffff',

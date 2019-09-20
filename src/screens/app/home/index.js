@@ -104,27 +104,32 @@ class Home extends Component {
   }
 
   async componentDidMount() {
-    const lng = await locale()
-    // AppState.addEventListener('change', this.handleGetResources)
-    const resAppoInProgress = await getAppoiment(this.props.currentUser._id,
-      {
-        states: [
-          {
-            state: 'in progress'
-          }
-        ]
-      }
-    )
-    const resAppoPendingReview = await getAppoimentPendingReview()
+    try {
+      const lng = await locale()
+      // AppState.addEventListener('change', this.handleGetResources)
+      const resAppoInProgress = await getAppoiment(this.props.currentUser._id,
+        {
+          states: [
+            {
+              state: 'in progress'
+            }
+          ]
+        }
+      )
+
+      const resAppoPendingReview = await getAppoimentPendingReview()
 
 
-    await this.verifyPermissions()
-    this.setState({
-      lng,
-      loading: false,
-      resAppoInProgress: resAppoInProgress.data,
-      appoPendingReview: resAppoPendingReview.data != 0 ? resAppoPendingReview.data[0] : null
-    })
+      await this.verifyPermissions()
+      this.setState({
+        lng,
+        loading: false,
+        resAppoInProgress: resAppoInProgress.data,
+        appoPendingReview: resAppoPendingReview.data != 0 ? resAppoPendingReview.data[0] : null
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   componentWillUnmount = () => {
@@ -415,7 +420,7 @@ class Home extends Component {
         barbersArround: barbersArround.data
       })
     } catch (error) {
-
+      console.log(error)
     }
   }
 

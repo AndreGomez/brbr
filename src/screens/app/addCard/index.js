@@ -63,11 +63,6 @@ class AddCardForm extends Component {
         type: '',
         required: true
       },
-      lastName: {
-        value: '',
-        type: '',
-        required: true
-      },
       cardNumber: {
         value: '',
         type: '',
@@ -140,21 +135,23 @@ class AddCardForm extends Component {
       const date = cardInfo.date.value.split('/')
       const data = {
         card_number: cardInfo.cardNumber.value,
-        holder_name: `${cardInfo.name.value} ${cardInfo.lastName.value}`,
-        expiration_year: date[0],
-        expiration_month: date[1],
+        holder_name: `${cardInfo.name}`,
+        expiration_year: date[1],
+        expiration_month: date[0],
         cvv2: cardInfo.cvv.value
       }
-
+      console.log('data', data)
       const res = await generateToken(data)
+      console.log('resresresresres', res)
       const card = await res.json()
       const device_session_id = await createDeviceSessionId()
+      console.log('device_session_id', device_session_id)
       if (card.card) {
-        await addPaymentMethodToken({
+        const resAAAA = await addPaymentMethodToken({
           device_session_id,
           token: card.id
         })
-
+        console.log('resAAAAresAAAA', resAAAA)
         const resUser = await GetMyInfo(currentUser._id)
 
         dispatch({
@@ -172,10 +169,8 @@ class AddCardForm extends Component {
         navigation.goBack()
         this.setState({ loadingButton: false })
       } else {
-        if (card.description === 'expiration_month 22 is invalid, valid expirations months are 01 to 12') {
-          this.toggleModal('modalErrorData', 'El formato de fecha debe ser YY/MM')
-          this.setState({ loadingButton: false })
-        }
+        console.log('card', card)
+
         if (card.description === 'expiration_month 22 is invalid, valid expirations months are 01 to 12') {
           this.toggleModal('modalErrorData', 'El formato de fecha debe ser YY/MM')
           this.setState({ loadingButton: false })
@@ -185,12 +180,13 @@ class AddCardForm extends Component {
         }
       }
     } catch (error) {
+      console.log('error', error.response)
       this.setState({ loadingButton: false })
       if (error.response) {
         if (error.response.data) {
           if (error.response.data.error) {
             if (error.response.data.error.description) {
-              return this.toggleModal('modalErrorData', 'Hemos tenido problemas para agregar esta tarjeta')
+              return this.toggleModal('modalErrorData', 'La tarjeta a sido declinada por tu banco, ponte en contacto con ellos')
             }
           }
         }
@@ -284,16 +280,16 @@ class AddCardForm extends Component {
             </Text>
           </View>
           <MainInput
-            placeholder={lng.name}
+            placeholder={'Nombre del titular'}
             value={name.value}
             onChangeText={(value) => this.onChange('name', value)}
           />
-          <MainInput
+          {/* <MainInput
             placeholder={lng.last_name}
             value={lastName.value}
             onChangeText={(value) => this.onChange('lastName', value)}
             customStyle={styles.input}
-          />
+          /> */}
           <MainInput
             keyboardType={'numeric'}
             placeholder={lng.add_card_form_card_number}

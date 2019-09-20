@@ -51,11 +51,8 @@ class BrbrReserve extends Component {
   async componentDidMount() {
     const lng = await locale()
     const barberProfile = await getBarberProfile(this.props.navigation.state.params.item.barber._id)
-    console.log('barberProfile', barberProfile)
     const dateToSelectService = this.props.navigation.state.params.dateForService
-    console.log('dateToSelectService', dateToSelectService)
     const schedule = barberProfile.data.schedule
-    console.log('schedule', schedule)
 
     var days = []
 

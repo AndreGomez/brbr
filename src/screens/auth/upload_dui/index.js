@@ -169,14 +169,17 @@ class UploadDUI extends Component {
         const userData = await authIdentityConfirm(storeState.user._id, {
           auth_identity: res
         })
-
+        const resUser = await GetMyInfo(storeState.user._id)
+        console.log('resUserresUserresUserresUserresUser', resUser)
         this.setState({ loadingButton: false })
+
         dispatch({
           type: SET_USER,
           payload: {
-            ...userData.data
+            ...resUser.data
           }
         });
+
         dispatch({
           type: INIT_SESSION,
           payload: {

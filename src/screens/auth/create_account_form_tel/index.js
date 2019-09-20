@@ -87,8 +87,8 @@ class CreateAccountFormTel extends Component {
       visible: false
     },
     check: false,
-    cca2: 'SV',
-    callingCode: '503',
+    cca2: 'MX',
+    callingCode: '52',
     errorMessage: '',
     loadingButton: false
   }
