@@ -59,7 +59,14 @@ export default StyleSheet.create({
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(20),
     fontWeight: Platform.OS === 'ios' ? '500' : '400',
-    textAlign: 'center'
+    textAlign: 'center',
+  },
+  description: {
+    color: '#cfcfcf',
+    fontFamily: AIRBNB_MEDIUM,
+    fontSize: resize(15),
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
+    textAlign: 'center',
   },
   stars: {
     color: '#ffffff',

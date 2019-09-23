@@ -25,7 +25,7 @@ export default function Comment(props) {
     body,
     stars
   } = props
-
+  console.log('datedatedatedate', date)
   return (
     <View
       style={styles.container}
@@ -76,7 +76,7 @@ export default function Comment(props) {
         <Text
           style={styles.date}
         >
-          {getFormatDate(date, 'es')}
+          {getFormatDate(moment(date, 'YYYY/DD/MM').format('YYYY-MM-DD'), 'es')}
         </Text>
       </View>
       <Text

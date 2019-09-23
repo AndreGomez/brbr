@@ -14,6 +14,13 @@ export default StyleSheet.create({
   content: {
     paddingHorizontal: resize(20)
   },
+  description: {
+    color: '#cfcfcf',
+    fontFamily: AIRBNB_MEDIUM,
+    fontSize: resize(15),
+    fontWeight: Platform.OS === 'ios' ? '500' : '400',
+    textAlign: 'center',
+  },
   column: {
     marginTop: resize(25, 'h'),
   },

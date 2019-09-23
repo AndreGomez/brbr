@@ -63,7 +63,7 @@ const es = {
   password_validation: '8 caracteres como mínimo, distingue mayúsculas de minúsculas',
   reset_password: 'Reestablecer contraseña',
   id_oficial: 'Identificación oficial',
-  id_oficial_label1: 'Queremos hacer que esta plataforma sea segura para nuestros barberos y nuestros clientes. Tus datos están seguros, lee nuestro aviso de privacidad.',
+  id_oficial_label1: 'Sube un ID oficial para corroborar que eres tu. Pasaporte, INE, Licencia de Conducir. Queremos hacer que esta plataforma sea segura para nuestros barberos y nuestros clientes. Tus datos están seguros, lee nuestro aviso de privacidad.',
   id_oficial_label2: 'Si utilizas tu cámara recuerda sacar el rostro completo',
 
   //HOME

@@ -36,6 +36,7 @@ export default StyleSheet.create({
     fontFamily: 'Airbnb Cereal App',
     fontSize: resize(24),
     fontWeight: Platform.OS === 'ios' ? '500' : '400',
+    width: resize(270)
   },
   city: {
     color: '#cfcfcf',

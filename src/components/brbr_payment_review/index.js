@@ -30,7 +30,8 @@ export default function BrbrPaymentReview(props) {
     onPressProfile,
     onPressChange,
     hour,
-    change
+    change,
+    viewDate
   } = props
 
   return (
@@ -54,11 +55,14 @@ export default function BrbrPaymentReview(props) {
               source={vipIcon}
             />
           } */}
-          <Text
-            style={styles.barber}
-          >
-            {/* {`${getFormatDate(date, 'es')}, ${hour}`} */}
-          </Text>
+          {
+            viewDate &&
+            <Text
+              style={styles.barber}
+            >
+              {`${getFormatDate(date, 'es')}, ${hour}`}
+            </Text>
+          }
         </View>
         <View
           style={styles.topHeader}
@@ -155,5 +159,6 @@ BrbrPaymentReview.defaultProps = {
   paymentMethod: '',
   onPressProfile: () => { },
   onPressChange: () => { },
-  hour: ''
+  hour: '',
+  viewDate: false
 }

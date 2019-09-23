@@ -481,7 +481,7 @@ class DateDetail extends Component {
               />
             </Content>
         }
-        {
+        {/* {
           navigation.state.params.service &&
           <MainButton
             bottom
@@ -489,7 +489,7 @@ class DateDetail extends Component {
             text={lng.finish_service}
             onPress={() => this.toggleModal()}
           />
-        }
+        } */}
         <ModalAlert
           lng={lng}
           finish

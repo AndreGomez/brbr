@@ -29,12 +29,14 @@ export default function ItemList(props) {
     customStyles,
     card,
     use,
-    emoji
+    emoji,
+    onLongPress
   } = props
 
   return (
     <TouchableOpacity
       onPress={onPress}
+      // onLongPress={onLongPress}
       style={[styles.container, customStyles]}
     >
       {
@@ -136,5 +138,6 @@ export default function ItemList(props) {
 ItemList.defaultProps = {
   text: '',
   onPress: () => { },
-  alert: false
+  alert: false,
+  onLongPress: () => { }
 }

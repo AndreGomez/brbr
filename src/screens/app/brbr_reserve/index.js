@@ -105,9 +105,11 @@ class BrbrReserve extends Component {
       }
 
       var ultimateDays = []
-
+      console.log('schedule', schedule)
       days.map((res, i) => {
+        console.log('resresresres', res)
         const filter = schedule.filter(scheduleRes => scheduleRes.date == res.date)
+        console.log(filter)
         if (filter.length != 0) {
           days[i]._id = filter[0]._id
           days[i].hours = filter[0].hours
@@ -142,11 +144,13 @@ class BrbrReserve extends Component {
       days.map((res, i) => {
         const filter = schedule.filter(scheduleRes => scheduleRes.date == res.date)
         if (filter.length != 0) {
-          days[i]._id = filter[0]._id
-          days[i].hours = filter[0].hours
-          days[i].active = false
+          if (moment(res.date, 'YYYY-MM-DD').isBefore(moment().format('YYYY-MM-DD'), 'date')) {
+            days[i]._id = filter[0]._id
+            days[i].hours = filter[0].hours
+            days[i].active = false
 
-          ultimateDays.push(days[i])
+            ultimateDays.push(days[i])
+          }
         }
       })
 
@@ -324,8 +328,9 @@ class BrbrReserve extends Component {
       >
         <CustomHeader
           center={
+            !loading &&
             <HeaderTitle
-              text={lng.brbr_profile_title}
+              text={barberInfo.name}
             />
           }
           left={
@@ -358,13 +363,14 @@ class BrbrReserve extends Component {
               <View
                 style={styles.portraitBackFront}
               >
-                <Text
+                {/* <Text
                   style={styles.name}
                 >
                   {barberInfo.name}
-                </Text>
+                </Text> */}
                 <Text
-                  style={styles.city}
+                  style={styles.description}
+                  numberOfLines={6}
                 >
                   {barberInfo.lastname}
                 </Text>

@@ -3,7 +3,8 @@ import {
   View,
   Text,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Container, Content } from 'native-base';
@@ -23,7 +24,7 @@ import plusIcon from '../../../assets/icons/plus_card.png';
 
 //customs
 import styles from './styles';
-import { getObjectCard, usePaymentMethod } from '../../../api/payment';
+import { getObjectCard, usePaymentMethod, deletePaymenCard } from '../../../api/payment';
 import { GetMyInfo } from '../../../api/user';
 import { SET_USER } from '../../../actions/user';
 import successMessage from '../../../utils/success_message';
@@ -105,6 +106,55 @@ class PaymentMethodsList extends Component {
     this.props.navigation.navigate('AddCardForm', { addExternal: true })
   }
 
+  deletePaymentMethod = (i) => {
+    const { paymentMethods } = this.state
+    Alert.alert(
+      'Brbr App',
+      'Seguro que quieres eliminar este metodo de pago?',
+      [
+        {
+          text: 'No',
+          onPress: () => { },
+          style: 'destructive',
+        },
+        {
+          text: 'Si', onPress: async () => {
+            try {
+              this.setState({
+                loading: true
+              })
+              await deletePaymenCard(paymentMethods[i].myId)
+
+              const resUser = await GetMyInfo(this.props.currentUser._id)
+
+              dispatch({
+                type: SET_USER,
+                payload: {
+                  ...resUser.data
+                }
+              });
+
+              await this.getData()
+
+              this.setState({
+                loading: false
+              })
+
+              successMessage('Metodo eliminado!')
+            } catch (error) {
+              this.setState({
+                loading: false
+              })
+
+              successMessage('Error al eliminar metodo de pago!', 'danger')
+            }
+          }
+        },
+      ],
+      { cancelable: false },
+    );
+  }
+
   render() {
 
     const {
@@ -153,6 +203,7 @@ class PaymentMethodsList extends Component {
                 paymentMethods.map((res, i) => (
                   <ItemList
                     onPress={() => this.onPressPaymentMethod(i)}
+                    onLongPress={() => this.deletePaymentMethod(i)}
                     text={res.card_number}
                     customStyles={styles.item}
                     card={

@@ -21,6 +21,7 @@ export default StyleSheet.create({
     width: '100%',
     height: '100%',
     paddingLeft: resize(10),
+    padding: 0,
     // fontFamily: INTERSTATE_REGULAR,
     color: '#95989a',
     fontFamily: AIRBNB_MEDIUM,

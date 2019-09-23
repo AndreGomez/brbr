@@ -92,7 +92,7 @@ class BrbrProfile extends Component {
 
   renderPhotos = () => (
     <FlatList
-      data={this.state.barberInfo.gallery}
+      data={this.state.barberInfo.gallery.reverse()}
       keyExtractor={(a, i) => `${i}`}
       renderItem={(item) => this.renderPhoto(item.item, item.index)}
       numColumns={4}
@@ -142,8 +142,9 @@ class BrbrProfile extends Component {
       >
         <CustomHeader
           center={
+            !loading &&
             <HeaderTitle
-              text={lng.brbr_profile_title}
+              text={barberInfo.name}
             />
           }
           left={
@@ -176,13 +177,14 @@ class BrbrProfile extends Component {
               <View
                 style={styles.portraitBackFront}
               >
-                <Text
+                {/* <Text
                   style={styles.name}
                 >
                   {barberInfo.name}
-                </Text>
+                </Text> */}
                 <Text
-                  style={styles.city}
+                  style={styles.description}
+                  numberOfLines={6}
                 >
                   {barberInfo.lastname}
                 </Text>

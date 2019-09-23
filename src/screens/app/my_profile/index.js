@@ -262,6 +262,7 @@ class MyProfile extends Component {
                 >
                   <Text
                     style={styles.name}
+                    numberOfLines={2}
                   >
                     {currentUser.name}
                   </Text>

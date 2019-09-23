@@ -43,6 +43,13 @@ export const addPaymentMethodToken = async (data = {}) => {
   })
 }
 
+export const deletePaymenCard = async (id) => {
+  return await dispatchRequest({
+    method: 'DELETE',
+    url: `users/payment/${id}`,
+  })
+}
+
 export const usePaymentMethod = async (id = '') => {
   return await dispatchRequest({
     method: 'GET',
