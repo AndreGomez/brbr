@@ -105,22 +105,23 @@ class BrbrReserve extends Component {
       }
 
       var ultimateDays = []
-      console.log('schedule', schedule)
       days.map((res, i) => {
-        console.log('resresresres', res)
         const filter = schedule.filter(scheduleRes => scheduleRes.date == res.date)
-        console.log(filter)
         if (filter.length != 0) {
-          days[i]._id = filter[0]._id
-          days[i].hours = filter[0].hours
-          days[i].active = false
+          if (moment(res.date, 'YYYY-MM-DD').isAfter(moment().format('YYYY-MM-DD'), 'date')) {
 
-          ultimateDays.push(days[i])
+            days[i]._id = filter[0]._id
+            days[i].hours = filter[0].hours
+            days[i].active = false
+
+            ultimateDays.push(days[i])
+          }
         }
       })
 
       days = ultimateDays
     }
+
     if (dateToSelectService == 'nextWeek') {
       var startOfWeek = moment().add(1, 'weeks').startOf('isoWeek');
       var endOfWeek = moment().add(1, 'weeks').endOf('isoWeek');
@@ -138,22 +139,21 @@ class BrbrReserve extends Component {
         );
         day = day.clone().add(1, 'd');
       }
-
+      console.log('daysdays', days)
       var ultimateDays = []
 
       days.map((res, i) => {
         const filter = schedule.filter(scheduleRes => scheduleRes.date == res.date)
+        console.log('filter', filter)
         if (filter.length != 0) {
-          if (moment(res.date, 'YYYY-MM-DD').isBefore(moment().format('YYYY-MM-DD'), 'date')) {
-            days[i]._id = filter[0]._id
-            days[i].hours = filter[0].hours
-            days[i].active = false
+          days[i]._id = filter[0]._id
+          days[i].hours = filter[0].hours
+          days[i].active = false
 
-            ultimateDays.push(days[i])
-          }
+          ultimateDays.push(days[i])
         }
       })
-
+      console.log('ultimateDays,ultimateDaysultimateDays', ultimateDays)
       days = ultimateDays
     }
 

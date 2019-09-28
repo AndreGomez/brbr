@@ -15,6 +15,10 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center'
   },
+  ups: {
+    fontSize: resize(72),
+    fontWeight: 'bold'
+  },
   aboutContainer: {
     width: resize(370),
     alignSelf: 'flex-start',

@@ -56,6 +56,7 @@ class PaymentMethodsList extends Component {
         const card = await cardObject.json()
         paymentMethods.push({ ...card, use: res.use, myId: res._id })
       }))
+      console.log(paymentMethods)
       this.setState({
         loading: false,
         paymentMethods
@@ -108,6 +109,7 @@ class PaymentMethodsList extends Component {
 
   deletePaymentMethod = (i) => {
     const { paymentMethods } = this.state
+    const { dispatch } = this.props
     Alert.alert(
       'Brbr App',
       'Seguro que quieres eliminar este metodo de pago?',
@@ -126,7 +128,7 @@ class PaymentMethodsList extends Component {
               await deletePaymenCard(paymentMethods[i].myId)
 
               const resUser = await GetMyInfo(this.props.currentUser._id)
-
+              console.log(resUser.data)
               dispatch({
                 type: SET_USER,
                 payload: {
@@ -142,6 +144,7 @@ class PaymentMethodsList extends Component {
 
               successMessage('Metodo eliminado!')
             } catch (error) {
+              console.log(error)
               this.setState({
                 loading: false
               })

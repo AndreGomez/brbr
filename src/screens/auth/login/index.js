@@ -96,6 +96,7 @@ class Login extends Component {
             onPress={() => this.navigateTo('LoginForm')}
           />
         </View>
+
       </View>
     );
   }

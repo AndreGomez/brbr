@@ -4542,6 +4542,13 @@ node-emoji@1.8.1:
   dependencies:
     lodash.toarray "^4.4.0"
 
+node-emoji@^1.10.0:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/node-emoji/-/node-emoji-1.10.0.tgz#8886abd25d9c7bb61802a658523d1f8d2a89b2da"
+  integrity sha512-Yt3384If5H6BYGVHiHwTL+99OzJKHhgp82S8/dktEK73T26BazdgZ4JZh92xSVtGNJvz9UbXdNAc5hcrXV42vw==
+  dependencies:
+    lodash.toarray "^4.4.0"
+
 node-fetch@1.6.3:
   version "1.6.3"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-1.6.3.tgz#dc234edd6489982d58e8f0db4f695029abcd8c04"
@@ -5286,10 +5293,10 @@ react-native-calendars@^1.187.0:
     prop-types "^15.5.10"
     xdate "^0.8.0"
 
-react-native-country-picker-modal@^0.7.1:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/react-native-country-picker-modal/-/react-native-country-picker-modal-0.7.1.tgz#bde8f9c1c50b67efed880bf3a1c455b96eced389"
-  integrity sha512-0Mtw62QpVbJRO9GXt0lEFccoVjGfmDrb/4hpRBsuoepkyAeilXE4dboNqnql/ALny6/y6uza+Hz/WjEVU2Uw0Q==
+react-native-country-picker-modal@0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/react-native-country-picker-modal/-/react-native-country-picker-modal-0.6.2.tgz#ba97118be4373be0c11cd51e445e6bd448e2f1ca"
+  integrity sha1-upcRi+Q3O+DBHNUeRF5r1Eji8co=
   dependencies:
     fuse.js "2.6.2"
     lodash "4.12.0"

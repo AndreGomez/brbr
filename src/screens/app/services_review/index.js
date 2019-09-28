@@ -178,7 +178,7 @@ class ServiceReview extends Component {
       this.setState({
         loadingBtn: false
       })
-      return alertMessage('Error al procesar su reserva')
+      return alertMessage('La tarjeta a sido declinada, ponte en contacto con tu banco.')
     }
   }
 

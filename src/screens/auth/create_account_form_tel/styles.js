@@ -16,6 +16,9 @@ export default StyleSheet.create({
     paddingHorizontal: resize(20),
     paddingBottom: resize(25, 'h')
   },
+  emoji: {
+    fontSize: resize(25)
+  },
   check: {
     marginTop: resize(10, 'h')
   },
@@ -51,11 +54,12 @@ export default StyleSheet.create({
   },
   country: {
     height: resize(60, 'h'),
-    width: resize(60, 'h'),
     position: 'absolute',
+    width: resize(40),
     right: 0,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
     top: resize(25, 'h'),
-    alignItems: 'flex-end'
   }
 });
 export const modalDark = StyleSheet.create({

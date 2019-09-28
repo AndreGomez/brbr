@@ -135,7 +135,7 @@ class AddCardForm extends Component {
       const date = cardInfo.date.value.split('/')
       const data = {
         card_number: cardInfo.cardNumber.value,
-        holder_name: `${cardInfo.name}`,
+        holder_name: `${cardInfo.name.value}`,
         expiration_year: date[1],
         expiration_month: date[0],
         cvv2: cardInfo.cvv.value
@@ -186,7 +186,7 @@ class AddCardForm extends Component {
         if (error.response.data) {
           if (error.response.data.error) {
             if (error.response.data.error.description) {
-              return this.toggleModal('modalErrorData', 'La tarjeta a sido declinada por tu banco, ponte en contacto con ellos')
+              return this.toggleModal('modalErrorData', 'La tarjeta a sido declinada, ponte en contacto con tu banco.')
             }
           }
         }
@@ -435,9 +435,10 @@ class AddCardForm extends Component {
         <ModalAlert
           visible={modalErrorData.visible}
           title={
-            <Image
-              source={upsIcon}
-            />
+            <Text
+              style={styles.ups}>
+              ¡Ups!
+            </Text>
           }
           message={modalErrorData.message}
           btnTitle={lng.accept}

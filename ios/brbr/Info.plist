@@ -32,7 +32,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>3</string>
+	<string>6</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -49,17 +49,19 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>$(PRODUCT_NAME) I would like to use your camera to take your profile picture</string>
+	<string>$(PRODUCT_NAME) Nos gustaría usar tu cámara para tomar tu foto de perfil</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like to use your location for search barbers</string>
+	<string>$(PRODUCT_NAME) Nos gustaría usar su ubicación para buscar barberos</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like to use your location for search barbers</string>
+	<string>$(PRODUCT_NAME) Nos gustaría usar su ubicación para buscar barberos</string>
+  <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+  <string>$(PRODUCT_NAME) Nos gustaría usar su ubicación para buscar barberos</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to use your microphone (for videos)</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to save photos to your photo gallery</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like access to your photo gallery</string>
+	<string>$(PRODUCT_NAME) Nos gustaria acceder a su galería de fotos para seleccionar tu foto de perfil</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

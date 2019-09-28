@@ -1,9 +1,8 @@
 
 import React, { Component } from 'react';
-import { Image, View, Text } from 'react-native';
+import { Image, View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { Content, Container } from 'native-base';
-import CountryPicker from 'react-native-country-picker-modal';
 
 //customs
 import styles, { modalDark } from './styles';
@@ -17,6 +16,7 @@ import HeaderTitle from '../../../components/header_title';
 import BackButton from '../../../components/back_button';
 import ModalAlert from '../../../components/modal_alerts';
 import successMessage from '../../../utils/success_message';
+import nodeEmoji from 'node-emoji';
 
 //assets
 import upsIcon from '../../../assets/icons/ups.png';
@@ -39,7 +39,7 @@ import { SET_USER } from '../../../actions/user';
 //utils
 import { validateFields } from '../../../utils/validators';
 import { CheckBox } from 'react-native-elements';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import CountryPicker from '../../../components/country_picker';
 
 const PLACEHOLDER_COLOR = "rgba(255,255,255,0.2)";
 
@@ -87,10 +87,11 @@ class CreateAccountFormTel extends Component {
       visible: false
     },
     check: false,
-    cca2: 'MX',
     callingCode: '52',
+    flag: 'flag-mx',
     errorMessage: '',
-    loadingButton: false
+    loadingButton: false,
+    visiblePicker: false
   }
 
   async componentDidMount() {
@@ -311,6 +312,14 @@ class CreateAccountFormTel extends Component {
     navigation.navigate(screen)
   }
 
+  onPressItemCountryPicker = (item) => {
+    this.setState({
+      flag: item.flag,
+      callingCode: item.callingCode,
+      visiblePicker: false
+    })
+  }
+
   render() {
 
     const {
@@ -324,7 +333,6 @@ class CreateAccountFormTel extends Component {
       modalData: {
         visible
       },
-      cca2,
       callingCode,
       errorMessage,
       loadingButton,
@@ -377,29 +385,12 @@ class CreateAccountFormTel extends Component {
             value={`+(${callingCode}) ${phone.value}`}
             underText={lng.create_account_tel_message}
             icon={
-              <View
+              <TouchableOpacity
+                onPress={() => this.setState({ visiblePicker: true })}
                 style={styles.country}
               >
-                <CountryPicker
-                  showCallingCode
-                  onChange={value => {
-                    this.setState({
-                      cca2: value.cca2,
-                      callingCode: value.callingCode
-                    })
-                  }}
-                  styles={modalDark}
-                  cca2={cca2}
-                  translation="eng"
-                  filterPlaceholderTextColor={PLACEHOLDER_COLOR}
-                  closeable
-                  animationType={'slide'}
-                  filterable
-                  filterPlaceholder={'Buscar'}
-                  closeButtonImage={storeIcon}
-                  showCountryNameWithFlag
-                />
-              </View>
+                <Text style={styles.emoji}>{nodeEmoji.get(this.state.flag)}</Text>
+              </TouchableOpacity>
             }
           />
           <MainInput
@@ -496,6 +487,10 @@ class CreateAccountFormTel extends Component {
           placeholder={lng.code}
           onPress={() => this.onPressConfirmCode()}
         />
+        <CountryPicker
+          onPressItem={(item) => this.onPressItemCountryPicker(item)}
+          onPressClose={() => this.setState({ visiblePicker: false })}
+          visible={this.state.visiblePicker} />
       </Container>
     );
   }

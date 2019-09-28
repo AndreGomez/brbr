@@ -128,7 +128,6 @@ class Home extends Component {
         appoPendingReview: resAppoPendingReview.data != 0 ? resAppoPendingReview.data[0] : null
       })
     } catch (error) {
-      console.log(error)
     }
   }
 
@@ -187,10 +186,24 @@ class Home extends Component {
       })
     } catch (error) {
       console.log('error', error)
+      const barbersArround = await getBarbersArround({
+        range: 4,
+        location: [
+          19.4270245,
+          -99.1676647
+        ]
+      })
+
+      const resMyAddress = await getMyAddres({ latitude: 19.4270245, longitude: -99.1676647 })
+      state.position.lat = 19.4270245
+      state.position.lng = -99.1676647
+      state.location = resMyAddress.data.results[0].formatted_address
+      state.acceptPermission = true
+      state.locationCoords = { latitude: 19.4270245, longitude: -99.1676647 }
+      state.barbersArround = barbersArround.data
+      state.loading = false
       this.setState({
-        loading: false,
-        acceptPermission: false,
-        barbersArround: [],
+        ...state,
         lng
       })
       // parseError(error)
@@ -396,7 +409,6 @@ class Home extends Component {
   }
 
   getCoords = async (data, details) => {
-    console.log(this.state)
     const description = data.description
     const lat = details.result.geometry.location.lat
     const lng = details.result.geometry.location.lng
@@ -420,7 +432,6 @@ class Home extends Component {
         barbersArround: barbersArround.data
       })
     } catch (error) {
-      console.log(error)
     }
   }
 

@@ -36,7 +36,7 @@ export default function ItemList(props) {
   return (
     <TouchableOpacity
       onPress={onPress}
-      // onLongPress={onLongPress}
+      onLongPress={onLongPress}
       style={[styles.container, customStyles]}
     >
       {
@@ -57,6 +57,7 @@ export default function ItemList(props) {
               >
                 <Text
                   style={styles.name}
+                  numberOfLines={1}
                 >
                   {name}
                 </Text>
