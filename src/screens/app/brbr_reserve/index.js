@@ -108,7 +108,7 @@ class BrbrReserve extends Component {
       days.map((res, i) => {
         const filter = schedule.filter(scheduleRes => scheduleRes.date == res.date)
         if (filter.length != 0) {
-          if (moment(res.date, 'YYYY-MM-DD').isAfter(moment().format('YYYY-MM-DD'), 'date')) {
+          if (moment(res.date, 'YYYY-MM-DD').isAfter(moment().format('YYYY-MM-DD'), 'date') || moment(res.date, 'YYYY-MM-DD').format('YYYY-MM-DD') == moment().format('YYYY-MM-DD')) {
 
             days[i]._id = filter[0]._id
             days[i].hours = filter[0].hours

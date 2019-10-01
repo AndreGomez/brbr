@@ -83,8 +83,9 @@ class LoginForm extends Component {
       });
 
       const fcmToken = await firebase.messaging().getToken();
+      console.log('TOKEN MEN', fcmToken)
       const a = await setToken({ device_token: fcmToken }, res.data.user._id);
-
+      console.log('SETEO DE TOKEN', a)
       dispatch({
         type: INIT_SESSION,
         payload: {
