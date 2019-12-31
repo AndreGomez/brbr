@@ -93,6 +93,10 @@ export default StyleSheet.create({
     flexDirection: 'row',
     marginTop: Platform.OS === 'ios' ? resize(100, 'h') : resize(135, 'h'),
   },
+  brbrTxt: {
+    fontWeight: 'bold',
+    fontSize: resize(42)
+  },
   section: {
     width: '33.33333%',
     height: '100%',
@@ -114,11 +118,10 @@ export default StyleSheet.create({
     paddingBottom: resize(10, 'h')
   },
   days: {
-    color: '#2d2d2d',
+    color: 'white',
     fontFamily: AIRBNB_MEDIUM,
     fontSize: resize(20),
     fontWeight: Platform.OS === 'ios' ? '500' : '400',
-    paddingRight: resize(23)
   },
   hours: {
     color: 'white',

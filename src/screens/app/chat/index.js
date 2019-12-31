@@ -48,7 +48,7 @@ class Chat extends Component {
     const { currentUser } = this.props
 
     const idCollection = `${currentUser._id}-${this.props.navigation.state.params.idBarber}`
-
+    console.log(idCollection)
     unsubscribe = firebase.firestore().collection(idCollection).onSnapshot(async (doc) => {
       const allMessages = []
       const data = await firebase.firestore().collection(idCollection).orderBy('numerMessage').get()

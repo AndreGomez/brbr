@@ -7,9 +7,9 @@ import firebase from 'react-native-firebase';
 
 // Optional: Flow type
 import type, {
-  Notification,
-  NotificationOpen,
-  RemoteMessage
+	Notification,
+	NotificationOpen,
+	RemoteMessage
 } from 'react-native-firebase';
 
 import { getMessaging } from '../../api/setToken';
@@ -29,164 +29,186 @@ import styles from './styles';
 import locale from '../../locale';
 import { NavigationActions, StackActions } from 'react-navigation';
 import { SET_USER } from '../../actions/user';
+import { DESTROY_SESSION } from '../../actions/auth';
 
 var lng = {}
 
 class Splash extends Component {
 
-  async componentDidMount() {
-    lng = await locale()
-    SplashScreen.hide();
+	async componentDidMount() {
+		lng = await locale()
+		SplashScreen.hide();
 
-    getMessaging({ authorize: this.props.authorize, logout: false });
-    this.openNotification();
-    this.openNotificationWileAppIsClosed();
-    this.showNotification();
+		getMessaging({ authorize: this.props.authorize, logout: false });
+		this.openNotification();
+		this.openNotificationWileAppIsClosed();
+		this.showNotification();
 
-    this.setState({
-      render: true,
-    })
-  }
+		this.setState({
+			render: true,
+		})
+	}
 
 
-  showNotification = () => {
-    firebase.messaging().subscribeToTopic('brbr');
-    this.messageListener = firebase
-      .messaging()
-      .onMessage((message) => {
-        console.log('messageListener', { message });
-        this.displayNotification(message);
-      });
-    this.removeNotificationListener = firebase
-      .notifications()
-      .onNotification((notification) => {
-        console.log('removeNotificationListener', { notification });
-        this.displayNotification(notification);
+	showNotification = () => {
+		firebase.messaging().subscribeToTopic('brbr');
+		this.messageListener = firebase
+			.messaging()
+			.onMessage((message) => {
+				console.log('messageListener', { message });
+				this.displayNotification(message);
+			});
+		this.removeNotificationListener = firebase
+			.notifications()
+			.onNotification((notification) => {
+				console.log('removeNotificationListener', { notification });
+				this.displayNotification(notification);
 
-        if (notification._data.state === 'in progress') {
-          const actionToDispatch = StackActions.reset({
-            index: 0,
-            key: null,
-            actions: [
-              NavigationActions.navigate({
-                routeName: 'drawer',
-              }),
-            ]
-          });
-          setTimeout(() => {
-            this.navigator.dispatch(actionToDispatch);
-          }, 500);
-        }
+				if (notification._data.state === 'in progress') {
+					const actionToDispatch = StackActions.reset({
+						index: 0,
+						key: null,
+						actions: [
+							NavigationActions.navigate({
+								routeName: 'drawer',
+							}),
+						]
+					});
+					setTimeout(() => {
+						this.navigator.dispatch(actionToDispatch);
+					}, 500);
+				}
 
-        if (notification._data.state === 'finish') {
-          this.props.dispatch({
-            type: SET_USER,
-            payload: {
-              appoinmentFinish: notification._data.id
-            }
-          });
-          const actionToDispatch = StackActions.reset({
-            index: 0,
-            key: null,
-            actions: [
-              NavigationActions.navigate({
-                routeName: 'drawer',
-              }),
-            ]
-          });
-          setTimeout(() => {
-            this.navigator.dispatch(actionToDispatch);
-          }, 500);
-        }
-      });
-  };
+				if (notification._data.state === 'finish') {
+					this.props.dispatch({
+						type: SET_USER,
+						payload: {
+							appoinmentFinish: notification._data.id
+						}
+					});
+					const actionToDispatch = StackActions.reset({
+						index: 0,
+						key: null,
+						actions: [
+							NavigationActions.navigate({
+								routeName: 'drawer',
+							}),
+						]
+					});
+					setTimeout(() => {
+						this.navigator.dispatch(actionToDispatch);
+					}, 500);
+				}
+			});
+	};
 
-  displayNotification = notification => {
-    const channelId = new firebase.notifications.Android.Channel(
-      'Default',
-      'Default',
-      firebase.notifications.Android.Importance.High
-    );
-    firebase.notifications().android.createChannel(channelId);
+	displayNotification = notification => {
+		const channelId = new firebase.notifications.Android.Channel(
+			'Default',
+			'Default',
+			firebase.notifications.Android.Importance.High
+		);
+		firebase.notifications().android.createChannel(channelId);
 
-    let notification_to_be_displayed = new firebase.notifications.Notification({
-      data: notification.data,
-      sound: 'default',
-      show_in_foreground: true,
-      title: notification.title,
-      body: notification.body
-    });
+		let notification_to_be_displayed = new firebase.notifications.Notification({
+			data: notification.data,
+			sound: 'default',
+			show_in_foreground: true,
+			title: notification.title,
+			body: notification.body
+		});
 
-    if (Platform.OS == 'android') {
-      notification_to_be_displayed.android
-        .setPriority(firebase.notifications.Android.Priority.High)
-        .android.setChannelId('Default')
-        .android.setVibrate(1000)
-        .android.setColor("#31d2f4")
-        .android.setSmallIcon("ic_stat_name");
-    }
+		if (Platform.OS == 'android') {
+			notification_to_be_displayed.android
+				.setPriority(firebase.notifications.Android.Priority.High)
+				.android.setChannelId('Default')
+				.android.setVibrate(1000)
+				.android.setColor("#31d2f4")
+				.android.setSmallIcon("ic_stat_name");
+		}
 
-    firebase.notifications().displayNotification(notification_to_be_displayed);
-  };
+		firebase.notifications().displayNotification(notification_to_be_displayed);
+	};
 
-  openNotification = () => {
-    this.removeNotificationOpenedListener = firebase
-      .notifications()
-      .onNotificationOpened(async (notificationOpen) => {
-        const action = notificationOpen.action;
-        const notification = notificationOpen.notification;
-        firebase.notifications().removeDeliveredNotification(notification.notificationId);
-        console.log(notification)
-        //ACTION
-      });
-  };
+	openNotification = () => {
+		this.removeNotificationOpenedListener = firebase
+			.notifications()
+			.onNotificationOpened(async (notificationOpen) => {
+				const action = notificationOpen.action;
+				const notification = notificationOpen.notification;
+				firebase.notifications().removeDeliveredNotification(notification.notificationId);
+				if (notification._data.id_barber_message) {
+					const actionToDispatch = StackActions.reset({
+						index: 1,
+						key: null,
+						actions: [
+							NavigationActions.navigate({
+								routeName: 'drawer',
+							}),
+							NavigationActions.navigate({
+								routeName: 'Chat',
+								params: {
+									idBarber: notification._data.id_barber_message
+								}
+							}),
+						]
+					});
+					setTimeout(() => {
+						this.navigator.dispatch(actionToDispatch);
+					}, 500);
+				}
+				//ACTION
+			});
+	};
 
-  openNotificationWileAppIsClosed = async () => {
-    const notificationOpen = await firebase
-      .notifications()
-      .getInitialNotification();
-    if (notificationOpen) {
-      const action = notificationOpen.action;
-      const notification = notificationOpen.notification;
-      console.log({ action, notification });
-      console.log(notification)
-      firebase.notifications().removeDeliveredNotification(notification.notificationId);
-    }
-  };
+	openNotificationWileAppIsClosed = async () => {
+		const notificationOpen = await firebase
+			.notifications()
+			.getInitialNotification();
+		if (notificationOpen) {
+			const action = notificationOpen.action;
+			const notification = notificationOpen.notification;
+			firebase.notifications().removeDeliveredNotification(notification.notificationId);
+		}
+	};
 
-  componentWillUnmount() {
-    this.openNotification();
-    this.openNotificationWileAppIsClosed();
-    this.showNotification();
-  }
+	componentWillUnmount() {
+		this.openNotification();
+		this.openNotificationWileAppIsClosed();
+		this.showNotification();
+	}
 
-  redirect = () => {
-    const {
-      authorize,
-      firstTime
-    } = this.props;
+	redirect = () => {
+		// this.props.dispatch({
+		// 	type: DESTROY_SESSION,
+		// 	payload: {}
+		// });
+		const {
+			authorize,
+			firstTime
+		} = this.props;
 
-    if (firstTime) return <FirstTimeNavigation />;
+		if (firstTime) return <FirstTimeNavigation />;
 
-    if (!authorize) return <AuthNavigation />
+		if (!authorize) return <AuthNavigation />
 
-    return <AppNavigation
-      ref={nav => {
-        this.navigator = nav;
-      }} />
-  }
+		return <AppNavigation
+			ref={nav => {
+				this.navigator = nav;
+			}} />
+	}
 
-  render() {
+	render() {
 
-    return (
-      this.redirect()
-    )
-  }
+		return (
+			this.redirect()
+		)
+	}
 }
 
 const mapStateToProps = (state) => ({
-  authorize: state.auth.authorize,
-  firstTime: state.auth.firstTime
+	authorize: state.auth.authorize,
+	firstTime: state.auth.firstTime
 });
 
 export default connect(mapStateToProps)(Splash);

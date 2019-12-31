@@ -35,246 +35,244 @@ import { SET_USER } from '../../../actions/user';
 
 //api
 import {
-  authIdentityConfirm
+	authIdentityConfirm
 } from '../../../api/auth';
 import { GetMyInfo } from '../../../api/user';
 
 class UploadDUI extends Component {
 
-  state = {
-    lng: {},
-    img: null,
-    loadingButton: false
-  }
+	state = {
+		lng: {},
+		img: null,
+		loadingButton: false
+	}
 
-  async componentDidMount() {
-    const lng = await locale()
+	async componentDidMount() {
+		const lng = await locale()
 
-    this.setState({
-      lng
-    })
-  }
+		this.setState({
+			lng
+		})
+	}
 
-  navigateTo = (screen) => {
-    const { navigation } = this.props
+	navigateTo = (screen) => {
+		const { navigation } = this.props
 
-    navigation.navigate(screen)
-  }
+		navigation.navigate(screen)
+	}
 
-  goBack = () => {
-    const { navigation } = this.props
+	goBack = () => {
+		const { navigation } = this.props
 
-    navigation.goBack()
-  }
+		navigation.goBack()
+	}
 
-  onPressTakePhoto = async () => {
-    try {
-      const res = await Camera.ImageCamera()
+	onPressTakePhoto = async () => {
+		try {
+			const res = await Camera.ImageCamera()
 
-      this.setState({
-        img: res.uri,
-        imgInfo: res
-      })
-    } catch (error) {
-    }
-  }
+			this.setState({
+				img: res.uri,
+				imgInfo: res
+			})
+		} catch (error) {
+		}
+	}
 
-  onPressLibrary = async () => {
-    try {
-      const res = await Camera.ImageLibrary()
+	onPressLibrary = async () => {
+		try {
+			const res = await Camera.ImageLibrary()
 
-      this.setState({
-        img: res.uri,
-        imgInfo: res
-      })
-    } catch (error) {
-    }
-  }
+			this.setState({
+				img: res.uri,
+				imgInfo: res
+			})
+		} catch (error) {
+		}
+	}
 
-  onPressSkip = () => {
-    const {
-      dispatch
-    } = this.props;
+	onPressSkip = () => {
+		// const {
+		// 	dispatch
+		// } = this.props;
 
-    dispatch({
-      type: INIT_SESSION,
-      payload: {
-        firstTime: true
-      }
-    });
-  }
+		// dispatch({
+		// 	type: INIT_SESSION,
+		// 	payload: {
+		// 		firstTime: true
+		// 	}
+		// });
 
-  onPressAcept = async () => {
-    const {
-      img,
-      lng,
-      imgInfo
-    } = this.state
+		this.navigateTo('SetProfileImage')
+	}
 
-    const {
-      dispatch
-    } = this.props;
+	onPressAcept = async () => {
+		const {
+			img,
+			lng,
+			imgInfo
+		} = this.state
 
-    if (img) {
-      try {
-        this.setState({ loadingButton: true })
+		const {
+			dispatch
+		} = this.props;
 
-        const res = await uploadAsset('authIdentiry', imgInfo.uri, imgInfo.fileName, { contentType: imgInfo.type })
+		if (img) {
+			try {
+				this.setState({ loadingButton: true })
 
-        const storeState = await store.getState()
+				const res = await uploadAsset('authIdentiry', imgInfo.uri, imgInfo.fileName, { contentType: imgInfo.type })
 
-        await authIdentityConfirm(storeState.user._id, {
-          auth_identity: res
-        })
+				const storeState = await store.getState()
 
-        const resUser = await GetMyInfo(storeState.user._id)
+				await authIdentityConfirm(storeState.user._id, {
+					auth_identity: res
+				})
 
-        dispatch({
-          type: SET_USER,
-          payload: {
-            ...resUser.data
-          }
-        });
+				const resUser = await GetMyInfo(storeState.user._id)
 
-        this.setState({ loadingButton: false })
-        successMessage('Exitoso!')
-        return this.props.navigation.goBack()
-      } catch (error) {
-        this.setState({ loadingButton: false })
-      }
-    } else {
-      return successMessage(lng.photo_identify, 'danger')
-    }
-  }
+				dispatch({
+					type: SET_USER,
+					payload: {
+						...resUser.data
+					}
+				});
 
-  onPressNext = async () => {
-    const {
-      img,
-      lng,
-      imgInfo
-    } = this.state
+				this.setState({ loadingButton: false })
+				successMessage('Exitoso!')
+				return this.props.navigation.goBack()
+			} catch (error) {
+				this.setState({ loadingButton: false })
+			}
+		} else {
+			return successMessage(lng.photo_identify, 'danger')
+		}
+	}
 
-    const {
-      dispatch
-    } = this.props;
+	onPressNext = async () => {
+		const {
+			img,
+			lng,
+			imgInfo
+		} = this.state
 
-    if (img) {
-      try {
-        this.setState({ loadingButton: true })
+		const {
+			dispatch
+		} = this.props;
 
-        const res = await uploadAsset('authIdentiry', imgInfo.uri, imgInfo.fileName, { contentType: imgInfo.type })
+		if (img) {
+			try {
+				this.setState({ loadingButton: true })
 
-        const storeState = await store.getState()
+				const res = await uploadAsset('authIdentiry', imgInfo.uri, imgInfo.fileName, { contentType: imgInfo.type })
 
-        const userData = await authIdentityConfirm(storeState.user._id, {
-          auth_identity: res
-        })
-        const resUser = await GetMyInfo(storeState.user._id)
-        console.log('resUserresUserresUserresUserresUser', resUser)
-        this.setState({ loadingButton: false })
+				const storeState = await store.getState()
 
-        dispatch({
-          type: SET_USER,
-          payload: {
-            ...resUser.data
-          }
-        });
+				const userData = await authIdentityConfirm(storeState.user._id, {
+					auth_identity: res
+				})
+				const resUser = await GetMyInfo(storeState.user._id)
 
-        dispatch({
-          type: INIT_SESSION,
-          payload: {
-            firstTime: true
-          }
-        });
-      } catch (error) {
-        this.setState({ loadingButton: false })
-      }
-    } else {
-      return successMessage(lng.photo_identify, 'danger')
-    }
-  }
+				this.setState({ loadingButton: false })
 
-  render() {
+				dispatch({
+					type: SET_USER,
+					payload: {
+						...resUser.data
+					}
+				});
 
-    const {
-      lng,
-      img,
-      loadingButton
-    } = this.state
+				this.navigateTo('SetProfileImage')
 
-    const {
-      navigation
-    } = this.props
+			} catch (error) {
+				this.setState({ loadingButton: false })
+			}
+		} else {
+			return successMessage(lng.photo_identify, 'danger')
+		}
+	}
 
-    return (
-      <Container
-        style={styles.container}
-      >
-        <CustomHeader
-          center={
-            <HeaderTitle
-              text={lng.id_oficial}
-            />
-          }
-          left={
-            <BackButton
-              onPress={() => this.goBack()}
-            />
-          }
-        />
-        <Content
-          contentContainerStyle={styles.content}
-          bounces={false}
-        >
-          <View
-            style={styles.cameraContainer}
-          >
-            <TouchableOpacity
-              onPress={() => this.onPressLibrary()}
-            >
-              <Text
-                style={styles.cameraText}
-              >
-                {lng.galery}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => this.onPressTakePhoto()}
-            >
-              <Image
-                source={cameraIcons}
-              />
-            </TouchableOpacity>
-          </View>
-          <Image
-            style={styles.icon}
-            source={duiIcons}
-          />
-          <Text
-            style={styles.title}
-          >
-            {lng.id_oficial}
-          </Text>
-          <Text
-            style={styles.label}
-          >
-            {lng.id_oficial_label1}
-          </Text>
-          {
-            !navigation.state.params.addExternal ?
-              <Image
-                style={img ? styles.img : styles.empty_img}
-                source={img ? { uri: img } : id_empty}
-                resizeMode={'contain'}
-              />
-              :
-              <Image
-                style={img ? styles.img : navigation.state.params.userData.auth_identity ? styles.img : styles.empty_img}
-                source={img ? { uri: img } : navigation.state.params.userData.auth_identity ? { uri: navigation.state.params.userData.auth_identity } : id_empty}
-                resizeMode={'contain'}
-              />
-          }
-          {/* <Text
+	render() {
+
+		const {
+			lng,
+			img,
+			loadingButton
+		} = this.state
+
+		const {
+			navigation
+		} = this.props
+
+		return (
+			<Container
+				style={styles.container}
+			>
+				<CustomHeader
+					center={
+						<HeaderTitle
+							text={lng.id_oficial}
+						/>
+					}
+					left={
+						<BackButton
+							onPress={() => this.goBack()}
+						/>
+					}
+				/>
+				<Content
+					contentContainerStyle={styles.content}
+					bounces={false}
+				>
+					<View
+						style={styles.cameraContainer}
+					>
+						<TouchableOpacity
+							onPress={() => this.onPressLibrary()}
+						>
+							<Text
+								style={styles.cameraText}
+							>
+								{lng.galery}
+							</Text>
+						</TouchableOpacity>
+						<TouchableOpacity
+							onPress={() => this.onPressTakePhoto()}
+						>
+							<Image
+								source={cameraIcons}
+							/>
+						</TouchableOpacity>
+					</View>
+					<Image
+						style={styles.icon}
+						source={duiIcons}
+					/>
+					<Text
+						style={styles.title}
+					>
+						{lng.id_oficial}
+					</Text>
+					<Text
+						style={styles.label}
+					>
+						{lng.id_oficial_label1}
+					</Text>
+					{
+						!navigation.state.params.addExternal ?
+							<Image
+								style={img ? styles.img : styles.empty_img}
+								source={img ? { uri: img } : id_empty}
+								resizeMode={'contain'}
+							/>
+							:
+							<Image
+								style={img ? styles.img : navigation.state.params.userData.auth_identity ? styles.img : styles.empty_img}
+								source={img ? { uri: img } : navigation.state.params.userData.auth_identity ? { uri: navigation.state.params.userData.auth_identity } : id_empty}
+								resizeMode={'contain'}
+							/>
+					}
+					{/* <Text
             style={
               [
                 styles.label,
@@ -284,42 +282,42 @@ class UploadDUI extends Component {
           >
             {lng.id_oficial_label2}
           </Text> */}
-          {
-            !navigation.state.params.addExternal ?
-              <View
-                style={styles.btnContainer}
-              >
-                <MainButton
-                  raised_green
-                  text={lng.skip}
-                  sm
-                  onPress={() => this.onPressSkip()}
-                />
-                <MainButton
-                  white
-                  text={lng.next}
-                  sm
-                  onPress={() => this.onPressNext()}
-                  loading={loadingButton}
-                />
-              </View>
-              :
-              <View
-                style={styles.btnContainerNoParams}
-              >
-                <MainButton
-                  white
-                  text={lng.accept}
-                  sm
-                  onPress={() => this.onPressAcept()}
-                  loading={loadingButton}
-                />
-              </View>
-          }
-        </Content>
-      </Container>
-    );
-  }
+					{
+						!navigation.state.params.addExternal ?
+							<View
+								style={styles.btnContainer}
+							>
+								<MainButton
+									raised_green
+									text={lng.skip}
+									sm
+									onPress={() => this.onPressSkip()}
+								/>
+								<MainButton
+									white
+									text={lng.next}
+									sm
+									onPress={() => this.onPressNext()}
+									loading={loadingButton}
+								/>
+							</View>
+							:
+							<View
+								style={styles.btnContainerNoParams}
+							>
+								<MainButton
+									white
+									text={lng.accept}
+									sm
+									onPress={() => this.onPressAcept()}
+									loading={loadingButton}
+								/>
+							</View>
+					}
+				</Content>
+			</Container>
+		);
+	}
 }
 
 export default connect()(UploadDUI);

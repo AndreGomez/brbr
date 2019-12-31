@@ -15,6 +15,7 @@ import CustomHeader from '../../../components/header';
 import HeaderTitle from '../../../components/header_title';
 import BackButton from '../../../components/back_button';
 import MainButton from '../../../components/button';
+import ModalAlert from '../../../components/modal_alerts';
 
 //customs
 import styles from './styles';
@@ -46,6 +47,7 @@ class BrbrReserve extends Component {
     price: 0,
     daySelected: null,
     hourSelected: null,
+    visible: false
   }
 
   async componentDidMount() {
@@ -222,11 +224,18 @@ class BrbrReserve extends Component {
             <TouchableOpacity
               key={i}
               onPress={() => this.setItemList('days', i)}
+              style={
+                [
+                  styles.hour,
+                  res.active &&
+                  styles.hourActive
+                ]
+              }
             >
               <Text
                 style={
                   [
-                    styles.days,
+                    styles.hours,
                     res.active &&
                     styles.activeText
                   ]
@@ -258,33 +267,36 @@ class BrbrReserve extends Component {
       horizontal
     >
       {
-        this.state.hours.map((res, i) =>
-          !res.reserve &&
-          i % 2 == 0 &&
-          <TouchableOpacity
-            key={i}
-            onPress={() => this.setItemList('hours', i)}
-            style={
-              [
-                styles.hour,
-                res.active &&
-                styles.hourActive
-              ]
-            }
-          >
-            <Text
+        this.state.hours.length != 0 ?
+          this.state.hours.map((res, i) =>
+            !res.reserve &&
+            i % 2 == 0 &&
+            <TouchableOpacity
+              key={i}
+              onPress={() => this.setItemList('hours', i)}
               style={
                 [
-                  styles.hours,
+                  styles.hour,
                   res.active &&
-                  styles.activeText
+                  styles.hourActive
                 ]
               }
             >
-              {res.hour}
-            </Text>
-          </TouchableOpacity>
-        )
+              <Text
+                style={
+                  [
+                    styles.hours,
+                    res.active &&
+                    styles.activeText
+                  ]
+                }
+              >
+                {res.hour}
+              </Text>
+            </TouchableOpacity>
+          )
+          :
+          <Text style={{ color: 'white', paddingTop: 30 }}>No hay horas disponibles</Text>
       }
     </ScrollView>
   )
@@ -292,7 +304,9 @@ class BrbrReserve extends Component {
   onPressNext = () => {
     const { state } = this
     const { navigation } = this.props
-
+    this.setState({
+      visible: false
+    })
     if (state.daySelected && state.hourSelected) {
       navigation.navigate('ServiceReview',
         {
@@ -307,6 +321,12 @@ class BrbrReserve extends Component {
     }
   }
 
+  toggleModal = () => {
+    this.setState({
+      visible: !this.state.visible
+    })
+  }
+
   render() {
 
     const {
@@ -315,7 +335,8 @@ class BrbrReserve extends Component {
       price,
       barberInfo,
       hours,
-
+      visible,
+      daySelected
     } = this.state
 
     const {
@@ -476,6 +497,7 @@ class BrbrReserve extends Component {
                         </Text>
                       }
                       {
+                        daySelected &&
                         this.hourList()
                       }
                     </View>
@@ -491,11 +513,24 @@ class BrbrReserve extends Component {
                 <MainButton
                   bottom
                   text={lng.reserve_now}
-                  onPress={() => this.onPressNext()}
+                  onPress={() => this.toggleModal()}
                 />
               }
             </React.Fragment>
         }
+        <ModalAlert
+          visible={visible}
+          title={
+            <Text style={styles.brbrTxt}>
+              brbr
+            </Text>
+          }
+          message={'Confirma que tienes el permiso necesario del lugar al que llevamos tu servicio a domicilio. '}
+          btnTitle={'Confirmar'}
+          onPress={() => this.onPressNext()}
+          close={true}
+          onPressClose={() => this.toggleModal()}
+        />
       </Container>
     );
   }

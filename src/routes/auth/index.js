@@ -12,26 +12,28 @@ import UploadDUI from '../../screens/auth/upload_dui';
 import FirstTime from '../../screens/app/fist_time';
 import About from '../../screens/app/about';
 import ExtraInfo from '../../screens/app/extra_info';
+import SetProfileImage from '../../screens/auth/create_account_profile_image';
 
 const authStackNavigator = createStackNavigator(
-  {
-    Login,
-    CreateAccountStep1,
-    CreateAccountFormTel,
-    PaymentMethodAuth,
-    AddCardForm,
-    LoginForm,
-    forgotPassword,
-    UploadDUI,
-    About,
-    ExtraInfo
-  },
-  {
-    initialRouteName: 'Login',
-    defaultNavigationOptions: {
-      header: null
-    }
-  }
+	{
+		Login,
+		CreateAccountStep1,
+		CreateAccountFormTel,
+		PaymentMethodAuth,
+		AddCardForm,
+		LoginForm,
+		forgotPassword,
+		UploadDUI,
+		About,
+		ExtraInfo,
+		SetProfileImage
+	},
+	{
+		initialRouteName: 'Login',
+		defaultNavigationOptions: {
+			header: null
+		}
+	}
 );
 
 const authNavigator = createAppContainer(authStackNavigator);
