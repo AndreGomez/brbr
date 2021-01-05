@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "accordion-collapse-react-native": "^0.1.10",
-    "axios": "0.18.0",
+    "axios": "0.21.1",
     "js-base64": "^2.5.1",
     "moment": "2.24.0",
     "native-base": "2.12.1",
