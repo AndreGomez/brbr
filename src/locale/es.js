@@ -171,6 +171,13 @@ const es = {
 	title_review: 'Título (Bueno, Muy Bueno, Excelente)',
 	review: 'Reseña',
 	send: 'ENVIAR',
+
+	//country
+	country_es: 'El salvador',
+	country_mx: 'México',
+	country_label: 'Seleccione su país de origen'
+
+
 }
 
 export default es;
