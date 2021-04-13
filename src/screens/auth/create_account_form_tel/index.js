@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { Image, View, Text, TouchableOpacity } from 'react-native';
+import { Image, View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { Content, Container } from 'native-base';
 
@@ -24,6 +24,7 @@ import checkIcon from '../../../assets/icons/check.png';
 import storeIcon from '../../../assets/icons/store.png';
 
 //api
+import { getCountries } from '../../../api/countries.js'
 import firebase from 'react-native-firebase';
 import {
 	createAccount,
@@ -41,6 +42,7 @@ import { validateFields } from '../../../utils/validators';
 import { CheckBox } from 'react-native-elements';
 import CountryPicker from '../../../components/country_picker';
 import { resize } from '../../../utils/styles';
+
 
 const PLACEHOLDER_COLOR = "rgba(255,255,255,0.2)";
 
@@ -98,14 +100,24 @@ class CreateAccountFormTel extends Component {
 			type: '',
 			required: true
 		},
+		countries: []
 	}
 
 	async componentDidMount() {
+		this.getCountriesList()
 		const lng = await locale()
-
 		this.setState({
 			lng
 		})
+	}
+
+	getCountriesList = async () => {
+		try {
+			const countries = await getCountries()
+			this.setState({ countries: countries.data })
+		} catch (error) {
+			console.log(error)
+		}
 	}
 
 	onChange = (key, value) => {
@@ -167,7 +179,8 @@ class CreateAccountFormTel extends Component {
 			callingCode,
 			password,
 			rPassword,
-			check
+			check,
+			country
 		} = this.state
 
 		if (check) {
@@ -181,7 +194,7 @@ class CreateAccountFormTel extends Component {
 						if (res.data.exist == false) {
 
 							const cell_phone = `+${callingCode} ${phone.value}`
-							await validateFields({ email, name, phone })
+							await validateFields({ email, name, phone, country })
 							const confirmResult = await validatePhone({ cell_phone })
 							if (confirmResult.data.code) {
 								this.setState({
@@ -203,17 +216,17 @@ class CreateAccountFormTel extends Component {
 							return this.toggleModalError()
 						}
 					} catch (error) {
-						console.log('error', error.response)
+						console.log(error)
 						this.setState({
-							errorMessage:
+							loadingButton: false,
+							errorMessage: error.response ?
 								error == 'invalid_email' ?
 									'Correo invalido' :
 									error.response.data &&
 										error.response.data.message === 'There was an error sending the message.' ?
 										'Error al enviar el mensaje, revisa que el numero sea valido'
 										:
-										'Revisa tu info',
-							loadingButton: false
+										'Revisa tu info' : 'Verifique sus datos',
 						})
 						this.toggleModalError()
 					}
@@ -247,6 +260,7 @@ class CreateAccountFormTel extends Component {
 			phone,
 			callingCode,
 			password,
+			country
 		} = this.state
 
 		const {
@@ -255,14 +269,15 @@ class CreateAccountFormTel extends Component {
 
 		try {
 			if (confirmResult === confirmCode.value) {
-
+				console.log(country.value)
 				const dataSend = {
 					email: email.value,
 					password: password.value,
 					name: name.value,
 					lastname: 'Me encanta mi trabajo!',
 					cell_phone: `+${callingCode} ${phone.value}`,
-					device_token: '000'
+					device_token: '000',
+					country: country.value
 				}
 
 				await createAccount(dataSend)
@@ -292,12 +307,12 @@ class CreateAccountFormTel extends Component {
 					loadingButton: false
 				})
 
-				this.navigateTo('PaymentMethodAuth', { email, name, phone, callingCode })
+				this.navigateTo('PaymentMethodAuth', { email, name, phone, callingCode, country: country.value })
 			} else {
 				return successMessage('Codigo invalido', 'danger')
 			}
 		} catch (error) {
-			console.log('error', error.response)
+			console.log(error)
 			this.setState({
 				errorMessage: 'Revisa tu informacion',
 				loadingButton: false
@@ -348,7 +363,8 @@ class CreateAccountFormTel extends Component {
 			password,
 			rPassword,
 			check,
-			country
+			country,
+			countries
 		} = this.state
 
 		return (
@@ -416,36 +432,32 @@ class CreateAccountFormTel extends Component {
 					/>
 					<Text style={styles.label}>{lng.country_label}</Text>
 					<View style={styles.row}>
-						<TouchableOpacity onPress={() => this.onChange('country', 'MX')} style={[styles.rowAltern,
-						country.value === 'MX' && styles.rowAlternSelect]}>
-							<CheckBox
-								checkedIcon='dot-circle-o'
-								uncheckedIcon='circle-o'
-								size={resize(25, 'h')}
-								checkedColor={'#000'}
-								uncheckedColor={'#FFF'}
-								type="FontAwesome"
-								checked={country.value === 'MX'}
-								containerStyle={styles.checkContainer}
-								onPress={() => this.onChange('country', 'MX')}
-							/>
-							<Text style={[styles.textDoc, country.value === 'MX' && styles.textDocSelect]}>{lng.country_mx}</Text>
-						</TouchableOpacity>
-						<TouchableOpacity onPress={() => this.onChange('country', 'ES')} style={[styles.rowAltern,
-						country.value === 'ES' && styles.rowAlternSelect]}>
-							<CheckBox
-								checkedIcon='dot-circle-o'
-								uncheckedIcon='circle-o'
-								size={resize(25, 'h')}
-								checkedColor={'#000'}
-								uncheckedColor={'#FFF'}
-								type="FontAwesome"
-								checked={country.value === 'ES'}
-								containerStyle={styles.checkContainer}
-								onPress={() => this.onChange('country', 'ES')}
-							/>
-							<Text style={[styles.textDoc, country.value === 'ES' && styles.textDocSelect]}>{lng.country_es}</Text>
-						</TouchableOpacity>
+						<FlatList
+							data={countries}
+							keyExtractor={(a, i) => `${i}`}
+							horizontal={true}
+							showsHorizontalScrollIndicator={false}
+							extraData={this.state}
+							renderItem={
+								({ item, index }) => (
+									<TouchableOpacity onPress={() => this.onChange('country', item.iso)} style={[styles.rowAltern,
+									country.value === item.iso && styles.rowAlternSelect]}>
+										<CheckBox
+											checkedIcon='dot-circle-o'
+											uncheckedIcon='circle-o'
+											size={resize(25, 'h')}
+											checkedColor={'#000'}
+											uncheckedColor={'#FFF'}
+											type="FontAwesome"
+											checked={country.value === item.iso}
+											containerStyle={styles.checkContainer}
+											onPress={() => this.onChange('country', item.iso)}
+										/>
+										<Text style={[styles.textDoc, country.value === item.iso && styles.textDocSelect]}>{item.name}</Text>
+									</TouchableOpacity>
+								)
+							}
+						/>
 					</View>
 					<TouchableOpacity
 						onPress={() => this.navigateTo('About')}

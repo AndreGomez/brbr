@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import {
-  View,
-  Text,
-  TouchableOpacity
+	View,
+	Text,
+	TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Container, Content } from 'native-base';
 import { Image } from 'react-native-elements';
-import CountryPicker from 'react-native-country-picker-modal';
+import CountryPicker from '../../../components/country_picker';
+import nodeEmoji from 'node-emoji';
 
 //component
 import CustomHeader from '../../../components/header';
@@ -44,299 +45,310 @@ import parseError from '../../../utils/parse_error';
 
 class EditProfile extends Component {
 
-  state = {
-    lng: {},
-    loading: true,
-    avatar: null,
-    confirmCode: {
-      value: '',
-      type: '',
-      required: true
-    },
-    email: {
-      value: '',
-      type: '',
-      required: true
-    },
-    name: {
-      value: '',
-      type: '',
-      required: true
-    },
-    phone: {
-      value: '',
-      type: '',
-      required: true
-    },
-    description: {
-      value: '',
-      type: '',
-      required: true
-    },
-    change: false,
-    loadingButton: false,
-    confirmResult: '',
-    modalConfirmPhone: {
-      visibleConfirm: false
-    },
-    validatePhoneVar: true,
-    cca2: 'MX',
-    callingCode: '52',
-  }
+	state = {
+		lng: {},
+		loading: true,
+		avatar: null,
+		confirmCode: {
+			value: '',
+			type: '',
+			required: true
+		},
+		email: {
+			value: '',
+			type: '',
+			required: true
+		},
+		name: {
+			value: '',
+			type: '',
+			required: true
+		},
+		phone: {
+			value: '',
+			type: '',
+			required: true
+		},
+		description: {
+			value: '',
+			type: '',
+			required: true
+		},
+		change: false,
+		loadingButton: false,
+		confirmResult: '',
+		modalConfirmPhone: {
+			visibleConfirm: false
+		},
+		validatePhoneVar: true,
+		cca2: 'MX',
+		callingCode: '52',
+		visiblePicker: false,
+		flag: 'flag-mx',
 
-  async componentDidMount() {
-    const lng = await locale()
-    this.setState({
-      lng,
-      loading: false
-    })
-  }
+	}
 
-  selectImage = async () => {
-    try {
-      const res = await ImageSelect.ImageSelect()
-      res.uri &&
-        this.setState({
-          avatar: res,
-          change: true
-        })
-    } catch (error) {
+	async componentDidMount() {
+		const lng = await locale()
+		this.setState({
+			lng,
+			loading: false
+		})
+	}
 
-    }
-  }
+	selectImage = async () => {
+		try {
+			const res = await ImageSelect.ImageSelect()
+			res.uri &&
+				this.setState({
+					avatar: res,
+					change: true
+				})
+		} catch (error) {
 
-  onChange = (key, value) => {
-    let { state } = this;
+		}
+	}
 
-    if (key === 'phone') {
-      value = value.split(' ')
+	onChange = (key, value) => {
+		let { state } = this;
 
-      state[key].value = value[1] ? value[1] : ''
-      this.setState({
-        ...state,
-        change: true
-      })
-    } else {
-      state[key].value = value;
-      this.setState({ ...state, change: true });
-    }
-  }
+		if (key === 'phone') {
+			value = value.split(' ')
 
-  onPressSave = async () => {
-    const {
-      currentUser: {
-        photo,
-        cell_phone
-      },
-      currentUser,
-      dispatch
-    } = this.props
+			state[key].value = value[1] ? value[1] : ''
+			this.setState({
+				...state,
+				change: true
+			})
+		} else {
+			state[key].value = value;
+			this.setState({ ...state, change: true });
+		}
+	}
 
-    const {
-      name,
-      email,
-      phone,
-      avatar,
-      description,
-      validatePhoneVar,
-      callingCode
-    } = this.state
+	onPressSave = async () => {
+		const {
+			currentUser: {
+				photo,
+				cell_phone
+			},
+			currentUser,
+			dispatch
+		} = this.props
 
-    const changes = {}
+		const {
+			name,
+			email,
+			phone,
+			avatar,
+			description,
+			validatePhoneVar,
+			callingCode
+		} = this.state
 
-    const newPhone = `+${callingCode} ${phone.value}`
+		const changes = {}
 
-    try {
-      this.setState({ loadingButton: true })
-      if (description.value != '' || phone.value != '' || email.value != '' || name.value != '' || avatar != '') {
-        if (phone.value != '' && newPhone != cell_phone) {
-          changes.cell_phone = newPhone
-          if (validatePhoneVar) {
-            const confirmResult = await validatePhone({ cell_phone: newPhone })
-            if (confirmResult.data.code) {
-              this.setState({
-                confirmResult: confirmResult.data.code
-              })
-              return this.toggleModalConfirmPhone()
-            } else {
-              console.log('1')
-              return successMessage('Este telefono ya existe o es invalido')
-            }
-          }
-        }
-        if (description.value != '' && description.value != currentUser.lastname) {
-          changes.lastname = description.value
-        }
-        if (email.value != '' && email.value != currentUser.email) {
-          changes.email = email.value
-        }
-        if (name.value != '' && name.value != currentUser.name) {
-          changes.name = name.value
-        }
-        if (name.value != '' && name.value != currentUser.name) {
-          changes.name = name.value
-        }
-        if (avatar) {
-          const urlPhoto = await uploadAsset(
-            'profileImage',
-            avatar.uri,
-            `${avatar.fileName}${avatar.timestamp}`,
-            { contentType: avatar.type }
-          )
-          changes.photo = urlPhoto
-        }
-      }
+		const newPhone = `+${callingCode} ${phone.value}`
 
-      const res = await EditProfileUser(changes, currentUser._id)
-      dispatch({
-        type: SET_USER,
-        payload: {
-          ...res.data.user
-        }
-      });
+		try {
+			this.setState({ loadingButton: true })
+			if (description.value != '' || phone.value != '' || email.value != '' || name.value != '' || avatar != '') {
+				if (phone.value != '' && newPhone != cell_phone) {
+					changes.cell_phone = newPhone
+					if (validatePhoneVar) {
+						const confirmResult = await validatePhone({ cell_phone: newPhone })
+						if (confirmResult.data.code) {
+							this.setState({
+								confirmResult: confirmResult.data.code
+							})
+							return this.toggleModalConfirmPhone()
+						} else {
+							console.log('1')
+							return successMessage('Este telefono ya existe o es invalido')
+						}
+					}
+				}
+				if (description.value != '' && description.value != currentUser.lastname) {
+					changes.lastname = description.value
+				}
+				if (email.value != '' && email.value != currentUser.email) {
+					changes.email = email.value
+				}
+				if (name.value != '' && name.value != currentUser.name) {
+					changes.name = name.value
+				}
+				if (name.value != '' && name.value != currentUser.name) {
+					changes.name = name.value
+				}
+				if (avatar) {
+					const urlPhoto = await uploadAsset(
+						'profileImage',
+						avatar.uri,
+						`${avatar.fileName}${avatar.timestamp}`,
+						{ contentType: avatar.type }
+					)
+					changes.photo = urlPhoto
+				}
+			}
 
-      successMessage('Usuario actualizado')
-      this.setState({ loadingButton: false, change: false })
-    } catch (error) {
-      this.setState({ loadingButton: false })
-      return successMessage('Telefono incorrecto', 'danger')
-    }
-  }
+			const res = await EditProfileUser(changes, currentUser._id)
+			dispatch({
+				type: SET_USER,
+				payload: {
+					...res.data.user
+				}
+			});
 
-  toggleModalConfirmPhone = () => {
-    this.setState({
-      modalConfirmPhone: {
-        ...this.state.modalConfirmPhone,
-        visibleConfirm: !this.state.modalConfirmPhone.visibleConfirm
-      }
-    })
-  }
+			successMessage('Usuario actualizado')
+			this.setState({ loadingButton: false, change: false })
+		} catch (error) {
+			this.setState({ loadingButton: false })
+			return successMessage('Telefono incorrecto', 'danger')
+		}
+	}
 
-  onPressConfirmCode = async () => {
-    const {
-      confirmCode,
-      confirmResult,
-    } = this.state
+	toggleModalConfirmPhone = () => {
+		this.setState({
+			modalConfirmPhone: {
+				...this.state.modalConfirmPhone,
+				visibleConfirm: !this.state.modalConfirmPhone.visibleConfirm
+			}
+		})
+	}
 
-    try {
-      if (confirmResult === confirmCode.value) {
-        await this.setState({
-          validatePhoneVar: false
-        })
-        await this.onPressSave()
+	onPressConfirmCode = async () => {
+		const {
+			confirmCode,
+			confirmResult,
+		} = this.state
 
-        this.setState({
-          validatePhoneVar: true
-        })
+		try {
+			if (confirmResult === confirmCode.value) {
+				await this.setState({
+					validatePhoneVar: false
+				})
+				await this.onPressSave()
 
-        this.toggleModalConfirmPhone()
-      } else {
-        return successMessage('Codigo invalido', 'danger')
-      }
-    } catch (error) {
-      this.setState({
-        errorMessage: 'Revisa tu informacion',
-        loadingButton: false
-      })
-      this.toggleModalError()
-    }
-  }
+				this.setState({
+					validatePhoneVar: true
+				})
 
-  render() {
+				this.toggleModalConfirmPhone()
+			} else {
+				return successMessage('Codigo invalido', 'danger')
+			}
+		} catch (error) {
+			this.setState({
+				errorMessage: 'Revisa tu informacion',
+				loadingButton: false
+			})
+			this.toggleModalError()
+		}
+	}
 
-    const {
-      lng,
-      loading,
-      email,
-      name,
-      phone,
-      change,
-      avatar,
-      loadingButton,
-      description,
-      cca2,
-      callingCode,
-      modalConfirmPhone,
-    } = this.state
+	onPressItemCountryPicker = (item) => {
+		this.setState({
+			flag: item.flag,
+			callingCode: item.callingCode,
+			visiblePicker: false
+		})
+	}
 
-    const {
-      currentUser
-    } = this.props
+	render() {
 
-    return (
-      <Container
-        style={styles.container}
-      >
-        <CustomHeader
-          center={
-            <HeaderTitle
-              text={lng.account}
-            />
-          }
-          left={
-            <BackButton
-              onPress={() => this.props.navigation.goBack()}
-            />
-          }
-          right={
-            change ?
-              loadingButton ?
-                <Loading />
-                :
-                <TouchableOpacity
-                  onPress={() => this.onPressSave()}
-                >
-                  <Text
-                    style={styles.save}
-                  >
-                    {lng.save}
-                  </Text>
-                </TouchableOpacity>
-              :
-              null
-          }
-        />
-        {
-          loading ?
-            <Loading />
-            :
-            <Content
-              bounces={false}
-              contentContainerStyle={styles.content}
-            >
-              <TouchableOpacity
-                onPress={() => this.selectImage()}
-              >
-                <Image
-                  PlaceholderContent={<Loading />}
-                  style={styles.avatar}
-                  source={avatar ? { uri: avatar.uri } : currentUser.photo ? { uri: currentUser.photo } : img_empty}
-                />
-              </TouchableOpacity>
-              <Text
-                style={styles.title}
-              >
-                {lng.upload_photo}
-              </Text>
-              <View
-                style={styles.inputContainer}
-              >
-                <MainInput
-                  placeholder={currentUser.name}
-                  value={name.value}
-                  onChangeText={(value) => this.onChange('name', value)}
-                  customStyle={styles.input}
-                  icon={
-                    <View
-                      style={styles.pencil}
-                    >
-                      <Image
-                        source={pencil}
-                      />
-                    </View>
-                  }
-                />
-                {/* <MainInput
+		const {
+			lng,
+			loading,
+			email,
+			name,
+			phone,
+			change,
+			avatar,
+			loadingButton,
+			description,
+			cca2,
+			callingCode,
+			modalConfirmPhone,
+		} = this.state
+
+		const {
+			currentUser
+		} = this.props
+
+		return (
+			<Container
+				style={styles.container}
+			>
+				<CustomHeader
+					center={
+						<HeaderTitle
+							text={lng.account}
+						/>
+					}
+					left={
+						<BackButton
+							onPress={() => this.props.navigation.goBack()}
+						/>
+					}
+					right={
+						change ?
+							loadingButton ?
+								<Loading />
+								:
+								<TouchableOpacity
+									onPress={() => this.onPressSave()}
+								>
+									<Text
+										style={styles.save}
+									>
+										{lng.save}
+									</Text>
+								</TouchableOpacity>
+							:
+							null
+					}
+				/>
+				{
+					loading ?
+						<Loading />
+						:
+						<Content
+							bounces={false}
+							contentContainerStyle={styles.content}
+						>
+							<TouchableOpacity
+								onPress={() => this.selectImage()}
+							>
+								<Image
+									PlaceholderContent={<Loading />}
+									style={styles.avatar}
+									source={avatar ? { uri: avatar.uri } : currentUser.photo ? { uri: currentUser.photo } : img_empty}
+								/>
+							</TouchableOpacity>
+							<Text
+								style={styles.title}
+							>
+								{lng.upload_photo}
+							</Text>
+							<View
+								style={styles.inputContainer}
+							>
+								<MainInput
+									placeholder={currentUser.name}
+									value={name.value}
+									onChangeText={(value) => this.onChange('name', value)}
+									customStyle={styles.input}
+									icon={
+										<View
+											style={styles.pencil}
+										>
+											<Image
+												source={pencil}
+											/>
+										</View>
+									}
+								/>
+								{/* <MainInput
                   placeholder={'Descripcion'}
                   value={description.value}
                   onChangeText={(value) => this.onChange('description', value)}
@@ -351,88 +363,76 @@ class EditProfile extends Component {
                     </View>
                   }
                 /> */}
-                <MainInput
-                  placeholder={currentUser.email}
-                  value={email.value}
-                  keyboardType={'email-address'}
-                  onChangeText={(value) => this.onChange('email', value)}
-                  customStyle={styles.input}
-                  key
-                  icon={
-                    <View
-                      style={styles.pencil}
-                    >
-                      <Image
-                        source={pencil}
-                      />
-                    </View>
-                  }
-                />
-                <MainInput
-                  placeholder={currentUser.cell_phone}
-                  value={`+(${callingCode}) ${phone.value}`}
-                  onChangeText={(value) => this.onChange('phone', value)}
-                  customStyle={styles.inputCus}
-                  keyboardType={'phone-pad'}
-                  icon={
-                    <View
-                      style={styles.country}
-                    >
-                      <CountryPicker
-                        showCallingCode
-                        onChange={value => {
-                          this.setState({
-                            cca2: value.cca2,
-                            callingCode: value.callingCode
-                          })
-                        }}
-                        styles={modalDark}
-                        cca2={cca2}
-                        translation="eng"
-                        filterPlaceholderTextColor={'rgba(255,255,255,0.2)'}
-                        closeable
-                        animationType={'slide'}
-                        filterable
-                        filterPlaceholder={'Buscar'}
-                        closeButtonImage={storeIcon}
-                        showCountryNameWithFlag
-                      />
-                    </View>
-                  }
-                />
-              </View>
-            </Content>
-        }
-        {/* confirm */}
-        <ModalAlert
-          close
-          onPressClose={() => {
-            this.setState({ loadingButton: false })
-            this.toggleModalConfirmPhone()
-          }}
-          visible={modalConfirmPhone.visibleConfirm}
-          title={
-            <Image
-              source={checkIcon}
-            />
-          }
-          phoneNumber
-          onChangeText={(value) => this.onChange('confirmCode', value)}
-          message={lng.confirm_your_code}
-          subtitle={lng.set_code}
-          btnTitle={lng.confirm}
-          placeholder={lng.code}
-          onPress={() => this.onPressConfirmCode()}
-        />
-      </Container>
-    );
-  }
+								<MainInput
+									placeholder={currentUser.email}
+									value={email.value}
+									keyboardType={'email-address'}
+									onChangeText={(value) => this.onChange('email', value)}
+									customStyle={styles.input}
+									key
+									icon={
+										<View
+											style={styles.pencil}
+										>
+											<Image
+												source={pencil}
+											/>
+										</View>
+									}
+								/>
+								<MainInput
+									placeholder={currentUser.cell_phone}
+									value={`+(${callingCode}) ${phone.value}`}
+									onChangeText={(value) => this.onChange('phone', value)}
+									customStyle={styles.inputCus}
+									keyboardType={'phone-pad'}
+									icon={
+										<TouchableOpacity
+											onPress={() => this.setState({ visiblePicker: true })}
+											style={styles.country}
+										>
+											<Text style={styles.emoji}>{nodeEmoji.get(this.state.flag)}</Text>
+										</TouchableOpacity>
+									}
+								/>
+							</View>
+						</Content>
+				}
+				{/* confirm */}
+				<ModalAlert
+					close
+					onPressClose={() => {
+						this.setState({ loadingButton: false })
+						this.toggleModalConfirmPhone()
+					}}
+					visible={modalConfirmPhone.visibleConfirm}
+					title={
+						<Image
+							source={checkIcon}
+						/>
+					}
+					phoneNumber
+					onChangeText={(value) => this.onChange('confirmCode', value)}
+					message={lng.confirm_your_code}
+					subtitle={lng.set_code}
+					btnTitle={lng.confirm}
+					placeholder={lng.code}
+					onPress={() => this.onPressConfirmCode()}
+				/>
+				<CountryPicker
+					onPressItem={(item) => this.onPressItemCountryPicker(item)}
+					onPressClose={() => this.setState({ visiblePicker: false })}
+					visible={this.state.visiblePicker} />
+
+			</Container>
+		);
+	}
 }
 
 const mapStateToProps = (state) => {
-  return {
-    currentUser: state.user
-  }
+	return {
+		currentUser: state.user
+	}
 };
 
 export default connect(mapStateToProps)(EditProfile);

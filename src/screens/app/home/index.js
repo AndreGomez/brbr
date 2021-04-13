@@ -158,8 +158,9 @@ class Home extends Component {
 
 	getCurrentLocation = async () => {
 		const { state } = this
+		const { currentUser } = this.props
 		const lng = await locale()
-
+		console.log(currentUser.country)
 		try {
 			const position = await getLocation()
 
@@ -186,18 +187,27 @@ class Home extends Component {
 		} catch (error) {
 			const barbersArround = await getBarbersArround({
 				range: 7,
-				location: [
+				location: currentUser.country === 'mx' ? [
 					19.4270245,
 					-99.1676647
-				]
+				] :
+					[
+						13.6914757, -89.2502714
+					]
 			})
 
-			const resMyAddress = await getMyAddres({ latitude: 19.4270245, longitude: -99.1676647 })
-			state.position.lat = 19.4270245
-			state.position.lng = -99.1676647
+			const resMyAddress = await getMyAddres(
+				currentUser.country === 'mx' ?
+					{ latitude: 19.4270245, longitude: -99.1676647 } :
+					{ latitude: 13.6914757, longitude: -89.2502714 }
+			)
+			state.position.lat = currentUser.country === 'mx' ? 19.4270245 : 13.6914757
+			state.position.lng = currentUser.country === 'mx' ? -99.1676647 : -89.2502714
 			state.location = resMyAddress.data.results[0].formatted_address
 			state.acceptPermission = true
-			state.locationCoords = { latitude: 19.4270245, longitude: -99.1676647 }
+			state.locationCoords = currentUser.country === 'mx' ?
+				{ latitude: 19.4270245, longitude: -99.1676647 } :
+				{ latitude: 13.6914757, longitude: -89.2502714 }
 			state.barbersArround = barbersArround.data
 			state.loading = false
 			this.setState({

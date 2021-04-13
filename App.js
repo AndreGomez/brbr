@@ -10,27 +10,29 @@ import Splash from './src/screens/splash';
 
 console.disableYellowBox = true;
 
+import './src/utils/networking/networkDebugger';
+
 export default class App extends Component {
 
-  componentDidMount() {
-    AsyncStorage.setItem('lng', 'es')
-  }
+	componentDidMount() {
+		AsyncStorage.setItem('lng', 'es')
+	}
 
-  render() {
-    return (
-      <Provider store={store}>
-        <PersistGate
-          persistor={persistor}
-        >
-          <StatusBar
-            backgroundColor={Platform.OS === 'ios' ? '#fff' : 'black'}
-            barStyle='light-content'
-          />
-          <Root>
-            <Splash />
-          </Root>
-        </PersistGate>
-      </Provider>
-    );
-  }
+	render() {
+		return (
+			<Provider store={store}>
+				<PersistGate
+					persistor={persistor}
+				>
+					<StatusBar
+						backgroundColor={Platform.OS === 'ios' ? '#fff' : 'black'}
+						barStyle='light-content'
+					/>
+					<Root>
+						<Splash />
+					</Root>
+				</PersistGate>
+			</Provider>
+		);
+	}
 }

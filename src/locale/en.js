@@ -14,7 +14,11 @@ const en = {
 	//country
 	country_es: 'El salvador',
 	country_mx: 'México',
-	country_label: 'Seleccione su país de origen'
+	country_label: 'Seleccione su país de origen',
+
+	//money
+	money_ES: 'USD',
+	money_MX: 'MXN',
 
 }
 
