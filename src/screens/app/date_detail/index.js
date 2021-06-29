@@ -114,8 +114,7 @@ class DateDetail extends Component {
 
 	navigateTo = (screen, data = { data }) => {
 		const { navigation } = this.props
-
-		navigation.navigate(screen, { ...data })
+		navigation.navigate(screen, { ...data, idBarber: data.barber._id })
 	}
 
 	toggleModal = () => {
@@ -365,7 +364,7 @@ class DateDetail extends Component {
 												xsRaisedGreen
 												text={lng.CHAT}
 												icon={arrow_green}
-												onPress={() => this.navigateTo('Chat')}
+												onPress={() => this.navigateTo('Chat', reserveDetail)}
 											/>
 										</View>
 									</View>
@@ -390,7 +389,7 @@ class DateDetail extends Component {
 										<Text
 											style={styles.total}
 										>
-											{currentUser.country === 'mx' ? 'MXN ' : 'USD ' `$${reserveDetail.services.beard.cost + reserveDetail.services.hair.cost + reserveDetail.services.eyebrows.cost}`}
+											{currentUser.country === 'mx' ? `MXN $${reserveDetail.services.beard.cost + reserveDetail.services.hair.cost + reserveDetail.services.eyebrows.cost}` : `USD $${reserveDetail.services.beard.cost + reserveDetail.services.hair.cost + reserveDetail.services.eyebrows.cost}`}
 										</Text>
 									</View>
 								</View>

@@ -128,6 +128,7 @@ class Home extends Component {
 				appoPendingReview: resAppoPendingReview.data != 0 ? resAppoPendingReview.data[0] : null
 			})
 		} catch (error) {
+			console.log(error)
 		}
 	}
 
@@ -160,7 +161,6 @@ class Home extends Component {
 		const { state } = this
 		const { currentUser } = this.props
 		const lng = await locale()
-		console.log(currentUser.country)
 		try {
 			const position = await getLocation()
 
@@ -173,6 +173,7 @@ class Home extends Component {
 			})
 
 			const resMyAddress = await getMyAddres(position.coords)
+			console.log(resMyAddress)
 			state.position.lat = position.coords.latitude
 			state.position.lng = position.coords.longitude
 			state.location = resMyAddress.data.results[0].formatted_address
@@ -185,6 +186,7 @@ class Home extends Component {
 				lng
 			})
 		} catch (error) {
+			console.log(error)
 			const barbersArround = await getBarbersArround({
 				range: 7,
 				location: currentUser.country === 'mx' ? [
@@ -201,6 +203,7 @@ class Home extends Component {
 					{ latitude: 19.4270245, longitude: -99.1676647 } :
 					{ latitude: 13.6914757, longitude: -89.2502714 }
 			)
+			console.log(resMyAddress)
 			state.position.lat = currentUser.country === 'mx' ? 19.4270245 : 13.6914757
 			state.position.lng = currentUser.country === 'mx' ? -99.1676647 : -89.2502714
 			state.location = resMyAddress.data.results[0].formatted_address
@@ -712,6 +715,7 @@ class Home extends Component {
 					resAppoInProgress.length != 0 &&
 					<MainButton
 						bottom
+
 						text={lng.service_in_progress}
 						onPress={() => this.navigateTo('DateDetail', { service: true, ...resAppoInProgress[0] })}
 					/>

@@ -50,9 +50,9 @@
 		854FED721D7347D7A533B316 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5AFA583C8D0144C78B028D59 /* MaterialCommunityIcons.ttf */; };
 		8D2050D817044FEC9206B360 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 482E03FDB0444496906803D3 /* Octicons.ttf */; };
 		8FC47AD6EFFE41A491378C96 /* AirbnbCereal-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F39463A279AA449E9D9291DC /* AirbnbCereal-Black.ttf */; };
-		AB624D0B76FC302F39847CD1 /* libPods-brbr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 237DBD80CAEF91067E23E976 /* libPods-brbr.a */; };
 		AD08D85D22B0931900FA902A /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD08D85B22B0930F00FA902A /* libRNImagePicker.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
+		ADF13380A7749E2BCA21D3B5 /* libPods-brbr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB126BD3225368DAD9D9919 /* libPods-brbr.a */; };
 		B9C0A4DE13F0458F865E1DAC /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2AFD10DD08464A29B2203318 /* FontAwesome.ttf */; };
 		C420F2DDB9764A8497857B8F /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 16A3A4A06558422C9B2D78B5 /* FontAwesome5_Regular.ttf */; };
 		E9C1EB352EA74BA393E75143 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBA926C7FC3346A6A4D70B95 /* SimpleLineIcons.ttf */; };
@@ -417,7 +417,6 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = brbr/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		16A3A4A06558422C9B2D78B5 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
-		237DBD80CAEF91067E23E976 /* libPods-brbr.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-brbr.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AFD10DD08464A29B2203318 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/native-base/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		301AC0A622C3CF7300AD4D22 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/ios/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
@@ -431,6 +430,7 @@
 		515A13C0D2484806BCB5387A /* AirbnbCereal-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "AirbnbCereal-Medium.ttf"; path = "../src/assets/fonts/AirbnbCereal-Medium.ttf"; sourceTree = "<group>"; };
 		5A6DB4BE231D4DE6A358521C /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		5AFA583C8D0144C78B028D59 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
+		5DB126BD3225368DAD9D9919 /* libPods-brbr.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-brbr.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		6661EF4F8EA04D7CB50FE540 /* Roboto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto.ttf; path = "../node_modules/native-base/Fonts/Roboto.ttf"; sourceTree = "<group>"; };
 		7859A296C58140639F16257B /* AirbnbCereal-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "AirbnbCereal-ExtraBold.ttf"; path = "../src/assets/fonts/AirbnbCereal-ExtraBold.ttf"; sourceTree = "<group>"; };
@@ -443,13 +443,13 @@
 		B67149E1952C4FA59C190390 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/native-base/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		BCF7821DF5BC46DC91595A86 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		C200ACD766D343E4A339AB30 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		D2EB9E1D16E2B30C38F3A0B2 /* Pods-brbr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-brbr.debug.xcconfig"; path = "Target Support Files/Pods-brbr/Pods-brbr.debug.xcconfig"; sourceTree = "<group>"; };
 		D9C5B2F8B18944F1BFF6A4EF /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/native-base/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		E33688DB871A4C8798EF328D /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; };
 		E85525E3D78040799E605BB6 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/native-base/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
-		EC9A65D97651BEBEA9AF103D /* Pods-brbr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-brbr.release.xcconfig"; path = "Target Support Files/Pods-brbr/Pods-brbr.release.xcconfig"; sourceTree = "<group>"; };
+		E9BC204966283DB6D019DBEF /* Pods-brbr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-brbr.release.xcconfig"; path = "Target Support Files/Pods-brbr/Pods-brbr.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		EDE67F40E6379D46329B3E40 /* Pods-brbr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-brbr.debug.xcconfig"; path = "Target Support Files/Pods-brbr/Pods-brbr.debug.xcconfig"; sourceTree = "<group>"; };
 		F39463A279AA449E9D9291DC /* AirbnbCereal-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "AirbnbCereal-Black.ttf"; path = "../src/assets/fonts/AirbnbCereal-Black.ttf"; sourceTree = "<group>"; };
 		FBA926C7FC3346A6A4D70B95 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		FC3B1272EF3B46FFB0470D7D /* AirbnbCereal-Book.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "AirbnbCereal-Book.ttf"; path = "../src/assets/fonts/AirbnbCereal-Book.ttf"; sourceTree = "<group>"; };
@@ -481,7 +481,7 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
-				AB624D0B76FC302F39847CD1 /* libPods-brbr.a in Frameworks */,
+				ADF13380A7749E2BCA21D3B5 /* libPods-brbr.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -638,7 +638,7 @@
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
-				237DBD80CAEF91067E23E976 /* libPods-brbr.a */,
+				5DB126BD3225368DAD9D9919 /* libPods-brbr.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -672,8 +672,8 @@
 		48E378ED7394E68870FF8B1A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				EDE67F40E6379D46329B3E40 /* Pods-brbr.debug.xcconfig */,
-				EC9A65D97651BEBEA9AF103D /* Pods-brbr.release.xcconfig */,
+				D2EB9E1D16E2B30C38F3A0B2 /* Pods-brbr.debug.xcconfig */,
+				E9BC204966283DB6D019DBEF /* Pods-brbr.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -809,12 +809,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "brbr" */;
 			buildPhases = (
-				8FD54D4868FE8EC52786D82D /* [CP] Check Pods Manifest.lock */,
+				49BD3905F6B7F288535AF472 /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				23154F5B18B79DFD4CEFBDFF /* [CP] Copy Pods Resources */,
+				A36DB16C1036BCABE789EA20 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1327,27 +1327,7 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
-		23154F5B18B79DFD4CEFBDFF /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-brbr/Pods-brbr-resources.sh",
-				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/gRPC-C++/gRPCCertificates.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gRPCCertificates.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-brbr/Pods-brbr-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8FD54D4868FE8EC52786D82D /* [CP] Check Pods Manifest.lock */ = {
+		49BD3905F6B7F288535AF472 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1367,6 +1347,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A36DB16C1036BCABE789EA20 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-brbr/Pods-brbr-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/gRPC-C++/gRPCCertificates.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gRPCCertificates.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-brbr/Pods-brbr-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1398,11 +1398,11 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EDE67F40E6379D46329B3E40 /* Pods-brbr.debug.xcconfig */;
+			baseConfigurationReference = D2EB9E1D16E2B30C38F3A0B2 /* Pods-brbr.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = brbr/brbr.entitlements;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 79AGF28Y5Q;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1443,11 +1443,11 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EC9A65D97651BEBEA9AF103D /* Pods-brbr.release.xcconfig */;
+			baseConfigurationReference = E9BC204966283DB6D019DBEF /* Pods-brbr.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = brbr/brbr.entitlements;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 79AGF28Y5Q;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
