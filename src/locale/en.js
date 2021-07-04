@@ -20,6 +20,8 @@ const en = {
 	money_ES: 'USD',
 	money_MX: 'MXN',
 
+	address_barber: 'Dirección: '
+
 }
 
 export default en;

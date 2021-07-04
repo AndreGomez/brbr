@@ -162,7 +162,7 @@ class BrbrReserve extends Component {
 		this.setState({
 			lng,
 			loading: false,
-			barberInfo: barberProfile.data,
+			barberInfo: { ...barberProfile.data, address: 'Test Address' },
 			price: this.props.navigation.state.params.price,
 			days
 		})
@@ -249,7 +249,7 @@ class BrbrReserve extends Component {
 					:
 					<Text style={{ color: 'white' }}>
 						Lo sentimos, este barbero no trabajara
-            {
+						{
 							this.props.navigation.state.params.dateForService == 'today' ?
 								' hoy' :
 								this.props.navigation.state.params.dateForService == 'thisWeek' ?
@@ -390,6 +390,20 @@ class BrbrReserve extends Component {
                 >
                   {barberInfo.name}
                 </Text> */}
+								{
+									barberInfo.address &&
+
+									<Text
+										style={styles.description}
+										numberOfLines={6}
+									>
+										<Text
+											style={styles.descriptionAltern}
+										>
+											{lng.address_barber}
+										</Text>	{barberInfo.address}
+									</Text>
+								}
 								<Text
 									style={styles.description}
 									numberOfLines={6}
@@ -524,7 +538,7 @@ class BrbrReserve extends Component {
 					title={
 						<Text style={styles.brbrTxt}>
 							brbr
-            </Text>
+						</Text>
 					}
 					message={'Confirma que tienes el permiso necesario del lugar al que llevamos tu servicio a domicilio. '}
 					btnTitle={'Confirmar'}
