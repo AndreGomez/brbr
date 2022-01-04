@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {
-  Image,
-  View,
-  TouchableOpacity,
-  Text
+	Image,
+	View,
+	TouchableOpacity,
+	Text
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Container, Content } from 'native-base';
@@ -36,8 +36,8 @@ import centerCoordinates from '../../../utils/center_coordinates';
 
 //api
 import {
-  SaveAddress,
-  EditAddress
+	SaveAddress,
+	EditAddress
 } from '../../../api/user';
 import successMessage from '../../../utils/success_message';
 import parseError from '../../../utils/parse_error';
@@ -49,279 +49,295 @@ let cancel = null;
 
 class MyAddress extends Component {
 
-  state = {
-    lng: {},
-    currentLocation: {},
-    loading: true,
-    coord: {},
-    loadingButton: false,
-    editable: false
-  }
+	state = {
+		lng: {},
+		currentLocation: {},
+		loading: true,
+		coord: {},
+		loadingButton: false,
+		editable: false,
+		propsLocation: this.props.navigation.getParam('location', null)
+	}
 
-  async componentDidMount() {
-    const lng = await locale()
-    this.setState({
-      lng
-    })
-    var currentLocation = {}
-    navigator.geolocation.getCurrentPosition((position) => {
-      currentLocation = {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude
-      }
-      this.setLocation(currentLocation)
-    }, (error) => {
-    },
-      {
-        enableHighAccuracy: true,
-        timeout: 20000,
-        maximumAge: 10000
-      }
-    )
-  }
+	async componentDidMount() {
+		const lng = await locale()
+		this.setState({
+			lng
+		})
+		const { propsLocation } = this.state
+		var currentLocation = {}
+		if (propsLocation) {
+			this.setLocation(propsLocation)
 
-  setLocation = (currentLocation = null) => {
-    this.setState({
-      loading: false,
-      currentLocation
-    })
-  }
+		} else {
+			navigator.geolocation.getCurrentPosition((position) => {
+				currentLocation = {
+					latitude: position.coords.latitude,
+					longitude: position.coords.longitude
+				}
+				this.setLocation(propsLocation ? propsLocation : currentLocation)
+			}, (error) => {
+			},
+				{
+					enableHighAccuracy: true,
+					timeout: 20000,
+					maximumAge: 10000
+				}
+			)
+		}
+	}
 
-  onChangeRegion = async (location) => {
-    try {
-      const res = await this.beginFetching(`${location.latitude},${location.longitude}`)
-      this.setState({
-        descriptionAddress: res,
-        coords: location
-      })
-    } catch (error) {
-    }
-  }
+	setLocation = (currentLocation = null) => {
+		this.setState({
+			loading: false,
+			currentLocation
+		}, () => console.log(this.state.loading))
+	}
 
-  beginFetching = async (query, map_key = MAP_KEY) => {
-    try {
-      this.abortFetching();
-      const urlToFetch = `${MAP_API_PLACE}json?latlng=${query}&key=${map_key}`;
-      const response = await axios.get(urlToFetch, {
-        cancelToken: new CancelToken(function executor(c) {
-          cancel = c;
-        }),
-      });
-      return new Promise.resolve(response.data.results[1].formatted_address);
-    } catch (error) {
-      return new Promise.reject(error);
-    }
-  };
+	onChangeRegion = async (location) => {
+		try {
+			const res = await this.beginFetching(`${location.latitude},${location.longitude}`)
+			this.setState({
+				descriptionAddress: res,
+				coords: location
+			})
+		} catch (error) {
+		}
+	}
 
-  abortFetching = () => {
-    if (cancel !== null) {
-      cancel();
-    }
-  };
+	beginFetching = async (query, map_key = MAP_KEY) => {
+		try {
+			this.abortFetching();
+			const urlToFetch = `${MAP_API_PLACE}json?latlng=${query}&key=${map_key}`;
+			const response = await axios.get(urlToFetch, {
+				cancelToken: new CancelToken(function executor(c) {
+					cancel = c;
+				}),
+			});
+			return new Promise.resolve(response.data.results[1].formatted_address);
+		} catch (error) {
+			return new Promise.reject(error);
+		}
+	};
 
-  onPressSaveLocation = async () => {
-    const { coords, descriptionAddress } = this.state
-    const { dispatch } = this.props
-    this.setState({
-      loadingButton: true
-    })
-    try {
-      const res = await SaveAddress({
-        coordinates: {
-          ...coords
-        },
-        description: descriptionAddress
-      })
-      dispatch({
-        type: SET_USER,
-        payload: {
-          ...res.data
-        }
-      });
+	abortFetching = () => {
+		if (cancel !== null) {
+			cancel();
+		}
+	};
 
-      successMessage('Direccion guardada exitosamente')
-      this.setState({
-        loadingButton: false,
-        editable: false
-      })
-    } catch (error) {
-      this.setState({
-        loadingButton: false,
-        editable: false
-      })
-      parseError(error)
-    }
-  }
+	onPressSaveLocation = async () => {
+		const { coords, descriptionAddress } = this.state
+		const { dispatch } = this.props
+		this.setState({
+			loadingButton: true
+		})
+		try {
+			const res = await SaveAddress({
+				coordinates: {
+					...coords
+				},
+				description: descriptionAddress
+			})
+			dispatch({
+				type: SET_USER,
+				payload: {
+					...res.data
+				}
+			});
 
-  onPressEdit = () => {
-    this.setState({
-      editable: true
-    })
-  }
+			successMessage('Direccion guardada exitosamente')
+			this.setState({
+				loadingButton: false,
+				editable: false
+			})
+		} catch (error) {
+			this.setState({
+				loadingButton: false,
+				editable: false
+			})
+			parseError(error)
+		}
+	}
 
-  onPressConfirmEdit = async () => {
-    const { coords, descriptionAddress } = this.state
-    const { currentUser, dispatch } = this.props
-    this.setState({
-      loadingButton: true
-    })
-    try {
+	onPressEdit = () => {
+		this.setState({
+			editable: true
+		})
+	}
 
-      const res = await EditAddress({
-        coordinates: {
-          ...coords
-        },
-        description: descriptionAddress
-      })
+	onPressConfirmEdit = async () => {
+		const { coords, descriptionAddress } = this.state
+		const { currentUser, dispatch } = this.props
+		this.setState({
+			loadingButton: true
+		})
+		try {
 
-      dispatch({
-        type: SET_USER,
-        payload: {
-          ...res.data
-        }
-      });
+			const res = await EditAddress({
+				coordinates: {
+					...coords
+				},
+				description: descriptionAddress
+			})
 
-      this.setState({
-        loadingButton: false,
-        editable: false
-      })
+			dispatch({
+				type: SET_USER,
+				payload: {
+					...res.data
+				}
+			});
 
-      successMessage('Direccion guardada exitosamente')
-    } catch (error) {
-      this.setState({
-        loadingButton: false,
-        editable: false
-      })
-    }
-  }
+			this.setState({
+				loadingButton: false,
+				editable: false
+			})
 
-  render() {
+			successMessage('Direccion guardada exitosamente')
+		} catch (error) {
+			this.setState({
+				loadingButton: false,
+				editable: false
+			})
+		}
+	}
 
-    const {
-      lng,
-      loading,
-      currentLocation,
-      loadingButton,
-      descriptionAddress,
-      editable
-    } = this.state
+	render() {
 
-    const {
-      currentUser
-    } = this.props
+		const {
+			lng,
+			loading,
+			currentLocation,
+			loadingButton,
+			descriptionAddress,
+			editable,
+			propsLocation
+		} = this.state
 
-    return (
-      <Container
-        style={styles.container}
-      >
-        <CustomHeader
-          center={
-            <HeaderTitle
-              text={lng.my_address}
-            />
-          }
-          left={
-            <BackButton
-              onPress={() => this.props.navigation.goBack()}
-            />
-          }
-        />
-        {
-          loading ?
-            <Loading />
-            :
-            <Content
-              bounces={false}
-              contentContainerStyle={styles.content}
-            >
-              <TouchableOpacity
-                onPress={() => { }}
-                style={styles.location}
-                activeOpacity={0.8}
-              >
-                <Image
-                  source={locationIcon}
-                />
-                <Text
-                  numberOfLines={1}
-                  style={styles.locationText}
-                >
-                  {
-                    editable ?
-                      descriptionAddress
-                      :
-                      currentUser.address.location.length != 0 ?
-                        currentUser.address.location[0].description
-                        :
-                        descriptionAddress
-                  }
-                </Text>
-              </TouchableOpacity>
-              <MapView
-                scrollEnabled={
-                  editable ?
-                    true
-                    :
-                    currentUser.address.location.length === 0 ?
-                      true
-                      :
-                      false
-                }
-                style={styles.map}
-                provider={PROVIDER_GOOGLE}
-                customMapStyle={DarkTheme}
-                onRegionChange={(coord) => {
-                  this.onChangeRegion({
-                    latitude: coord.latitude,
-                    longitude: coord.longitude
-                  })
-                }}
-                initialRegion={centerCoordinates([
-                  currentUser.address.location.length != 0 ?
-                    currentUser.address.location[0].coordinates
-                    :
-                    currentLocation
-                ])}
-              />
-              <Image
-                style={{ height: 50, width: 50, position: 'absolute', alignSelf: 'center' }}
-                source={map_icon_white}
-              />
-              <MainButton
-                containerStyle={styles.btn}
-                text={
-                  editable ?
-                    lng.accept_location
-                    :
-                    currentUser.address.location.length != 0 ?
-                      lng.edit
-                      :
-                      lng.accept_location
+		const {
+			currentUser
+		} = this.props
 
-                }
-                green
-                loading={loadingButton}
-                onPress={() =>
-                  editable ?
-                    this.onPressConfirmEdit()
-                    :
-                    currentUser.address.location.length != 0 ?
-                      this.onPressEdit()
-                      :
-                      this.onPressSaveLocation()
-                }
-              />
-            </Content>
-        }
-      </Container>
-    );
-  }
+		return (
+			<Container
+				style={styles.container}
+			>
+				<CustomHeader
+					center={
+						<HeaderTitle
+							text={propsLocation ? lng.my_address_barbershop : lng.my_address}
+						/>
+					}
+					left={
+						<BackButton
+							onPress={() => this.props.navigation.goBack()}
+						/>
+					}
+				/>
+				{
+					loading ?
+						<Loading />
+						:
+						<Content
+							bounces={false}
+							contentContainerStyle={styles.content}
+						>
+							{
+								!propsLocation &&
+
+								<TouchableOpacity
+									onPress={() => { }}
+									style={styles.location}
+									activeOpacity={0.8}
+								>
+									<Image
+										source={locationIcon}
+									/>
+									<Text
+										numberOfLines={1}
+										style={styles.locationText}
+									>
+										{
+											editable ?
+												descriptionAddress
+												:
+												currentUser.address.location.length != 0 ?
+													currentUser.address.location[0].description
+													:
+													descriptionAddress
+										}
+									</Text>
+								</TouchableOpacity>
+							}
+							<MapView
+								scrollEnabled={
+									editable ?
+										true
+										:
+										currentUser.address.location.length === 0 ?
+											true
+											:
+											false
+								}
+								style={styles.map}
+								provider={PROVIDER_GOOGLE}
+								customMapStyle={DarkTheme}
+								onRegionChange={(coord) => {
+									this.onChangeRegion({
+										latitude: coord.latitude,
+										longitude: coord.longitude
+									})
+								}}
+								initialRegion={centerCoordinates([
+									currentUser.address.location.length != 0 ?
+										currentUser.address.location[0].coordinates
+										:
+										currentLocation
+								])}
+							/>
+							<Image
+								style={{ height: 50, width: 50, position: 'absolute', alignSelf: 'center' }}
+								source={map_icon_white}
+							/>
+							{
+								!propsLocation &&
+
+								<MainButton
+									containerStyle={styles.btn}
+									text={
+										editable ?
+											lng.accept_location
+											:
+											currentUser.address.location.length != 0 ?
+												lng.edit
+												:
+												lng.accept_location
+
+									}
+									green
+									loading={loadingButton}
+									onPress={() =>
+										editable ?
+											this.onPressConfirmEdit()
+											:
+											currentUser.address.location.length != 0 ?
+												this.onPressEdit()
+												:
+												this.onPressSaveLocation()
+									}
+								/>
+							}
+						</Content>
+				}
+			</Container>
+		);
+	}
 }
 
 const mapStateToProps = (state) => {
-  return {
-    currentUser: state.user
-  }
+	return {
+		currentUser: state.user
+	}
 };
 
 export default connect(mapStateToProps)(MyAddress);

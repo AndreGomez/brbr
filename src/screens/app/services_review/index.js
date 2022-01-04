@@ -292,6 +292,8 @@ class ServiceReview extends Component {
 								// hour={this.props.navigation.state.params.hourSelected.hour}
 								onPressProfile={() => this.navigateTo('BrbrProfile', { item: { barber: { ...barberInfo } } })}
 								onPressChange={() => this.navigateTo('PaymentMethodsList')}
+								type={barberInfo.type}
+								address_name={barberInfo.address_name}
 							/>
 							<Text
 								style={styles.price}

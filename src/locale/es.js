@@ -109,6 +109,7 @@ const es = {
 	add: 'Agregar',
 	select: 'Seleccionar',
 	brbr_profile_title: 'Barbero',
+	brbr_profile_title_barbershop: 'Barbería',
 	rese: 'Reseñas',
 	calify: 'Calificacion',
 	cuts: 'Cortes',
@@ -163,6 +164,7 @@ const es = {
 	photo_identify: 'Debe subir una foto u omitir este paso',
 
 	my_address: 'Mi direccion',
+	my_address_barbershop: 'Direccion de barbería',
 	accept_location: 'Aceptar ubicacion',
 
 	//Reviews

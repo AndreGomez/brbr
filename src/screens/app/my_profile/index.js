@@ -118,7 +118,6 @@ class MyProfile extends Component {
 
 	navigateTo = (screen, data = {}) => {
 		const { navigation } = this.props
-
 		navigation.navigate(screen, data)
 	}
 
@@ -322,21 +321,37 @@ class MyProfile extends Component {
 													paymentMethod={paymentMethod}
 													onPressProfile={() => this.navigateTo('BrbrProfile', { item: { barber: { ...{ _id: res.barber._id } } } })}
 													onPressChange={() => this.navigateTo('BrbrProfile', { item: { barber: { ...{ _id: res.barber._id } } } })}
+													type={res.barber.type}
+													address_name={res.barber.address_name}
 												/>
 												<View style={styles.rowBtns}>
 													<MainButton
-														sm
+														xsAltern={res.barber.type === 'barbershop'}
+														sm={res.barber.type !== 'barbershop'}
 														red
 														loading={loadingBtnCancel}
 														text={'Cancelar cita'}
-														containerStyle={styles.cancelBtn}
 														onPress={() => this.toggleModal('cancelModal', res._id)}
 													/>
+													{
+														res.barber.type === 'barbershop' &&
+														<MainButton
+															xsAltern
+															raised_green
+															text={'Ver dirección'}
+															onPress={() => this.navigateTo('MyAddress', {
+																location: {
+																	latitude: res.location[0],
+																	longitude: res.location[1]
+																}
+															})}
+														/>
+													}
 													<MainButton
-														sm
+														xsAltern={res.barber.type === 'barbershop'}
+														sm={res.barber.type !== 'barbershop'}
 														white
 														text={'Mensaje'}
-														containerStyle={styles.cancelBtn}
 														onPress={() => this.navigateTo('Chat', { idBarber: res.barber._id })}
 													/>
 												</View>
@@ -351,7 +366,7 @@ class MyProfile extends Component {
 										ListEmptyComponent={
 											<Text style={styles.empty2}>
 												No tienes reservaciones
-                      </Text>
+											</Text>
 										}
 										renderItem={(item) => this.renderHistory(item)}
 										data={appoinments.reverse()}
@@ -375,7 +390,7 @@ class MyProfile extends Component {
 								style={styles.cancelSecure}
 							>
 								¿Seguro que quieres cancelar?
-            </Text>
+							</Text>
 						}
 						close
 						onPressClose={() => this.toggleModal('cancelModal')}

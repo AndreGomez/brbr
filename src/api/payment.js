@@ -3,8 +3,8 @@ import { Base64 } from 'js-base64';
 
 //dev
 const openPayUrl = 'https://sandbox-api.openpay.mx/v1/'
-const openPayMerchantId = 'mpcvuvrqgw8acy10e9bw'
-const openPaySk = 'pk_2c9529a18ab04eb3822b7e908b0f7c98'
+const openPayMerchantId = 'mnvsrrbeqci16jhfbuqj'
+const openPaySk = 'sk_24943e7d1d2d4965bff1fb38cc016481'
 const openPayPk = 'pk_a64ea6b36cc4413eb77f2e6c271b2831'
 
 //prof

@@ -55,7 +55,6 @@ class BrbrReserve extends Component {
 		const barberProfile = await getBarberProfile(this.props.navigation.state.params.item.barber._id)
 		const dateToSelectService = this.props.navigation.state.params.dateForService
 		const schedule = barberProfile.data.schedule
-
 		var days = []
 
 		if (dateToSelectService == 'today') {
@@ -162,7 +161,7 @@ class BrbrReserve extends Component {
 		this.setState({
 			lng,
 			loading: false,
-			barberInfo: { ...barberProfile.data, address: 'Test Address' },
+			barberInfo: { ...barberProfile.data },
 			price: this.props.navigation.state.params.price,
 			days
 		})
@@ -302,6 +301,7 @@ class BrbrReserve extends Component {
 	)
 
 	onPressNext = () => {
+		console.log('het')
 		const { state } = this
 		const { navigation } = this.props
 		this.setState({
@@ -391,7 +391,7 @@ class BrbrReserve extends Component {
                   {barberInfo.name}
                 </Text> */}
 								{
-									barberInfo.address &&
+									barberInfo.address_name &&
 
 									<Text
 										style={styles.description}
@@ -401,7 +401,7 @@ class BrbrReserve extends Component {
 											style={styles.descriptionAltern}
 										>
 											{lng.address_barber}
-										</Text>	{barberInfo.address}
+										</Text>	{barberInfo.address_name}
 									</Text>
 								}
 								<Text
@@ -528,7 +528,7 @@ class BrbrReserve extends Component {
 								<MainButton
 									bottom
 									text={lng.reserve_now}
-									onPress={() => this.toggleModal()}
+									onPress={() => barberInfo.type === 'barbershop' ? this.onPressNext() : this.toggleModal()}
 								/>
 							}
 						</React.Fragment>

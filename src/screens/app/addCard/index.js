@@ -408,7 +408,7 @@ class AddCardForm extends Component {
 							style={styles.about}
 						>
 							Ver terminos y condiciones, contacto, privacidad
-            </Text>
+						</Text>
 					</TouchableOpacity>
 					{
 						currentUser.country === 'mx' &&
@@ -475,7 +475,7 @@ class AddCardForm extends Component {
 						<Text
 							style={styles.ups}>
 							¡Ups!
-            </Text>
+						</Text>
 					}
 					message={modalErrorData.message}
 					btnTitle={lng.accept}
